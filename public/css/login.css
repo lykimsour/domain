@@ -1,0 +1,229 @@
+
+body{
+	background: #1f1f1f;
+}
+.clear{
+	clear: both;
+}
+.choose-contry{
+	text-align: center;
+	max-width: 600px;
+	padding-top: 40px;
+	text-transform: uppercase;
+	margin: 0 auto;
+}
+.choose-contry .title{
+	font-size: 20px;
+	margin-bottom: 30px;
+	color: #cccccc;
+}
+.country-item img{
+	width: 150px;
+}
+.country-item h3{
+	font-size: 14px;
+	margin-top: 10px;
+}
+.country-item a{
+	text-decoration: none;
+	color: #888;
+}
+
+div.member_signin {
+    text-align: center;
+}
+
+div.fa_logo{
+    margin-top: -80px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+div.fa_logo img{
+    height: 100px;
+    margin-bottom: 10px;
+}
+div.fa_logo p{
+    font-size: 20px;
+    color: #000000;
+}
+form#loginForm{
+    text-align: left;
+}
+
+.btn-sabay{
+    background-color: #c15557;
+    color: #ffffff;
+}
+.btn-sabay:hover{
+    background-color: #8C2117;
+    color: #ffffff;
+}
+
+button.login {
+    width: 100%;
+    /*text-transform: uppercase;*/
+}
+
+form.loginform div.input-group {
+    width: 100%;
+}
+
+form.loginform input[type="email"], form.loginform input[type="password"] {
+    color: #6C6C6C;
+    text-align: left;
+}
+
+p.forgotpass {
+    margin-top: 10px;
+}
+
+p.forgotpass a {
+    color: #555;
+}
+
+.checkout-panel{
+	margin-top: 65px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 15px;
+	max-width: 1000px;
+}
+
+.checkout-panel .title{
+	margin: 30px 0 20px 0;
+	color: #cccccc;
+}
+.checkout-panel .title .right{
+	text-align: right;
+}
+.account-detail img{
+	height: 65px;
+	margin-right: 10px;
+}
+#wait-area{
+	display: none;
+	margin-top: 30px;
+}
+a.navbar-brand.mysaby{
+	padding: 4px 10px;
+}
+a.navbar-brand.mysaby img{
+	height: 42px;
+}
+.alert{
+	text-align: left;
+}
+.alert > ul {
+    padding: 0 10px;
+}
+.api-container{
+	max-width: 1000px;
+}
+.checkout-panel .form-group .help-block{
+	text-align: right !important;
+}
+.login-panel{
+	max-width: 380px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 65px;
+	padding: 15px;
+}
+.order-summary{
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.05);
+	box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.05);
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+.order-summary .body{
+	margin: 0;
+	padding: 10px;
+	border: 1px solid #dddddd;
+	border-top: 0;
+}
+.order-summary .title{
+	background: #B03525;
+	padding: 7px 10px;
+	margin: 0;
+	font-weight: bold;
+	color: #ffffff;
+}
+.order-summary table{
+	width: 100%;
+	border-top:1px solid #eeeeee;
+	margin-top: 10px;
+}
+.user-info .title{
+	font-weight: bold;
+	color:#555555;
+	margin-top: 15px;
+}
+.user-info img{
+	float: left;
+	margin-right: 7px;
+	height: 43px;
+}
+.order-summary table th,
+.order-summary table td{
+	padding: 4px 0;
+}
+.order-summary table td{
+	color: #555555;
+}
+.order-summary table tr.item td{
+	padding-bottom: 15px;
+}
+.order-summary table th.total{
+	border-top: 1px solid #eeeeee;
+	color: red;
+}
+.modal-footer{
+	margin-top: 30px;
+	text-align: left;
+	font-size: 12px;
+	color: #999999;
+}
+.modal-footer a{
+	color: #777777;
+}
+.modal-footer img{
+	height: 20px;
+	margin-right: 5px;
+}
+.panel-checkout{
+	z-index: 1;
+	position: relative;
+	padding-top: 10px;
+}
+.user-login .title{
+	margin-top: 0px;
+	color: #333333;
+	margin-bottom: 25px;
+}
+.user-login .title h2{
+	margin-top: 0px;
+}
+.user-login .title span{
+	color: #777777;
+}
+.user-login form{
+	max-width: 300px;
+	margin: 0 auto;
+}
+.help-block{
+	text-align: left;
+}
+/*MENU*/
+
+nav.header{
+	background: #1f1f1f;
+	padding: 5px 15px;
+}
+.header .logo{
+	float: left;
+}
+.header .logo img{
+	height: 50px;
+}
