@@ -18,9 +18,7 @@ class AppController extends Controller
     public function gettest(Request $request)
     {
         //return $request->id;
-        //return 'hi';
         return view('dashboard.index',['re'=>$request]);
-        //echo 'fgf';
         //return $request->url();
         //return 'you are admin';
     }
