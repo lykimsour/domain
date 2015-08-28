@@ -16,7 +16,7 @@ class OnlineShopController extends Controller
      */
     public function index()
     {
-        //
+        // example
     }
 
     /**
