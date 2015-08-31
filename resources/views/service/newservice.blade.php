@@ -20,21 +20,11 @@
       </div>
       <div class="form-group">
         <label for="username">{{trans('Service_class_id:')}}</label>
-        <select id="serviceclassid" name="serviceclassid" class="selectpicker">
-         @foreach($serviceclasses as $serviceclass)
-        	<option>{{$serviceclass->id}}</option>
-        @endforeach
-        </select>
+        {!! Form::select('serviceclassid', $serviceclasses, Input::old('serviceclassid'),['class'=>'form-control',]) !!}
       </div>
       <div class="form-group">
         <label>{{trans('Service_type_id:')}}</label>
-      
-        <select class="selectpicker" id="servicetypeid" name="servicetypeid" >
-          @foreach($servicetypes as $servicetype)
-        	<option>{{$servicetype->id}}</option>
-        	@endforeach
-        </select>
-
+        {!! Form::select('servicetypeid', $servicetypes , Input::old('servicetypeid'),['class'=>'form-control',]) !!}
       </div>
       <div class="form-group">
         <label for="pwd">Password</label>

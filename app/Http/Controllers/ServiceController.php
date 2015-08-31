@@ -11,6 +11,7 @@ use App\ServiceType;
 use App\Service;
 use Input;
 use Redirect;
+use Form;
 class ServiceController extends Controller
 {
     /**
@@ -31,8 +32,8 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $serviceclasses = ServiceClass::All();
-        $servicetypes = ServiceType::All(); 
+        $serviceclasses = ServiceClass::lists('id','id');
+        $servicetypes = ServiceType::lists('id','id'); 
         return view('service.newservice',['serviceclasses'=>$serviceclasses,'servicetypes'=>$servicetypes]);
     }
 
@@ -44,14 +45,17 @@ class ServiceController extends Controller
      */
     public function store(Requests\NewServiceRequest $request)
     {
+        $serviceclassid = input::get('serviceclassid');
+        $servicetypeid =  input::get('servicetypeid');
         $service = new Service;
         $service->code = input::get('code');
-        $service->service_class_id = input::get('serviceclassid'); 
-        $service->service_type_id = input::get('servicetypeid');
+        $service->service_class_id = $serviceclassid; 
+        $service->service_type_id = $servicetypeid;
         $service->password = bcrypt(input::get('password'));
         $service->info = input::get('info');
         $service->save();
         return Redirect::route('service');
+      
     }
 
     /**
@@ -73,8 +77,8 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        $serviceclasses = ServiceClass::All();
-        $servicetypes = ServiceType::All(); 
+        $serviceclasses = ServiceClass::lists('id','id');
+        $servicetypes = ServiceType::lists('id','id'); 
         $service = Service::findOrFail($id);
         return view('service.editservice',['service'=>$service,'serviceclasses'=>$serviceclasses,'servicetypes'=>$servicetypes]);
     }

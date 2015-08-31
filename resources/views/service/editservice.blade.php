@@ -22,28 +22,10 @@
         <input type="text" name="code" class="form-control" id="code" value="{{$service->code}}">
       </div>
       <div class="form-group">
-        <label for="username">{{trans('Service_class_id:')}}</label>
-        <select id="serviceclassid" name="serviceclassid" class="selectpicker">
-        <option selected="{{$service->service_class_id}}">{{$service->service_class_id}}</option>
-         @foreach($serviceclasses as $serviceclass)
-         	@if($serviceclass->id!=$service->service_class_id)
-        	<option>{{$serviceclass->id}}</option>
-        	@endif
-        	
-        @endforeach
-        </select>
+               {!! Form::select('serviceclassid', $serviceclasses,$service->service_class_id,['class'=>'form-control',]) !!}
       </div>
       <div class="form-group">
-        <label>{{trans('Service_type_id:')}}</label>
-        <select class="selectpicker" id="servicetypeid" name="servicetypeid" >
-        <option selected="{{$service->service_type_id}}">{{$service->service_type_id}}</option>
-          @foreach($servicetypes as $servicetype)
-          	@if($servicetype->id!=$service->service_type_id)
-        	<option>{{$servicetype->id}}</option>
-        	@endif
-        	@endforeach
-        </select>
-
+               {!! Form::select('servicetypeid', $servicetypes , $service->service_type_id,['class'=>'form-control',]) !!}
       </div>
       <div class="form-group">
         <label for="pwd">Password</label>

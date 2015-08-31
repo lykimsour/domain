@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class OnlineShopRequest extends Request
+class OnlineShopItemRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class OnlineShopRequest extends Request
     public function rules()
     {
         return [
-             'name' => 'required|max:255',
-             'code' => 'required|max:32',
+          'ordering' => 'integer'
         ];
     }
 }

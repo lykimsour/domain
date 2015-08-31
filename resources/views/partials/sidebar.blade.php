@@ -49,10 +49,11 @@
       <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-shopping-cart"></i>{{trans('Online_Shop Management')}}<span class="caret"></span></a>
           <ul class="dropdown-menu" style="background:black">
-            <li><a href="{{route('service')}}"><i class="glyphicon glyphicon-shopping-cart"></i><span>{{trans('Online_shops')}}</span></a></li>
-            <li><a href="{{route('servicetype')}}"><i class="glyphicon glyphicon-shopping-cart"></i><span>{{trans('Online_shops_items')}}</span></a></li>
+            <li><a href="{{route('onlineshop')}}"><i class="glyphicon glyphicon-shopping-cart"></i><span>{{trans('Online_shops')}}</span></a></li>
+            <li><a href="{{route('onlineshopitem')}}"><i class="glyphicon glyphicon-shopping-cart"></i><span>{{trans('Online_shops_items')}}</span></a></li>
           </ul>
         </li>
+
     </ul><!-- /.sidebar-menu -->
 
   </section>

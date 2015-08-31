@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\OnlineShop;
+use Input;
+use Redirect;
 class OnlineShopController extends Controller
 {
     /**
@@ -16,7 +18,9 @@ class OnlineShopController extends Controller
      */
     public function index()
     {
-        // example
+        $onlineshops = OnlineShop::paginate(5);
+        $onlineshops->setPath('onlineshop');
+        return view('onlineshop.index',['onlineshops'=>$onlineshops]);
     }
 
     /**
@@ -26,7 +30,7 @@ class OnlineShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('onlineshop.newonlineshop');
     }
 
     /**
@@ -35,9 +39,15 @@ class OnlineShopController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Requests\OnlineShopRequest $request)
     {
-        //
+        $onlineshop = new OnlineShop;
+        $onlineshop->name = input::get('name');
+        $onlineshop->code = input::get('code');
+        $onlineshop->detail = input::get('detail');
+        $onlineshop->status = input::has('status');
+        $onlineshop->save();
+        return Redirect::route('onlineshop');
     }
 
     /**
@@ -48,7 +58,7 @@ class OnlineShopController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -59,7 +69,8 @@ class OnlineShopController extends Controller
      */
     public function edit($id)
     {
-        //
+        $onlineshop = OnlineShop::findOrFail($id);
+        return view('onlineshop.editonlineshop',['onlineshop'=>$onlineshop]);
     }
 
     /**
@@ -69,9 +80,16 @@ class OnlineShopController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\OnlineShopRequest $request)
     {
-        //
+        $id = input::get('id');
+        $onlineshop = OnlineShop::findOrFail($id);
+        $onlineshop->name = input::get('name');
+        $onlineshop->code = input::get('code');
+        $onlineshop->detail = input::get('detail');
+        $onlineshop->status = input::has('status');
+        $onlineshop->save();
+        return Redirect::route('onlineshop');
     }
 
     /**
@@ -82,6 +100,8 @@ class OnlineShopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $onlineshop = OnlineShop::findOrFail($id);
+        $onlineshop->delete();
+        return Redirect::route('onlineshop');
     }
 }
