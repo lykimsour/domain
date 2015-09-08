@@ -41,9 +41,9 @@ class ServiceClassController extends Controller
     public function store(Requests\ServiceClassRequest $request)
     {
         $serviceclass = new ServiceClass;
-        $serviceclass->name = input::get('name');
-        $serviceclass->commission_rate = input::get('commissionrate');
-        $serviceclass->payout_rate = input::get('payoutrate');
+        $serviceclass->name = $request->input('name');
+        $serviceclass->commission_rate = $request->input('commissionrate');
+        $serviceclass->payout_rate = $request->input('payoutrate');
         $serviceclass->save();
         return Redirect::route('serviceclass');
     }
@@ -82,9 +82,9 @@ class ServiceClassController extends Controller
     {
         $id = input::get('id');
         $serviceclass = ServiceClass::findOrFail($id); 
-        $serviceclass->name = input::get('name');
-        $serviceclass->commission_rate = input::get('commissionrate');
-        $serviceclass->payout_rate = input::get('payoutrate');
+        $serviceclass->name = $request->input('name');
+        $serviceclass->commission_rate = $request->input('commissionrate');
+        $serviceclass->payout_rate = $request->input('payoutrate');
         $serviceclass->save();
         return Redirect::route('serviceclass'); 
     }

@@ -23,7 +23,7 @@ class CheckPermission implements Middleware {
         }
 
         return Redirect::back();
-        //return $request;
+       
         //return $request;
     }
 

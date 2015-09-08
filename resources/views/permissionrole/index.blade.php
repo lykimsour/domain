@@ -1,15 +1,16 @@
-<?php 
+<?php
+use App\Permission;
 use App\Role;
- ?>
+?>
 @extends('layouts.app')
 
 @section('content')
 
 <div class="container-fluid">
-<h2>{{trans('Manage Users')}}</h2>
+<h2>{{trans('Manage Permissions')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('register')}}"><div class="btn btn-primary">{{trans('New Users')}}</div></a>
+       <a href="{{route('createpermissionrole')}}"><div class="btn btn-primary">{{trans('Assign Role_Permission')}}</div></a>
     </div>
 </div><br/>
 <div class="row">
@@ -25,19 +26,20 @@ use App\Role;
                 <tr>
                   <th>Tools</th>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>E-Mail</th>
-                  <th>Role_Title</th>
+                  <th>Role_ID</th>
+                  <th>Permission_ID</th>
+                 
                 </tr>
             </thead>
                <tbody>
-              @foreach($users as $user)
-              <?php
-                $roletitle = Role::findOrFail($user->role_id);
-               
-              ?>
+             @foreach($permissionroles as $permissionrole)
+             <?php
+              $roletitle = Role::findOrFail($permissionrole->role_id);
+              $permissionslug = Permission::findOrFail($permissionrole->permission_id);
+             ?>
               <tr>
                 <td>
+              @if($roletitle->id!=1)
               <form method="post" action="" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
@@ -48,13 +50,13 @@ use App\Role;
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
                 </form>
+              @endif
                 </td>
-              <td>{{$user->id}}</td>
-              <td>{{$user->name}}</td>
-              <td>{{$user->email}}</td>
-              <td>{{$roletitle->role_title}}</td>
+                    <td>{{$permissionrole->id}}</td>
+                    <td>{{$roletitle->role_title}}</td>
+                    <td>{{$permissionslug->permission_slug}}</td>
               </tr>
-              @endforeach
+             @endforeach
             </tbody>
           </table>
           </table>

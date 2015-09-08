@@ -18,7 +18,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Application's Traits (Separation of various types of methods)
      */
-       protected $table = 'users';
+       protected $table = 'adminusers';
 		protected $fillable = ['name', 'email', 'password','role_id'];
         protected $hidden = ['password', 'remember_token'];
     use UserACL, UserRelationShips;

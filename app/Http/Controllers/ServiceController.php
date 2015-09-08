@@ -21,7 +21,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::All();
+        $services = Service::paginate(5);
+        $services->setPath('service');
         return view('service.index',['services'=>$services]);
     }
 
@@ -45,14 +46,15 @@ class ServiceController extends Controller
      */
     public function store(Requests\NewServiceRequest $request)
     {
-        $serviceclassid = input::get('serviceclassid');
-        $servicetypeid =  input::get('servicetypeid');
+        //$serviceclassid = input::get('serviceclassid');
+        //$servicetypeid =  input::get('servicetypeid');
         $service = new Service;
-        $service->code = input::get('code');
-        $service->service_class_id = $serviceclassid; 
-        $service->service_type_id = $servicetypeid;
-        $service->password = bcrypt(input::get('password'));
-        $service->info = input::get('info');
+        $service->code = $request->input('code');
+        $service->service_class_id = $request->input('serviceclassid'); 
+        $service->service_type_id =$request->input('servicetypeid');
+        $service->password = bcrypt($request->input('password'));
+        $service->info = $request->input('info');
+        //dd($request->all());
         $service->save();
         return Redirect::route('service');
       
@@ -92,16 +94,16 @@ class ServiceController extends Controller
      */
     public function update(Requests\NewServiceRequest $request)
     {
-        $id=input::get('id');
+        $id = $request->input('id');
         $service = Service::findOrFail($id);
-        $service->code = input::get('code');
-        $service->service_class_id = input::get('serviceclassid'); 
-        $service->service_type_id = input::get('servicetypeid');
+        $service->code = $request->input('code');
+        $service->service_class_id = $request->input('serviceclassid'); 
+        $service->service_type_id = $request->input('servicetypeid');
     
-        if($service->password != input::get('password')){
-                  $service->password = bcrypt(input::get('password'));
+        if($service->password != $request->input('password')){
+                  $service->password = bcrypt($request->input('password'));
         }
-        $service->info = input::get('info');
+        $service->info = $request->input('info');
         $service->save();
         return Redirect::route('service');
     }

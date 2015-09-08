@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\OnlineShop;
 use Input;
 use Redirect;
+use File;
 class OnlineShopController extends Controller
 {
     /**
@@ -41,11 +42,28 @@ class OnlineShopController extends Controller
      */
     public function store(Requests\OnlineShopRequest $request)
     {
+        if ($request->hasFile('image'))
+         {
+             $image = $request->file('image');
+             $destinationPath = public_path().'/uploads/icons/';
+             $filename = time().'_'.$image->getClientOriginalName();
+             $uploaded = $image->move($destinationPath, $filename);
+             $image = 'uploads/icons/'. $filename;
+            
+        }
+        else{
+            $image = 'null';
+        }
         $onlineshop = new OnlineShop;
-        $onlineshop->name = input::get('name');
-        $onlineshop->code = input::get('code');
-        $onlineshop->detail = input::get('detail');
-        $onlineshop->status = input::has('status');
+        $onlineshop->name = $request->input('name');
+        $onlineshop->code = $request->input('code');
+        $description = $request->input('description');
+        $helpnote = $request->input('helpnote');
+        $specialnote = $request->input('specialnote');
+        $arraydetail = array('icon'=>$image,'description'=>$description,'help_note'=>$helpnote,'special_note'=>$specialnote);
+        $arraydetail = json_encode($arraydetail, JSON_UNESCAPED_SLASHES);
+        $onlineshop->detail =  $arraydetail;
+        $onlineshop->status = $request->has('status');
         $onlineshop->save();
         return Redirect::route('onlineshop');
     }
@@ -70,7 +88,8 @@ class OnlineShopController extends Controller
     public function edit($id)
     {
         $onlineshop = OnlineShop::findOrFail($id);
-        return view('onlineshop.editonlineshop',['onlineshop'=>$onlineshop]);
+        $arraydetail = json_decode($onlineshop->detail);
+        return view('onlineshop.editonlineshop',['onlineshop'=>$onlineshop,'arraydetail'=>$arraydetail]);
     }
 
     /**
@@ -84,10 +103,33 @@ class OnlineShopController extends Controller
     {
         $id = input::get('id');
         $onlineshop = OnlineShop::findOrFail($id);
-        $onlineshop->name = input::get('name');
-        $onlineshop->code = input::get('code');
-        $onlineshop->detail = input::get('detail');
-        $onlineshop->status = input::has('status');
+        $arraydetail = json_decode($onlineshop->detail);
+
+          if ($request->hasFile('image'))
+         {
+            if($arraydetail->icon !='null'){
+                $filename = public_path().'/'.$arraydetail->icon;
+                File::delete($filename);
+            }
+             
+             $image = $request->file('image');
+             $destinationPath = public_path().'/uploads/icons/';
+             $filename = time().'_'.$image->getClientOriginalName();
+             $uploaded = $image->move($destinationPath, $filename);
+             $image = 'uploads/icons/'. $filename; 
+        }
+        else{
+            $image = $arraydetail->icon;
+        }
+        $onlineshop->name = $request->input('name');
+        $onlineshop->code = $request->input('code');
+        $description = $request->input('description');
+        $helpnote = $request->input('helpnote');
+        $specialnote = $request->input('specialnote');
+        $arraydetail = array('icon'=>$image,'description'=>$description,'help_note'=>$helpnote,'special_note'=>$specialnote);
+        $arraydetail = json_encode($arraydetail, JSON_UNESCAPED_SLASHES);
+        $onlineshop->detail =  $arraydetail;
+        $onlineshop->status = $request->has('status');
         $onlineshop->save();
         return Redirect::route('onlineshop');
     }
@@ -102,6 +144,6 @@ class OnlineShopController extends Controller
     {
         $onlineshop = OnlineShop::findOrFail($id);
         $onlineshop->delete();
-        return Redirect::route('onlineshop');
+        return Redirect::back();
     }
 }

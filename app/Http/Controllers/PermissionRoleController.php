@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\ServiceType;
-use Input;
-use Redirect;
-class ServiceTypeController extends Controller
+use App\PermissionRole;
+use App\User;
+use DB;
+class PermissionRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,9 @@ class ServiceTypeController extends Controller
      */
     public function index()
     {
-        $servicetypes = ServiceType::All(); 
-        return view('servicetype.index',['servicetypes'=>$servicetypes]);
+        $users = User::lists('name','id');
+        $permissionroles = PermissionRole::All();
+        return view('permissionrole.index',['permissionroles' => $permissionroles,'users'=>$users]);
     }
 
     /**
@@ -29,7 +30,9 @@ class ServiceTypeController extends Controller
      */
     public function create()
     {
-        return view('servicetype.newservicetype');
+        
+        $users = User::lists('name','id');
+        return view('permissionrole.newpermissionrole',['users'=>$users]);
     }
 
     /**
@@ -38,12 +41,9 @@ class ServiceTypeController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Requests\ServiceTypeRequest $request)
+    public function store(Request $request)
     {
-        $servicetype = new ServiceType;
-        $servicetype->name = $request->input('name');
-        $servicetype->save();
-        return Redirect::route('servicetype');
+        //
     }
 
     /**
@@ -65,10 +65,8 @@ class ServiceTypeController extends Controller
      */
     public function edit($id)
     {
-        $servicetype = ServiceType::findOrFail($id);
-        return view('servicetype.editservicetype',['servicetype'=>$servicetype]);
+        //
     }
-    
 
     /**
      * Update the specified resource in storage.
@@ -77,13 +75,9 @@ class ServiceTypeController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Requests\ServiceTypeRequest $request)
+    public function update(Request $request, $id)
     {
-        $id = input::get('id');
-        $servicetype = ServiceType::findOrFail($id);
-        $servicetype->name = $request->input('name');
-        $servicetype->save();
-       return Redirect::route('servicetype');
+        //
     }
 
     /**
@@ -94,8 +88,6 @@ class ServiceTypeController extends Controller
      */
     public function destroy($id)
     {
-         $servicetype = ServiceType::findOrFail($id);
-         $servicetype->delete();
-          return Redirect::route('servicetype');
+        //
     }
 }

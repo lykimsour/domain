@@ -16,7 +16,7 @@
     @endif
 <div class="row">
     <div class="col-md-6">
-    <form method="post" action="{{route('storeonlineshop')}}">
+    <form method="post" action="{{route('storeonlineshop')}}" enctype="multipart/form-data">
     	   {!! csrf_field() !!}
     	<div class="form-group">
     		<label>{{trans('Name')}}</label>
@@ -27,12 +27,25 @@
     		<input type="text" name="code" class="form-control" id="code">
   		</div>
   		<div class="form-group">
-    		<label >Detail</label>
-    		<input type="text" name="detail" class="form-control" id="detail">
+    		<label>{{trans('Description')}}</label>
+    		<input type="text" name="description" class="form-control" id="description">
   		</div>
-      
+        <div class="form-group">
+        <label>{{trans('Help Note')}}</label>
+        <input type="text" name="helpnote" class="form-control" id="helpnote">
+      </div>
+       <div class="form-group">
+        <label>{{trans('Special Note')}}</label>
+        <input type="text" name="specialnote" class="form-control" id="specialnote">
+      </div>
+       <div class="form-group">
+              {!! Form::label('image', 'Icon') !!}
+              {!! Form::file('image') !!}
+           </div>
+       <div class="form-group">
       <div class="checkbox">
         <label><input type="checkbox" name="status" id="status">status</label>
+      </div>
       </div>
 		  <button type="submit" class="btn btn-primary">{{trans('Add Online_Shop')}}</button>
       </form>

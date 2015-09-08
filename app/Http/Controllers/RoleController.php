@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\ServiceType;
-use Input;
+use App\Role;
 use Redirect;
-class ServiceTypeController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,8 @@ class ServiceTypeController extends Controller
      */
     public function index()
     {
-        $servicetypes = ServiceType::All(); 
-        return view('servicetype.index',['servicetypes'=>$servicetypes]);
+        $roles = Role::All();
+        return view('roles.index',['roles'=>$roles]);
     }
 
     /**
@@ -29,7 +28,7 @@ class ServiceTypeController extends Controller
      */
     public function create()
     {
-        return view('servicetype.newservicetype');
+        return view('roles.newrole');
     }
 
     /**
@@ -38,12 +37,13 @@ class ServiceTypeController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Requests\ServiceTypeRequest $request)
+    public function store(Requests\RoleRequest $request)
     {
-        $servicetype = new ServiceType;
-        $servicetype->name = $request->input('name');
-        $servicetype->save();
-        return Redirect::route('servicetype');
+        $role = new Role;
+        $role->role_title = $request->input('roletitle');
+        $role->role_slug = $request->input('roleslug');
+        $role->save();
+        return Redirect::route('role');
     }
 
     /**
@@ -65,10 +65,10 @@ class ServiceTypeController extends Controller
      */
     public function edit($id)
     {
-        $servicetype = ServiceType::findOrFail($id);
-        return view('servicetype.editservicetype',['servicetype'=>$servicetype]);
+        $role = Role::findOrFail($id);
+        
+        return view('roles.editrole',['role'=>$role]);
     }
-    
 
     /**
      * Update the specified resource in storage.
@@ -77,13 +77,13 @@ class ServiceTypeController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Requests\ServiceTypeRequest $request)
+    public function update(Requests\RoleRequest $request, $id)
     {
-        $id = input::get('id');
-        $servicetype = ServiceType::findOrFail($id);
-        $servicetype->name = $request->input('name');
-        $servicetype->save();
-       return Redirect::route('servicetype');
+        $role = Role::findOrFail($id);
+        $role->role_title = $request->input('roletitle');
+        $role->role_slug = $request->input('roleslug');
+        $role->save();
+        return Redirect::route('role');
     }
 
     /**
@@ -94,8 +94,8 @@ class ServiceTypeController extends Controller
      */
     public function destroy($id)
     {
-         $servicetype = ServiceType::findOrFail($id);
-         $servicetype->delete();
-          return Redirect::route('servicetype');
+        $role = Role::findOrFail($id);
+        $role->delete();
+        return Redirect::back();
     }
 }

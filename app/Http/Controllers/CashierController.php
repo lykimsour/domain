@@ -25,11 +25,11 @@ class CashierController extends Controller
 
     public function postCashier(Requests\CreateCashierRequest $request){
       $cashier = new Cashier; 
-      $cashier->name = input::get('name');
-      $cashier->username = input::get('username');
-      $cashier->password = bcrypt(input::get('password'));
-      $cashier->commission_rate = input::get('commission');  
-      $cashier->status = input::has('status');
+      $cashier->name = $request->input('name');
+      $cashier->username = $request->input('username');
+      $cashier->password = bcrypt($request->input('password'));
+      $cashier->commission_rate = $request->input('commission');  
+      $cashier->status = $request->has('status');
       $cashier->only2service = false;
       $cashier->pay_bonus = false;
       $cashier->bonus_balance = 0;
@@ -44,17 +44,17 @@ class CashierController extends Controller
     public function puteditCashier(Requests\EditCashierRequest $request){
       $id = input::get('id');
       $cashier = Cashier::findOrFail($id);
-      $cashier->name = input::get('name');
-      $cashier->username = input::get('username');
-      $cashier->commission_rate = input::get('commission');  
+      $cashier->name = $request->input('name');
+      $cashier->username = $request->input('username');
+      $cashier->commission_rate = $request->input('commission');  
       $cashier->only2service = false;
       $cashier->pay_bonus = false;
       $cashier->bonus_balance = 0;
-      $cashier->status = input::has('status');
-      if($cashier->password != input::get('password')){
-        $cashier->password = bcrypt(input::get('password'));
+      $cashier->status = $request->has('status');
+      if($cashier->password != $request->input('password')){
+        $cashier->password = bcrypt($request->input('password'));
       }
-      $cashier->commission_rate = input::get('commission');  
+      $cashier->commission_rate = $request->input('commission');  
       $cashier->save();
       return Redirect::route('showcashier');
     }

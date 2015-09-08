@@ -21,39 +21,68 @@
           <div class="clear"></div>
         </a>
       </li>
-       <li {{ Helper::activeMenu("createuser") }}>
-        <a href="{{URL::route('createuser')}}">
-          <i class="glyphicon glyphicon-user"></i> 
-          <span>{{trans('Users')}}</span>
-          <div class="clear"></div>
-        </a>
-      </li>
 
-      <li {{ Helper::activeMenu("showcashier") }}>
+      <li class="treeview">
+              <a href="#">
+                 <i class="glyphicon glyphicon-user"></i> 
+                <span>{{trans('Users Management')}}</span>
+                 <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::route('users')}}"><i class="fa fa-circle-o"></i>Admin_Users</a></li>
+                <li><a href="{{URL::route('role')}}"><i class="fa fa-circle-o"></i>Role</a></li>
+                <li><a href="{{URL::route('permission')}}"><i class="fa fa-circle-o"></i>Permission</a></li>
+                <li><a href="{{URL::route('permissionrole')}}"><i class="fa fa-circle-o"></i>Assigned_role</a></li>
+              </ul>
+            </li>
+
+  
+
+      <li {{ Helper::activeMenu("cashier") }}>
         <a href="{{URL::route('showcashier')}}">
           <i class="glyphicon glyphicon-usd"></i> 
           <span>{{trans('Cashier Management')}}</span>
           <div class="clear"></div>
         </a>
       </li>
-      
-      <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-cog"></i>{{trans('Services Management')}}<span class="caret"></span></a>
-          <ul class="dropdown-menu" style="background:black">
-            <li><a href="{{route('service')}}"><i class="glyphicon glyphicon-cog"></i><span>{{trans('Service')}}</span></a></li>
-            <li><a href="{{route('servicetype')}}"><i class="glyphicon glyphicon-cog"></i><span>{{trans('Service_Type')}}</span></a></li>
-            <li><a href="{{route('serviceclass')}}"><i class="glyphicon glyphicon-cog"></i><span>{{trans('Service_Class')}}</span></a></li>                        
-          </ul>
-        </li>
-
-      <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-shopping-cart"></i>{{trans('Online_Shop Management')}}<span class="caret"></span></a>
-          <ul class="dropdown-menu" style="background:black">
-            <li><a href="{{route('onlineshop')}}"><i class="glyphicon glyphicon-shopping-cart"></i><span>{{trans('Online_shops')}}</span></a></li>
-            <li><a href="{{route('onlineshopitem')}}"><i class="glyphicon glyphicon-shopping-cart"></i><span>{{trans('Online_shops_items')}}</span></a></li>
-          </ul>
-        </li>
-
+      <li class="treeview">
+              <a href="#">
+                <i class="fa fa-car"></i>
+                <span>{{trans('Services Management')}}</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="{{route('service')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service')}}</span></a></li>
+                <li {{ Helper::activeMenu("servicetype") }}><a href="{{route('servicetype')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service_Type')}}</span></a></li>
+               <li {{ Helper::activeMenu("serviceclass") }}><a href="{{route('serviceclass')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service_Class')}}</span></a></li>                        
+              </ul>
+            </li>
+      <li class="treeview">
+              <a href="#">
+                <i class="fa fa-shopping-cart"></i>
+                <span>{{trans('Online_Shop_Management')}}</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                  <li {{ Helper::activeMenu("onlineshop") }}><a href="{{route('onlineshop')}}"><i class="fa fa-circle-o"></i><span>{{trans('Online_shops')}}</span></a></li>
+                  <li {{ Helper::activeMenu("onlineshopitem") }}><a href="{{route('onlineshopitem')}}"><i class="fa fa-circle-o"></i><span>{{trans('Online_shops_items')}}</span></a></li>
+              </ul>
+            </li>
+    
+    
+        <!--<li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i>
+                <span>Layout Options</span>
+                <span class="label label-primary pull-right">4</span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+                <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+                <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+                <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+              </ul>
+            </li>-->
     </ul><!-- /.sidebar-menu -->
 
   </section>

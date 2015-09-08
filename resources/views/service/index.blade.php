@@ -12,6 +12,7 @@
 <div class="row">
 
     <div class="col-md-12">
+        {!! $services->render()  !!}
        <ul class="list-group">
   		<li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
   				<span>List</span> 

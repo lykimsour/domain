@@ -22,9 +22,11 @@
         <input type="text" name="code" class="form-control" id="code" value="{{$service->code}}">
       </div>
       <div class="form-group">
+        <label for="name">{{trans('Service_Class_ID')}}</label>
                {!! Form::select('serviceclassid', $serviceclasses,$service->service_class_id,['class'=>'form-control',]) !!}
       </div>
       <div class="form-group">
+           <label for="name">{{trans('Service_Class_Type')}}</label>
                {!! Form::select('servicetypeid', $servicetypes , $service->service_type_id,['class'=>'form-control',]) !!}
       </div>
       <div class="form-group">

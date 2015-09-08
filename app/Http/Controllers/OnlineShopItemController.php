@@ -10,6 +10,8 @@ use App\OnlineShopItem;
 use App\OnlineShop;
 use Input;
 use Redirect;
+use rtrim;
+use File;
 class OnlineShopItemController extends Controller
 {
     /**
@@ -43,13 +45,34 @@ class OnlineShopItemController extends Controller
      */
     public function store(Requests\OnlineShopItemRequest $request)
     {
+       
+        if ($request->hasFile('image'))
+         {
+             $image = $request->file('image');
+             $destinationPath = public_path().'/uploads/item-image/';
+             $filename = time().'_'.$image->getClientOriginalName();
+             $uploaded = $image->move($destinationPath, $filename);
+             $image = 'uploads/item-image/'. $filename;
+            
+        }
+        else{
+            $image = 'null';
+        }
         $onlineshopitem = new OnlineShopItem;
-        $onlineshopitem->online_shop_code = input::get('onlineshops');
-        $onlineshopitem->item = input::get('item');
-        $onlineshopitem->ordering = input::get('ordering');
-        $onlineshopitem->status = input::has('status');
+        $onlineshopitem->online_shop_code = $request->input('onlineshops');
+        $name = $request->input('name');
+        $sku = $request->input('sku');
+        $currency = $request->input('currency');
+        $value = $request->input('value');
+        $max = $request->input('max');
+        $arrayitem = array('name'=>$name,'sku'=>$sku,'currency'=>$currency,'value'=>$value,'max'=>$max,'image'=>$image);
+        $arrayitem = json_encode($arrayitem, JSON_UNESCAPED_SLASHES);
+        $onlineshopitem->item = $arrayitem;
+        $onlineshopitem->ordering = $request->input('ordering');
+        $onlineshopitem->status = $request->has('status');
         $onlineshopitem->save();
         return Redirect::route('onlineshopitem');
+        
     }
 
     /**
@@ -60,7 +83,7 @@ class OnlineShopItemController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -71,7 +94,12 @@ class OnlineShopItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        $onlineshops = OnlineShop::lists('code','code');
+        $onlineshopitem = OnlineShopItem::findOrFail($id);
+
+        $arrayitem = json_decode($onlineshopitem->item);
+       
+        return view('onlineshopitem.editonlineshopitem',['onlineshopitem'=>$onlineshopitem,'onlineshops'=>$onlineshops,'arrayitem'=>$arrayitem,'arrayitem'=>$arrayitem]);
     }
 
     /**
@@ -81,9 +109,43 @@ class OnlineShopItemController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\OnlineShopItemRequest $request, $id)
     {
-        //
+
+        $onlineshopitem = OnlineShopItem::findOrFail($id);
+        $arrayitem = json_decode($onlineshopitem->item);
+         if ($request->hasFile('image'))
+         {
+            if($arrayitem->image !='null'){
+                $filename = public_path().'/'.$arrayitem->image;
+                File::delete($filename);
+            }
+             
+             $image = $request->file('image');
+             $destinationPath = public_path().'/uploads/item-image/';
+             $filename = time().'_'.$image->getClientOriginalName();
+             $uploaded = $image->move($destinationPath, $filename);
+             $image = 'uploads/item-image/'. $filename;  
+        }
+        else{
+            $image = $arrayitem->image;
+        }
+        
+        $onlineshopitem->online_shop_code = $request->input('onlineshops');
+        $name = $request->input('name');
+        $sku = $request->input('sku');
+        $currency = $request->input('currency');
+        $value = $request->input('value');
+        $max = $request->input('max');
+        $arrayitem = array('name'=>$name,'sku'=>$sku,'currency'=>$currency,'value'=>$value,'max'=>$max,'image'=>$image);
+        $arrayitem = json_encode($arrayitem, JSON_UNESCAPED_SLASHES);
+        $onlineshopitem->item = $arrayitem;
+        $onlineshopitem->ordering = $request->input('ordering');
+        $onlineshopitem->status = $request->has('status');
+        $onlineshopitem->save();
+
+        return Redirect::route('onlineshopitem');
+
     }
 
     /**
@@ -94,6 +156,15 @@ class OnlineShopItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd(date('Y-m-d H:i:s'));
+        $onlineshopitem = OnlineShopItem::findOrFail($id);
+        $arrayitem = json_decode($onlineshopitem->item);
+      
+        $filename = public_path().'/'.$arrayitem->image;
+        if (File::exists($filename)) {
+            File::delete($filename);
+        } 
+        $onlineshopitem->delete();
+        return Redirect::back();
     }
 }
