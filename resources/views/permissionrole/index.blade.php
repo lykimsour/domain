@@ -24,11 +24,10 @@ use App\Role;
           <table class="table table-bordered table-hover table-condensed" >
             <thead>
                 <tr>
-                  <th>Tools</th>
-                  <th>ID</th>
+                 <th>ID</th>
                   <th>Role_ID</th>
                   <th>Permission_ID</th>
-                 
+                   <th>Tools</th>
                 </tr>
             </thead>
                <tbody>
@@ -38,24 +37,25 @@ use App\Role;
               $permissionslug = Permission::findOrFail($permissionrole->permission_id);
              ?>
               <tr>
-                <td>
+              
               @if($roletitle->id!=1)
+                  @endif
               <form method="post" action="" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
-              <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
-              <span class="glyphicon glyphicon-remove"></span>
-              </button>
-              <a href=""><div class="btn btn-xs btn btn-info">
-                <span class="glyphicon glyphicon-pencil"></span>
-              </div></a>
-                </form>
-              @endif
-                </td>
                     <td>{{$permissionrole->id}}</td>
                     <td>{{$roletitle->role_title}}</td>
-                    <td>{{$permissionslug->permission_slug}}</td>
+                    <td>{{$permissionslug->permission_slug}} </td>
+                    <td>
+                        <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
+                            <span class="glyphicon">BLOCK</span>
+                        </button>
+                        <button type="summit" class="btn btn-xs btn btn-info" onclick="return confirm('Are you sure?')" >
+                            <span class="glyphicon">ACTIVE</span>
+                        </button>
+                    </td>
               </tr>
+              </form>
              @endforeach
             </tbody>
           </table>

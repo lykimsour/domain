@@ -18,8 +18,8 @@
 	Route::get('auth/login', 'Auth\AuthController@getLogin');
 	Route::post('auth/login', 'Auth\AuthController@postLogin');
 	Route::get('auth/logout', 'Auth\AuthController@getLogout');
-	Route::post('auth/register', 'Auth\AuthController@postRegister');
-	Route::get('auth/register', ['uses' => 'Auth\AuthController@getRegister','as' => 'register']);
+	//Route::post('auth/register', 'Auth\AuthController@postRegister');
+	//Route::get('auth/register', ['uses' => 'Auth\AuthController@getRegister','as' => 'register']);
 	Route::get('lang/{dil}', array('as' => 'languageChoose', 'uses' => 'AppController@languageChoose'));
 
 	Route::group(['middleware' => ['auth','acl']], function () {
@@ -89,6 +89,7 @@
 	//Permission_role
 	Route::get('/permissionrole',['uses'=>'PermissionRoleController@index','as'=>'permissionrole','permission'=>'manage_user']);
 	Route::get('/permissionrole/create',['uses'=>'PermissionRoleController@create','as'=>'createpermissionrole','permission'=>'manage_user']);
+	Route::post('/permissionrole/store',['uses'=>'PermissionRoleController@store','as'=>'storepermissionrole','permission'=>'manage_user']);
 
 	});
 

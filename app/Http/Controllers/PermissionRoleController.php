@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\PermissionRole;
 use App\User;
 use DB;
+use App\Permission;
+use App\Role;
 class PermissionRoleController extends Controller
 {
     /**
@@ -30,9 +32,9 @@ class PermissionRoleController extends Controller
      */
     public function create()
     {
-        
-        $users = User::lists('name','id');
-        return view('permissionrole.newpermissionrole',['users'=>$users]);
+        $permissions = Permission::All();
+        $roles = Role::lists('role_slug','id');
+        return view('permissionrole.newpermissionrole',['roles'=>$roles,'permissions'=>$permissions]);
     }
 
     /**
@@ -43,7 +45,7 @@ class PermissionRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

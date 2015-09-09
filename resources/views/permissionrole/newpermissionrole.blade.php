@@ -13,17 +13,23 @@
 <h2>{{trans('Edit Service')}}</h2>
 <div class="row">
    <div class="col-md-6">
-    <form method="post" action="">
+    <form method="post" action="{{route('storepermissionrole')}}">
      {!! csrf_field() !!}
-         <input type="hidden" name="_method" value="PUT">
-         <input type="hidden" name="id" id="id" value="">
       <div class="form-group">
-        <label for="name">{{trans('Users')}}</label>
-         {!! Form::select('userid', $users, Input::old('serviceclassid'),['class'=>'form-control',]) !!}
-        
-
+        <label for="name">{{trans('Roles')}}</label>
+         {!! Form::select('roleid', $roles, Input::old('serviceclassid'),['class'=>'form-control',]) !!}
       </div>
-       <button type="submit" class="btn btn-primary">{{trans('Edit Service')}}</button>
+       <div class="form-group">
+      <div class="checkbox">
+    <b>Permissions:</b><br/><br/>
+      	@foreach($permissions as $permission)
+      	@if($permission->permission_slug!='block')
+        <label><input type="checkbox" name="{{$permission->permission_slug}}" id="{{$permission->permission_slug}}" value="{{$permission->id}}" ><b>{{$permission->permission_title}}<b/></label><br/><br/>
+        @endif
+        @endforeach
+      </div>
+    </div>
+       <button type="submit" class="btn btn-primary">{{trans('Assign')}}</button>
  	</form>
  </div>
  </div>
