@@ -9,7 +9,7 @@ use App\Role;
 <h2>{{trans('Manage Users')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('register')}}"><div class="btn btn-primary">{{trans('New Users')}}</div></a>
+       <a href=""><div class="btn btn-primary">{{trans('New Users')}}</div></a>
     </div>
 </div><br/>
 <div class="row">
