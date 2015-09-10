@@ -10,6 +10,7 @@ trait UserACL {
 	 */
 	public function can($perm = null)
 	{
+	
 		if($perm) {
 			return $this->checkPermission($this->getArray($perm));	
 		}
@@ -25,6 +26,7 @@ trait UserACL {
 	 */
 	protected function getArray($perm)
 	{
+		
 		return is_array($perm) ? $perm : explode('|', $perm);
 	}
 
@@ -37,9 +39,8 @@ trait UserACL {
 	protected function checkPermission(Array $permArray = [])
 	{
 		$perms = $this->role->permissions->fetch('permission_slug');
-		
 		$perms = array_map('strtolower', $perms->toArray());
-
+		
 		return count(array_intersect($perms, $permArray));
 	}
 
@@ -62,6 +63,7 @@ trait UserACL {
 	 */
 	public function hasRole($role = null)
 	{
+
 		if(is_null($role)) return false;
 		
 		return strtolower($this->role->role_slug) == strtolower($role);

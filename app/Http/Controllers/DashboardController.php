@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use View;
-
+use Auth;
+use App\User;
 class DashboardController extends Controller
 {
     /**
@@ -15,8 +16,7 @@ class DashboardController extends Controller
      *
      * @return Response
      */
-   
-      
+  
     public function index(Request $request)
     {
         return view('dashboard.index',['re'=>$request]);

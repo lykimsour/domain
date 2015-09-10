@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-
+use Illuminate\Support\Facades\Lang;
+use App\User;
+use Auth;
 class Authenticate
 {
     /**
@@ -40,8 +42,29 @@ class Authenticate
             } else {
                 return redirect()->guest('auth/login');
             }
-        }
 
-        return $next($request);
+        }
+        $checkstatus = User::findOrFail(Auth::id());
+        if($checkstatus->status){
+            return $next($request);
+        }
+        else{
+             Auth::logout();
+             return view('auth.login')->withErrors([
+                $this->loginUsername() => $this->getBlockedsms(),
+            ]);
+        }
+        
+       
+
+    }
+     protected function getBlockedsms(){
+          return Lang::has('auth.failed')
+                ? Lang::get('auth.failed')
+                : 'You are blocked by Admin.';
+    }
+     public function loginUsername()
+    {
+        return property_exists($this, 'username') ? $this->username : 'email';
     }
 }

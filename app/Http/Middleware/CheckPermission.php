@@ -14,14 +14,15 @@ class CheckPermission implements Middleware {
      */
     public function handle($request, Closure $next)
     {
+      
         if($this->userHasAccessTo($request)) {
-          
+           
            view()->share('currentUser', $request->user());
-            
             return $next($request);
             //return $request->path();
         }
-
+       //dd($request->all());
+        //return Redirect::route('logout');
         return Redirect::back();
        
         //return $request;
@@ -41,7 +42,9 @@ class CheckPermission implements Middleware {
      */
     protected function userHasAccessTo($request)
     {
+        //dd($request);
         return $this->hasPermission($request);
+
         //return 'hi';
     }
 
@@ -54,7 +57,7 @@ class CheckPermission implements Middleware {
     protected function hasPermission($request)
     {
         $required = $this->requiredPermission($request);
-
+        //dd($required);
         return !$this->forbiddenRoute($request) && $request->user()->can($required);
     }
 
@@ -67,7 +70,7 @@ class CheckPermission implements Middleware {
     protected function requiredPermission($request)
     {
         $action = $request->route()->getAction();
-        //print_r(explode('|', $action['permission'])); 
+        //dd($action);
         return isset($action['permission']) ? explode('|', $action['permission']) : null;
     }
 
@@ -80,14 +83,13 @@ class CheckPermission implements Middleware {
     protected function forbiddenRoute($request)
     {
         $action = $request->route()->getAction();
+      
+               if(isset($action['except'])) {
 
-        //print_r($request->user()->can($required));
-
-        if(isset($action['except'])) {
-          
             return $action['except'] == $request->user()->role->role_slug;
         }
 
         return false;
+         //return Redirect::route('dashboard.index');
     }
 }

@@ -9,7 +9,7 @@ use App\Role;
 <h2>{{trans('Manage Users')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href=""><div class="btn btn-primary">{{trans('New Users')}}</div></a>
+       <a href="{{route('newusers')}}"><div class="btn btn-primary">{{trans('New Users')}}</div></a>
     </div>
 </div><br/>
 <div class="row">
@@ -28,6 +28,7 @@ use App\Role;
                   <th>Name</th>
                   <th>E-Mail</th>
                   <th>Role_Title</th>
+                  <th>Status</th>
                 </tr>
             </thead>
                <tbody>
@@ -38,22 +39,34 @@ use App\Role;
               ?>
               <tr>
                 <td>
+                @if($user->role_id!=1)
               <form method="post" action="" >
                {!! csrf_field() !!}
+
               <input type="hidden" name="_method" value="DELETE" >
+              <input type="hidden" name="_method" value="PUT" >
               <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
               <span class="glyphicon glyphicon-remove"></span>
               </button>
               <a href=""><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
-                </form>
+              </form>
+              @endif
                 </td>
               <td>{{$user->id}}</td>
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td>{{$roletitle->role_title}}</td>
+              @if($user->role_id!=1)
+              @if($user->status)
+              <td><a href="{{ URL::route('blockusers',['id'=>$user->id])}}" class="btn btn-xs btn-info" >Active</a></td>
+              @else
+               <td><a href="{{ URL::route('unblockusers',['id'=>$user->id])}}" class="btn btn-xs btn btn-danger">BLOCK</a></td>
+                @endif
+              @endif
               </tr>
+
               @endforeach
             </tbody>
           </table>
