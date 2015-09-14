@@ -27,7 +27,6 @@ use App\Role;
                  <th>ID</th>
                   <th>Role_ID</th>
                   <th>Permission_ID</th>
-                   <th>Tools</th>
                 </tr>
             </thead>
                <tbody>
@@ -46,14 +45,7 @@ use App\Role;
                     <td>{{$permissionrole->id}}</td>
                     <td>{{$roletitle->role_title}}</td>
                     <td>{{$permissionslug->permission_slug}} </td>
-                    <td>
-                        <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
-                            <span class="glyphicon">BLOCK</span>
-                        </button>
-                        <button type="summit" class="btn btn-xs btn btn-info" onclick="return confirm('Are you sure?')" >
-                            <span class="glyphicon">ACTIVE</span>
-                        </button>
-                    </td>
+            
               </tr>
               </form>
              @endforeach

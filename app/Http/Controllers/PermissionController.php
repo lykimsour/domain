@@ -18,6 +18,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::All();
+        
         return view('permissions.index',['permissions'=>$permissions]);
     }
 

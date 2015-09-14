@@ -39,7 +39,7 @@ use App\Role;
               ?>
               <tr>
                 <td>
-                @if($user->role_id!=1)
+                @if($user->id!=1)
               <form method="post" action="" >
                {!! csrf_field() !!}
 
@@ -60,7 +60,7 @@ use App\Role;
               <td>{{$roletitle->role_title}}</td>
               @if($user->role_id!=1)
               @if($user->status)
-              <td><a href="{{ URL::route('blockusers',['id'=>$user->id])}}" class="btn btn-xs btn-info" >Active</a></td>
+              <td><a href="{{ URL::route('blockusers',['id'=>$user->id])}}" class="btn btn-xs btn-info" >ACTIVE</a></td>
               @else
                <td><a href="{{ URL::route('unblockusers',['id'=>$user->id])}}" class="btn btn-xs btn btn-danger">BLOCK</a></td>
                 @endif

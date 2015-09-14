@@ -23,9 +23,7 @@
       <div class="checkbox">
     <b>Permissions:</b><br/><br/>
       	@foreach($permissions as $permission)
-      	@if($permission->permission_slug!='block')
-        <label><input type="checkbox" name="{{$permission->permission_slug}}" id="{{$permission->permission_slug}}" value="{{$permission->id}}" ><b>{{$permission->permission_title}}<b/></label><br/><br/>
-        @endif
+        <label><input type="checkbox" name="{{$permission->permission_slug}}" id="{{$permission->permission_slug}}" value="{{$permission->id}}" ><b>{{$permission->permission_slug}}<b/></label><br/><br/>
         @endforeach
       </div>
     </div>

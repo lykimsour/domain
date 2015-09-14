@@ -11,6 +11,7 @@ use App\User;
 use DB;
 use App\Permission;
 use App\Role;
+use Redirect;
 class PermissionRoleController extends Controller
 {
     /**
@@ -22,6 +23,7 @@ class PermissionRoleController extends Controller
     {
         $users = User::lists('name','id');
         $permissionroles = PermissionRole::All();
+        $permissionroles = $permissionroles->sortBy('id');
         return view('permissionrole.index',['permissionroles' => $permissionroles,'users'=>$users]);
     }
 
@@ -45,7 +47,18 @@ class PermissionRoleController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $permissions = Permission::All();
+       
+        foreach($permissions as $permission){
+    
+            if($request->has($permission->permission_slug)){
+                    $permissionrole = new PermissionRole;
+                    $permissionrole->role_id = $request->input('roleid');
+                    $permissionrole->permission_id = $request->input($permission->permission_slug);
+                    $permissionrole->save();
+           }
+        }
+        return Redirect::route('permissionrole');
     }
 
     /**
