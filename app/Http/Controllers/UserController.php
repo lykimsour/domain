@@ -11,6 +11,8 @@ use App\User;
 use App\Role;
 use App\Permission;
 use Redirect;
+use Auth;
+use Crypt;
 class UserController extends Controller
 {
     /**
@@ -39,6 +41,25 @@ class UserController extends Controller
         $user->save();
         return Redirect::route('users');
     }
+
+    public function edit(){
+        $id = Auth::user()->id;
+        $user = User::findOrFail($id);
+        return view('user.edituser',['user'=>$user]);
+    }
+       // echo $id;
+     public function update(Request $request){
+        $id = Auth::user()->id;
+        $user = User::findOrFail($id);
+
+      if($user->password != $request->input('password')){
+        $user->password = bcrypt($request->input('password'));
+      }
+        $user->save();
+        return Redirect::route('users');
+    }
+       
+
     public function block($id){
         $user = User::findOrFail($id);
         $user->status = 0;

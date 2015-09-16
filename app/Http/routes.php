@@ -24,6 +24,9 @@
 	Route::group(['middleware' => 'auth'], function () {
 
 		Route::get('/', ['uses'=>'DashboardController@index','as' => 'dashboard.index']);
+		Route::get('/usersedit', ['uses'=>'UserController@edit','as' => 'edituser']);
+		Route::put('/usersedit', ['uses'=>'UserController@update','as' => 'updateuser']);
+
 
 	});
 
@@ -100,6 +103,9 @@
 	Route::get('/permissionrole',['uses'=>'PermissionRoleController@index','as'=>'permissionrole','permission'=>'manage_user']);
 	Route::get('/permissionrole/create',['uses'=>'PermissionRoleController@create','as'=>'createpermissionrole','permission'=>'manage_user']);
 	Route::post('/permissionrole/store',['uses'=>'PermissionRoleController@store','as'=>'storepermissionrole','permission'=>'manage_user']);
+	Route::get('/permissionrole/edit/{id}',['uses'=>'PermissionRoleController@edit','as'=>'editpermissionrole','permission'=>'manage_user']);
+	Route::put('/permissionrole/edit/{id}',['uses'=>'PermissionRoleController@update','as'=>'updatepermissionrole','permission'=>'manage_user']);
+	Route::delete('/permissionrole/delete/{id}',['uses'=>'PermissionRoleController@destroy','as'=>'deletepermissionrole','permission'=>'manage_user']);
 
 	});
 

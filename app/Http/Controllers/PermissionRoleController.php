@@ -80,7 +80,10 @@ class PermissionRoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permissionrole = PermissionRole::findOrFail($id);
+        $permissions = Permission::lists('permission_title','id');
+        $roles = Role::lists('role_slug','id');
+        return view('permissionrole.editpermissionrole',['roles'=>$roles,'permissionrole'=>$permissionrole,'permissions'=>$permissions]);
     }
 
     /**
@@ -92,7 +95,11 @@ class PermissionRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+          $permissionrole = PermissionRole::findOrFail($id);
+          $permissionrole->role_id = $request->input('roles');
+          $permissionrole->permission_id = $request->input('permissions');
+          $permissionrole->save();
+            return Redirect::route('permissionrole');
     }
 
     /**
@@ -103,6 +110,7 @@ class PermissionRoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permissionrole = PermissionRole::findOrFail($id);
+        $permissionrole->delete();
     }
 }

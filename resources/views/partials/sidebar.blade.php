@@ -6,7 +6,8 @@
 
     <div class="user-panel">
       <div class="pull-left info">
-        <p>{{Auth::user()->name}}</p>
+        <p>{{Auth::user()->name}}</p> 
+        <a href="{{route('edituser')}}">(Change My Password)</a>
         <!-- Status -->
         <!--<a href="#">{{trans('user.id')}}: {{Auth::user()->id}}</a>-->
       </div>

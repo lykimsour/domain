@@ -31,20 +31,20 @@
                @foreach($roles as $role)
               <tr>
                 <td>
+             
               <form method="post" action="{{route('deleterole',['id'=>$role->id])}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
-              <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
-              <span class="glyphicon glyphicon-remove"></span>
-              </button>
               <a href="{{route('editrole',['id'=>$role->id])}}"><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
                 </form>
+ 
                 </td>
               <td>{{$role->id}}</td>
               <td>{{$role->role_title}}</td>
               <td>{{$role->role_slug}}</td>
+
               </tr>
             @endforeach
             </tbody>

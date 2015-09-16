@@ -7,7 +7,7 @@
 <h2>{{trans('Manage Permissions')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('createpermission')}}"><div class="btn btn-primary">{{trans('New Permission')}}</div></a>
+       <!--<a href="{{route('createpermission')}}"><div class="btn btn-primary">{{trans('New Permission')}}</div></a>-->
     </div>
 </div><br/>
 <div class="row">
