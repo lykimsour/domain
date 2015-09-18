@@ -44,12 +44,12 @@ use App\Role;
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
               <input type="hidden" name="_method" value="PUT" >
-              <!--<button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
+              <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
               <span class="glyphicon glyphicon-remove"></span>
               </button>
               <a href=""><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
-              </div></a>-->
+              </div></a>
               </form>
               @endif
                 </td>

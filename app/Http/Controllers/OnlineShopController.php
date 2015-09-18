@@ -10,6 +10,7 @@ use App\OnlineShop;
 use Input;
 use Redirect;
 use File;
+use Session;
 class OnlineShopController extends Controller
 {
     /**
@@ -49,6 +50,7 @@ class OnlineShopController extends Controller
              $filename = time().'_'.$image->getClientOriginalName();
              $uploaded = $image->move($destinationPath, $filename);
              $image = 'uploads/icons/'. $filename;
+           
             
         }
         else{

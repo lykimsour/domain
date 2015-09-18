@@ -7,7 +7,9 @@
     <div class="user-panel">
       <div class="pull-left info">
         <p>{{Auth::user()->name}}</p> 
-        <a href="{{route('edituser')}}">(Change My Password)</a>
+        <p>{{Auth::user()->email}}</p>
+        <a href="{{route('edituser')}}">(Change My Profile)</a>
+
         <!-- Status -->
         <!--<a href="#">{{trans('user.id')}}: {{Auth::user()->id}}</a>-->
       </div>
@@ -70,7 +72,20 @@
               </ul>
             </li>
     
-    
+         <li {{ Helper::activeMenu("promotion") }}>
+        <a href="{{URL::route('promotion')}}">
+          <i class="glyphicon glyphicon-usd"></i> 
+          <span>{{trans('Promotion Management')}}</span>
+          <div class="clear"></div>
+        </a>
+      </li>
+          <li {{ Helper::activeMenu("merchant") }}>
+         <a href="{{URL::route('merchant')}}">
+          <i class="glyphicon glyphicon-usd"></i> 
+          <span>{{trans('Merchants')}}</span>
+          <div class="clear"></div>
+        </a>
+      </li>
         <!--<li class="treeview">
               <a href="#">
                 <i class="fa fa-files-o"></i>

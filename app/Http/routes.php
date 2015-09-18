@@ -37,6 +37,8 @@
 	Route::post('/users/storeuser',['uses'=>'UserController@store','as'=>'storeusers','permission' => 'manage_user']);
 	Route::get('/users/blockuser/{id}',['uses'=>'UserController@block','as'=>'blockusers','permission' => 'manage_user']);
 	Route::get('/users/unblockuser/{id}',['uses'=>'UserController@unblock','as'=>'unblockusers','permission' => 'manage_user']);
+	Route::get('/usersedit/{id}', ['uses'=>'UserController@editOtherUser','as' => 'editotheruser','permission' => 'manage_user']);
+	Route::put('/usersedit/{id}', ['uses'=>'UserController@updateOtherUser','as' => 'updateotheruser','permission' => 'manage_user']);
 
 	//cashier Managerment
 	Route::get('/cashier', ['uses'=>'CashierController@showCashier','as' => 'showcashier','permission' => 'view_cashier']);
@@ -106,6 +108,20 @@
 	Route::get('/permissionrole/edit/{id}',['uses'=>'PermissionRoleController@edit','as'=>'editpermissionrole','permission'=>'manage_user']);
 	Route::put('/permissionrole/edit/{id}',['uses'=>'PermissionRoleController@update','as'=>'updatepermissionrole','permission'=>'manage_user']);
 	Route::delete('/permissionrole/delete/{id}',['uses'=>'PermissionRoleController@destroy','as'=>'deletepermissionrole','permission'=>'manage_user']);
+
+	//promotion
+	Route::get('/promotion',['uses'=>'PromotionController@index','as'=>'promotion','permission'=>'manage_user']);
+	Route::get('/promotion/create',['uses'=>'PromotionController@create','as'=>'createpromotion','permission'=>'manage_user']);
+	Route::post('/promotion/store',['uses'=>'PromotionController@store','as'=>'storepromotion','permission'=>'manage_user']);
+	Route::get('/promotion/edit/{id}',['uses'=>'PromotionController@edit','as'=>'editpromotion','permission'=>'manage_user']);
+	Route::put('/promotion/edit/{id}',['uses'=>'PromotionController@update','as'=>'updatepromotion','permission'=>'manage_user']);
+	Route::delete('/promotion/delete/{id}',['uses'=>'PromotionController@destroy','as'=>'deletepromotion','permission'=>'manage_user']);
+
+
+	//Merchant
+	Route::get('/merchant',['uses'=>'MerchantController@index','as'=>'merchant','permission'=>'manage_user']);
+	Route::get('/merchant/create',['uses'=>'MerchantController@create','as'=>'createmerchant','permission'=>'manage_user']);
+	Route::post('/merchant/store',['uses'=>'MerchantController@store','as'=>'storemerchant','permission'=>'manage_user']);
 
 	});
 

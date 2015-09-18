@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-
+use App\User;
+use Auth;
 class UserRequest extends Request
 {
     /**
@@ -22,11 +23,28 @@ class UserRequest extends Request
      * @return array
      */
     public function rules()
-    {
+    {   
+        
+        $user = User::findOrFail(Auth::user()->id);
+        switch($this->method()){
+        case 'POST':
+        {
         return [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:adminusers',
             'password' => 'required|confirmed|min:6'
         ];
+        }
+        case 'PUT':
+        {
+            return [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:adminusers,email,'.$user->id,
+            'password' => 'required|confirmed|min:6'
+        ];
+        }
+    default:break;
+    }
+
     }
 }

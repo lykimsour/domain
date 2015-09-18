@@ -25,7 +25,7 @@
         <label for="name">{{trans('Role_Slug')}}</label>
         <input type="text" name="roleslug" class="form-control" id="roleslug" value="{{$role->role_slug}}">
       </div>  
-       <button type="submit" class="btn btn-primary">{{trans('Add Role')}}</button>
+       <button type="submit" class="btn btn-primary">{{trans('Update Role')}}</button>
  	</form>
  </div>
  </div>

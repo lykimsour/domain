@@ -48,18 +48,23 @@ class UserController extends Controller
         return view('user.edituser',['user'=>$user]);
     }
        // echo $id;
-     public function update(Request $request){
+     public function update(Requests\UserRequest $request){
         $id = Auth::user()->id;
         $user = User::findOrFail($id);
+        $user->name = $request->input('name');
 
-      if($user->password != $request->input('password')){
+
+        if($user->password != $request->input('password')){
+
         $user->password = bcrypt($request->input('password'));
-      }
+        
+        }
+        $user->email = $request->input('email');
         $user->save();
-        return Redirect::route('users');
+        return Redirect::route('dashboard.index');
     }
-       
 
+   
     public function block($id){
         $user = User::findOrFail($id);
         $user->status = 0;
