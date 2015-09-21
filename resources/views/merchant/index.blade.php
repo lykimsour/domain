@@ -26,12 +26,10 @@
         					<th>ID</th>
         					<th>Name</th>
         					<th>E-Mail</th>
+                  <th>logo</th>
         					<th>Coin</th>
         					<th>Currency</th>
                   <th>Commission</th>
-                  <th>Key</th>
-                  <th>Seed</th>
-                  <th>Callback_url</th>
         					<th>Status</th>
         					<th>Created_at</th>
         					<th>Updated_at</th>
@@ -43,13 +41,13 @@
 
       				<tr>
       					<td>
-      				<form method="post" action="" >
+      				<form method="post" action="{{route('deletemerchant',['id'=>$merchant->id])}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
              <button type="submmit" class="btn btn-xs btn btn-danger"  onclick="return confirm('Are you sure?')">
   						<span class="glyphicon glyphicon-remove"></span>
   						</button>
-              <a href=""><div class="btn btn-xs btn btn-info">
+              <a href="{{route('editmerchant',['id'=>$merchant->id])}}"><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
               </form>
@@ -58,12 +56,10 @@
         				<td>{{$merchant->id}}</td>
         				<td>{{$merchant->name}}</td>
         				<td>{{$merchant->email}}</td>
+                <td>{{$merchant->logo}}</td>
         				<td>{{$merchant->coin}}</td>
         				<td>{{$merchant->currency}}</td>
-                <td>{{$merchant->comission}}</td>
-                <td>{{$merchant->key}}</td>
-                <td>{{$merchant->seed}}</td>
-                <td>{{$merchant->callback_url}}</td>
+                <td>{{$merchant->commission}}</td>
         				<td>{{$merchant->status}}</td>
         			   <td>{{$merchant->created_at->format('M-d-Y')}}</td>
                 <td>{{$merchant->updated_at->diffForHumans()}}</td>

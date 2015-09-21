@@ -27,5 +27,13 @@ class roletableseeder extends Seeder
             'role_title' => 'Online_Shop',
             'role_slug' => 'online_Shop',
              ]);
+        DB::table('roles')->insert([
+            'role_title' => 'Promotion',
+            'role_slug' => 'promotion',
+             ]);
+        DB::table('roles')->insert([
+            'role_title' => 'Merchant',
+            'role_slug' => 'Merchant',
+             ]);
     }
 }

@@ -111,7 +111,9 @@ class OnlineShopController extends Controller
          {
             if($arraydetail->icon !='null'){
                 $filename = public_path().'/'.$arraydetail->icon;
+                if (File::exists($filename)) {
                 File::delete($filename);
+                }
             }
              
              $image = $request->file('image');
@@ -145,7 +147,9 @@ class OnlineShopController extends Controller
     public function destroy($id)
     {
         $onlineshop = OnlineShop::findOrFail($id);
+         if (File::exists($filename)) {
         $onlineshop->delete();
+    }
         return Redirect::back();
     }
 }

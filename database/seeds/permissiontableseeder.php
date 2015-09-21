@@ -85,5 +85,54 @@ class permissiontableseeder extends Seeder
             'permission_slug' => 'update_onlineshop',
            	'permission_description' => 'Only for onlineshop user',
         ]);
+
+
+        DB::table('permissions')->insert([
+            'permission_title' => 'View_Promotion',
+            'permission_slug' => 'view_promotion',
+            'permission_description' => 'Only for promotion user',
+        ]);
+        DB::table('permissions')->insert([
+            'permission_title' => 'Inser_Promotion',
+            'permission_slug' => 'insert_promotion',
+            'permission_description' => 'Only for promotion user',
+        ]);
+         
+        DB::table('permissions')->insert([
+            'permission_title' => 'Delete_Promotion',
+            'permission_slug' => 'delete_promotion',
+            'permission_description' => 'Only for promotion user',
+        ]);
+
+        DB::table('permissions')->insert([
+            'permission_title' => 'Update_Promotion',
+            'permission_slug' => 'update_promotion',
+            'permission_description' => 'Only for promotion user',
+        ]); 
+
+
+
+        DB::table('permissions')->insert([
+            'permission_title' => 'View_Merchant',
+            'permission_slug' => 'view_Merchant',
+            'permission_description' => 'Only for promotion user',
+        ]);
+        DB::table('permissions')->insert([
+            'permission_title' => 'Inser_Merchant',
+            'permission_slug' => 'insert_merchant',
+            'permission_description' => 'Only for merchant user',
+        ]);
+         
+        DB::table('permissions')->insert([
+            'permission_title' => 'Delete_Merchant',
+            'permission_slug' => 'delete_merchant',
+            'permission_description' => 'Only for merchant user',
+        ]);
+
+        DB::table('permissions')->insert([
+            'permission_title' => 'Update_Merchant',
+            'permission_slug' => 'update_merchant',
+            'permission_description' => 'Only for merchant user',
+        ]); 
     }
 }

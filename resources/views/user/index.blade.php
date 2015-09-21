@@ -40,14 +40,14 @@ use App\Role;
               <tr>
                 <td>
                 @if($user->id!=1)
-              <form method="post" action="" >
+              <form method="post" action="{{route('deleteotheruser',['id'=>$user->id])}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
-              <input type="hidden" name="_method" value="PUT" >
+             
               <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
               <span class="glyphicon glyphicon-remove"></span>
               </button>
-              <a href=""><div class="btn btn-xs btn btn-info">
+              <a href="{{route('editotheruser',['id'=>$user->id])}}"><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
               </form>
@@ -57,7 +57,7 @@ use App\Role;
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td>{{$roletitle->role_title}}</td>
-              @if($user->role_id!=1)
+              @if($user->id!=1)
               @if($user->status)
               <td><a href="{{ URL::route('blockusers',['id'=>$user->id])}}" class="btn btn-xs btn-info" >ACTIVE</a></td>
               @else

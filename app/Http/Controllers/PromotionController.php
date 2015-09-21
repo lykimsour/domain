@@ -103,6 +103,8 @@ class PromotionController extends Controller
     public function update(Requests\PromotionRequest $request, $id)
     {
         $promotion = Promotion::findOrFail($id);
+        $arrayimages = json_decode($promotion->value);
+
          if ($request->hasFile('image'))
          {
             if($promotion->value != 'null'){
@@ -140,7 +142,7 @@ class PromotionController extends Controller
         $promotion->value = $value;
         $promotion->description = $request->input('description');
         $promotion->save();
-        return Redirect::route('promotion'); 
+        return Redirect::route('promotion');
    
 }
 

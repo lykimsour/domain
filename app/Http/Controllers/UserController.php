@@ -31,7 +31,7 @@ class UserController extends Controller
     }
 
     public function store(Requests\UserRequest $request){
-      // dd($request->all());
+     
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -64,7 +64,39 @@ class UserController extends Controller
         return Redirect::route('dashboard.index');
     }
 
-   
+   public function deleteOtherUser($id){
+        $user = User::findOrFail($id);
+        $user->delete();
+        return Redirect::back();
+   }
+
+    public function editOtherUser($id){
+        $user = User::findOrFail($id);
+        $roles = Role::lists('role_title','id');
+        return view('user.editotheruser',['user'=>$user,'roles'=>$roles]);
+   }
+
+
+    public function updateOtherUser(Request $request,$id){
+        $user = User::findOrFail($id);
+        $this->validate($request, [
+
+        'name' => 'required|max:255',
+        'email' => 'required|email|max:255|unique:adminusers,email,'.$user->id,
+        'password' => 'required|confirmed|min:6'
+        
+        ]);
+
+        $user->name = $request->input('name');
+        if($user->password != $request->input('password')){
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->email = $request->input('email');
+        $user->role_id = $request->input('roleid');
+        $user->save();
+        return Redirect::route('users');
+   }
     public function block($id){
         $user = User::findOrFail($id);
         $user->status = 0;

@@ -23,7 +23,7 @@ class PermissionRoleController extends Controller
     {
         $users = User::lists('name','id');
         $permissionroles = PermissionRole::All();
-        $permissionroles = $permissionroles->sortBy('id');
+        $permissionroles = $permissionroles->sortBy('role_id');
         return view('permissionrole.index',['permissionroles' => $permissionroles,'users'=>$users]);
     }
 

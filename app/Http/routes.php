@@ -37,8 +37,9 @@
 	Route::post('/users/storeuser',['uses'=>'UserController@store','as'=>'storeusers','permission' => 'manage_user']);
 	Route::get('/users/blockuser/{id}',['uses'=>'UserController@block','as'=>'blockusers','permission' => 'manage_user']);
 	Route::get('/users/unblockuser/{id}',['uses'=>'UserController@unblock','as'=>'unblockusers','permission' => 'manage_user']);
-	Route::get('/usersedit/{id}', ['uses'=>'UserController@editOtherUser','as' => 'editotheruser','permission' => 'manage_user']);
-	Route::put('/usersedit/{id}', ['uses'=>'UserController@updateOtherUser','as' => 'updateotheruser','permission' => 'manage_user']);
+	Route::get('/users/edit/{id}', ['uses'=>'UserController@editOtherUser','as' => 'editotheruser','permission' => 'manage_user']);
+	Route::put('/users/edit/{id}', ['uses'=>'UserController@updateOtherUser','as' => 'updateotheruser','permission' => 'manage_user']);
+	Route::delete('/users/delete/{id}', ['uses'=>'UserController@deleteOtherUser','as' => 'deleteotheruser','permission' => 'manage_user']);
 
 	//cashier Managerment
 	Route::get('/cashier', ['uses'=>'CashierController@showCashier','as' => 'showcashier','permission' => 'view_cashier']);
@@ -110,18 +111,21 @@
 	Route::delete('/permissionrole/delete/{id}',['uses'=>'PermissionRoleController@destroy','as'=>'deletepermissionrole','permission'=>'manage_user']);
 
 	//promotion
-	Route::get('/promotion',['uses'=>'PromotionController@index','as'=>'promotion','permission'=>'manage_user']);
-	Route::get('/promotion/create',['uses'=>'PromotionController@create','as'=>'createpromotion','permission'=>'manage_user']);
-	Route::post('/promotion/store',['uses'=>'PromotionController@store','as'=>'storepromotion','permission'=>'manage_user']);
-	Route::get('/promotion/edit/{id}',['uses'=>'PromotionController@edit','as'=>'editpromotion','permission'=>'manage_user']);
-	Route::put('/promotion/edit/{id}',['uses'=>'PromotionController@update','as'=>'updatepromotion','permission'=>'manage_user']);
-	Route::delete('/promotion/delete/{id}',['uses'=>'PromotionController@destroy','as'=>'deletepromotion','permission'=>'manage_user']);
+	Route::get('/promotion',['uses'=>'PromotionController@index','as'=>'promotion','permission'=>'view_promotion']);
+	Route::get('/promotion/create',['uses'=>'PromotionController@create','as'=>'createpromotion','permission'=>'insert_promotion']);
+	Route::post('/promotion/store',['uses'=>'PromotionController@store','as'=>'storepromotion','permission'=>'insert_promotion']);
+	Route::get('/promotion/edit/{id}',['uses'=>'PromotionController@edit','as'=>'editpromotion','permission'=>'update_promotion']);
+	Route::put('/promotion/edit/{id}',['uses'=>'PromotionController@update','as'=>'updatepromotion','permission'=>'update_promotion']);
+	Route::delete('/promotion/delete/{id}',['uses'=>'PromotionController@destroy','as'=>'deletepromotion','permission'=>'delete_promotion']);
 
 
 	//Merchant
-	Route::get('/merchant',['uses'=>'MerchantController@index','as'=>'merchant','permission'=>'manage_user']);
-	Route::get('/merchant/create',['uses'=>'MerchantController@create','as'=>'createmerchant','permission'=>'manage_user']);
-	Route::post('/merchant/store',['uses'=>'MerchantController@store','as'=>'storemerchant','permission'=>'manage_user']);
+	Route::get('/merchant',['uses'=>'MerchantController@index','as'=>'merchant','permission'=>'view_merchant']);
+	Route::get('/merchant/create',['uses'=>'MerchantController@create','as'=>'createmerchant','permission'=>'insert_merchant']);
+	Route::post('/merchant/store',['uses'=>'MerchantController@store','as'=>'storemerchant','permission'=>'insert_merchant']);
+	Route::get('/merchant/edit/{id}',['uses'=>'MerchantController@edit','as'=>'editmerchant','permission'=>'update_merchant']);
+	Route::put('/merchant/edit/{id}',['uses'=>'MerchantController@update','as'=>'updatemerchant','permission'=>'update_merchant']);
+	Route::delete('/merchant/delete/{id}',['uses'=>'MerchantController@destroy','as'=>'deletemerchant','permission'=>'delete_merchant']);
 
 	});
 

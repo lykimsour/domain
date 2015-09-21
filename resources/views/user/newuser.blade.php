@@ -38,7 +38,6 @@
   		<div class="form-group">
     		<label for="commision">Role_Id</label>
     		{!! Form::select('roleid', $roles, Input::old('roleid'),['class'=>'form-control',]) !!}
-
   		</div>
   		<div class="checkbox">
     		<label><input type="checkbox" name="status" id="status">status</label>

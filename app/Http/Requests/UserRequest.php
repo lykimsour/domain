@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use App\User;
 use Auth;
+use Input;
 class UserRequest extends Request
 {
     /**
@@ -24,8 +25,8 @@ class UserRequest extends Request
      */
     public function rules()
     {   
-        
         $user = User::findOrFail(Auth::user()->id);
+
         switch($this->method()){
         case 'POST':
         {
