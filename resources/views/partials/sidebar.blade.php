@@ -74,15 +74,15 @@
     
          <li {{ Helper::activeMenu("promotion") }}>
         <a href="{{URL::route('promotion')}}">
-          <i class="glyphicon glyphicon-usd"></i> 
+          <i class="fa fa-calculator"></i> 
           <span>{{trans('Promotion Management')}}</span>
           <div class="clear"></div>
         </a>
       </li>
           <li {{ Helper::activeMenu("merchant") }}>
          <a href="{{URL::route('merchant')}}">
-          <i class="glyphicon glyphicon-usd"></i> 
-          <span>{{trans('Merchants')}}</span>
+          <i class="fa fa-user"></i> 
+          <span>{{trans('Merchants Management')}}</span>
           <div class="clear"></div>
         </a>
       </li>

@@ -13,7 +13,7 @@ class MerchantRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,31 @@ class MerchantRequest extends Request
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch ($this->method()) {
+            case 'POST':
+            {
+                 return [
+                'name' => 'required|max:255',
+                'password' => 'required|confirmed|min:6',
+                'email' => 'required|email|max:255|unique:merchants',
+                'comission' => 'required|between:0,99.99',
+                'coin'=> 'required|between:0,99.99',
+             ];
+            }
+              case 'PUT':
+            {
+                 return [
+                'name' => 'required|max:255',
+                'password' => 'required|confirmed|min:6',
+                'email' => 'required|email|max:255|unique:merchants,email,'.$this->id,
+                'comission' => 'required|between:0,99.99',
+                'coin'=> 'required|between:0,99.99',
+             ];
+         } 
+                default:
+                break;
+            
+    }
+     
     }
 }

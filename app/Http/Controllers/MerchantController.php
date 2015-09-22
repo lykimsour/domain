@@ -38,7 +38,7 @@ class MerchantController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Requests\MerchantRequest $request)
     {
         if ($request->hasFile('image'))
          {
@@ -99,7 +99,7 @@ class MerchantController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\MerchantRequest $request, $id)
     {
         $merchant = Merchant::findOrFail($id);
         $logo = json_decode($merchant->logo);
