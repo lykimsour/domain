@@ -2,7 +2,7 @@
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="/" class="logo">
+  <a href="{{URL::route('dashboard.index')}}" class="logo">
     {!! Html::image('images/sabay-logo.png') !!} 
     <b>Sabay</b>Admin
   </a>

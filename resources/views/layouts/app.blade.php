@@ -55,6 +55,8 @@
 $(document).ready(function(){
     $('[rel="tooltip"]').tooltip();
 });
+
+
 </script>
 
 @yield('script')

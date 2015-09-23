@@ -17,7 +17,7 @@
     @endif
 <div class="row">
     <div class="col-md-6">
-    <form method="post" action="{{route('storeusers')}}">
+    <form  method="post" action="{{route('storeusers')}}" id="newuserform">
     	   {!! csrf_field() !!}
     	<div class="form-group">
     		<label for="name">{{trans('Name')}}</label>
@@ -42,7 +42,7 @@
   		<div class="checkbox">
     		<label><input type="checkbox" name="status" id="status">status</label>
   		</div>
-		  <button type="submit" class="btn btn-primary">{{trans('Add Users')}}</button>
+		  <button type="submit" class="btn btn-primary" name="submit">{{trans('Add Users')}}</button>
       </form>
     </div>
 </div><br/>

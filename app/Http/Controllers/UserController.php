@@ -31,7 +31,9 @@ class UserController extends Controller
     }
 
     public function store(Requests\UserRequest $request){
-     
+
+
+   
         $user = new User;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -40,6 +42,8 @@ class UserController extends Controller
         $user->status = $request->has('status');
         $user->save();
         return Redirect::route('users');
+     
+     
     }
 
     public function edit(){
