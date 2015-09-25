@@ -147,9 +147,13 @@ class OnlineShopController extends Controller
     public function destroy($id)
     {
         $onlineshop = OnlineShop::findOrFail($id);
+        $arrayitem = json_decode($onlineshop->detail);
+      
+        $filename = public_path().'/'.$arrayitem->icon;
          if (File::exists($filename)) {
-        $onlineshop->delete();
+             File::delete($filename);
     }
+    $onlineshop->delete();
         return Redirect::back();
     }
 }
