@@ -32,6 +32,7 @@ use App\Role;
                 </tr>
             </thead>
                <tbody>
+          
               @foreach($users as $user)
               <?php
                 $roletitle = Role::findOrFail($user->role_id);
@@ -44,7 +45,7 @@ use App\Role;
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
              
-              <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
+              <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" id="delete" >
               <span class="glyphicon glyphicon-remove"></span>
               </button>
               <a href="{{route('editotheruser',['id'=>$user->id])}}"><div class="btn btn-xs btn btn-info">
@@ -65,7 +66,6 @@ use App\Role;
                 @endif
               @endif
               </tr>
-
               @endforeach
             </tbody>
           </table>
@@ -75,8 +75,10 @@ use App\Role;
 
     </ul>
     </div>
+
 </div><br/>
 </div>
 
-
 @endsection
+  @section('script')
+  @endsection

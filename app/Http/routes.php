@@ -41,6 +41,7 @@
 	Route::put('/users/edit/{id}', ['uses'=>'UserController@updateOtherUser','as' => 'updateotheruser','permission' => 'manage_user']);
 	Route::delete('/users/delete/{id}', ['uses'=>'UserController@deleteOtherUser','as' => 'deleteotheruser','permission' => 'manage_user']);
 
+
 	//cashier Managerment
 	Route::get('/cashier', ['uses'=>'CashierController@showCashier','as' => 'showcashier','permission' => 'view_cashier']);
 	Route::get('/cashier/newcashier', ['uses'=>'CashierController@getCashier','as' => 'getcashier','permission' => 'insert_cashier']);
@@ -48,6 +49,8 @@
 	Route::get('/cashier/edit/{id}',['uses'=>'CashierController@geteditCashier','as'=>'editcashier','permission'=>'update_cashier']);
 	Route::put('/cashier/edit/',['uses'=>'CashierController@puteditCashier','as'=>'puteditcashier','permission'=>'update_cashier']);
 	Route::delete('/cashier/delete/{id}',['uses'=>'CashierController@destroy','as'=>'destroycashier','permission'=>'delete_cashier']);
+	
+
 	//Service
 	Route::get('/service',['uses'=>'ServiceController@index','as'=>'service','permission'=>'view_service']);
 	Route::get('/service/create',['uses'=>'ServiceController@create','as'=>'createservice','permission'=>'insert_service']);
