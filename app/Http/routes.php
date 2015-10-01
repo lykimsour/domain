@@ -130,6 +130,9 @@
 	Route::put('/merchant/edit/{id}',['uses'=>'MerchantController@update','as'=>'updatemerchant','permission'=>'update_merchant']);
 	Route::delete('/merchant/delete/{id}',['uses'=>'MerchantController@destroy','as'=>'deletemerchant','permission'=>'delete_merchant']);
 
+	//Report cashierToreseller
+	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
+
 	});
 
 	

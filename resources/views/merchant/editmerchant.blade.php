@@ -28,6 +28,10 @@
     		<label for="username">{{trans('email')}}</label>
     		<input type="text" name="email" class="form-control" id="email" value="{{$merchant->email}}">
   		</div>
+         <div class="form-group">
+        <label for="name">{{trans('Service_Code')}}</label>
+               {!! Form::select('servicecode', $servicecode,$merchant->service_code,['class'=>'form-control',]) !!}
+      </div>
   		<div class="form-group">
     		<label for="pwd">Password</label>
     		<input type="password" name="password" class="form-control" id="password" value="{{$merchant->password}}">

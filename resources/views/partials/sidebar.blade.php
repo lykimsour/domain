@@ -38,9 +38,6 @@
                 <li><a href="{{URL::route('permissionrole')}}"><i class="fa fa-circle-o"></i>Assigned_role</a></li>
               </ul>
             </li>
-
-  
-
       <li {{ Helper::activeMenu("cashier") }}>
         <a href="{{URL::route('showcashier')}}">
           <i class="glyphicon glyphicon-usd"></i> 
@@ -86,6 +83,22 @@
           <div class="clear"></div>
         </a>
       </li>
+
+
+        <li class="treeview">
+              <a href="#">
+                <i class="fa fa-car"></i>
+                <span>{{trans('Report')}}</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="{{route('cashiertoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cashier_To_Reseller')}}</span></a></li>
+                <li {{ Helper::activeMenu("servicetype") }}><a href="{{route('servicetype')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service_Type')}}</span></a></li>
+               <li {{ Helper::activeMenu("serviceclass") }}><a href="{{route('serviceclass')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service_Class')}}</span></a></li>                        
+              </ul>
+            </li>
+
+
         <!--<li class="treeview">
               <a href="#">
                 <i class="fa fa-files-o"></i>

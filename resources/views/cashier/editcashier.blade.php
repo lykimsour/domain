@@ -27,6 +27,10 @@
         <label for="username">{{trans('User Name')}}</label>
         <input type="text" name="username" class="form-control" id="username" value="{{$cashiers->username}}">
       </div>
+       <div class="form-group">
+        <label for="username">{{trans('Cashier_Type')}}</label>
+        {!! Form::select('cashiertype',$cashiertype, $cashiers->type,['class'=>'form-control',]) !!}
+      </div>
       <div class="form-group">
         <label for="commision">Commission_rate</label>
         <input type="text" name="commission" class="form-control" id="commission" value="{{$cashiers->commission_rate}}">
@@ -49,6 +53,11 @@
       <label><input type="checkbox" name="status" id="status" checked="true">status</label>
       @else
       <label><input type="checkbox" name="status" id="status">status</label>
+      @endif
+      @if($cashiers->allow_send_gold)
+      <label><input type="checkbox" name="allowsendgold" id="allowsendgold" checked="true">Allow_send_gold</label>
+      @else
+      <label><input type="checkbox" name="allowsendgold" id="allowsendgold">Allow_send_gold</label>
       @endif
       </div>
       <button type="submit" class="btn btn-primary">{{trans('Edit Cashier')}}</button>

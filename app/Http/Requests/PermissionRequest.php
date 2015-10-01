@@ -25,7 +25,7 @@ class PermissionRequest extends Request
     {
         return [
              'permissiontitle' => 'required|max:255',
-            'permissionslug' => 'required|max:255',
+             'permissionslug' => 'required|max:255',
         ];
     }
 }

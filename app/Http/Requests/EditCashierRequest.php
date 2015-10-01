@@ -28,7 +28,7 @@ class EditCashierRequest extends Request
             'username' => 'required|max:255',
             'password' => 'required|confirmed|min:6',
             'commission' => 'required|between:0,99.99',
-            'bonusbalance' => 'required|integer'
+            'bonusbalance' => 'required|between:0,99.99'
         ];
     }
 }

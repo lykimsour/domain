@@ -27,6 +27,10 @@
     		<label for="username">{{trans('User Name')}}</label>
     		<input type="text" name="username" class="form-control" id="username">
   		</div>
+       <div class="form-group">
+        <label for="username">{{trans('Cashier_Type')}}</label>
+        {!! Form::select('cashiertype',$cashiertype, Input::old('cashiertype'),['class'=>'form-control',]) !!}
+      </div>
   		<div class="form-group">
     		<label for="pwd">Password</label>
     		<input type="password" name="password" class="form-control" id="password">
@@ -42,6 +46,9 @@
   		<div class="checkbox">
     		<label><input type="checkbox" name="status" id="status">status</label>
   		</div>
+      <div class="checkbox">
+        <label><input type="checkbox" name="allowsendgold" id="allowsengold">Allow Send Gold</label>
+      </div>
 		  <button type="submit" class="btn btn-primary">{{trans('Add Cashier')}}</button>
       </form>
     </div>

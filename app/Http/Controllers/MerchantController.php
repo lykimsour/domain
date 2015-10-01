@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Merchant;
 use File;
 use Redirect;
+use App\Service;
 class MerchantController extends Controller
 {
     /**
@@ -18,6 +19,7 @@ class MerchantController extends Controller
      */
     public function index()
     {
+
         $merchants = Merchant::All();
         return view('merchant.index',['merchants'=>$merchants]);
     }
@@ -29,7 +31,9 @@ class MerchantController extends Controller
      */
     public function create()
     {
-        return view('merchant.newmerchant');
+
+        $servicecode = Service::lists('code','code');
+        return view('merchant.newmerchant',['servicecode'=>$servicecode]);
     }
 
     /**
@@ -40,7 +44,10 @@ class MerchantController extends Controller
      */
     public function store(Requests\MerchantRequest $request)
     {
-        if ($request->hasFile('image'))
+       try{
+
+
+       if ($request->hasFile('image'))
          {
              $image = $request->file('image');
              $destinationPath = public_path().'/uploads/logo/';
@@ -56,6 +63,7 @@ class MerchantController extends Controller
         $merchant = new Merchant;
         $merchant->name = $request->input('name');
         $merchant->email = $request->input('email');
+        $merchant->service_code = $request->input('servicecode');
         $merchant->password = $request->input('password');
         $merchant->coin = $request->input('coin');
         $merchant->currency = $request->input('currency');
@@ -66,6 +74,10 @@ class MerchantController extends Controller
         $merchant->logo =  $logo;
         $merchant->save();
         return Redirect::route('merchant');
+    }
+    catch(\Illuminate\Database\QueryException $e){
+          return Redirect::back()->withErrors("service_code Can't be double in Merchant Table");
+    }
     }
 
     /**
@@ -87,9 +99,11 @@ class MerchantController extends Controller
      */
     public function edit($id)
     {
+         $servicecode = Service::lists('code','code');
+
         $merchant = Merchant::findOrFail($id);
         $logo = json_decode($merchant->logo);
-        return view('merchant.editmerchant',['merchant'=>$merchant,'logo'=>$logo]);
+        return view('merchant.editmerchant',['merchant'=>$merchant,'logo'=>$logo,'servicecode'=>$servicecode]);
     }
 
     /**
@@ -103,7 +117,7 @@ class MerchantController extends Controller
     {
         $merchant = Merchant::findOrFail($id);
         $logo = json_decode($merchant->logo);
-
+        try{
           if ($request->hasFile('image'))
          {
             if($logo->logo !='null'){
@@ -126,9 +140,11 @@ class MerchantController extends Controller
         }
         $merchant->name = $request->input('name');
         $merchant->email = $request->input('email');
+        $merchant->service_code = $request->input('servicecode');
         if($merchant->password != $request->input('password')){
         $merchant->password = bcrypt($request->input('password'));
         }
+      
         $merchant->coin = $request->input('coin');
         $merchant->currency = $request->input('currency');
         $merchant->status = $request->has('status');
@@ -136,6 +152,11 @@ class MerchantController extends Controller
         $merchant->logo = $logo;
         $merchant->save();
          return Redirect::route('merchant');
+     }
+      catch(\Illuminate\Database\QueryException $e){
+       
+          return Redirect::back()->withErrors("service_code Can't be double in Merchant Table");
+    }
     }
 
     /**

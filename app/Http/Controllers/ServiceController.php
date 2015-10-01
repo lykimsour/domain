@@ -33,8 +33,9 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $serviceclasses = ServiceClass::lists('id','id');
-        $servicetypes = ServiceType::lists('id','id'); 
+        
+        $serviceclasses = ServiceClass::lists('name','id');
+        $servicetypes = ServiceType::lists('name','id'); 
         return view('service.newservice',['serviceclasses'=>$serviceclasses,'servicetypes'=>$servicetypes]);
     }
 
@@ -79,8 +80,8 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        $serviceclasses = ServiceClass::lists('id','id');
-        $servicetypes = ServiceType::lists('id','id'); 
+        $serviceclasses = ServiceClass::lists('name','id');
+        $servicetypes = ServiceType::lists('name','id'); 
         $service = Service::findOrFail($id);
         return view('service.editservice',['service'=>$service,'serviceclasses'=>$serviceclasses,'servicetypes'=>$servicetypes]);
     }

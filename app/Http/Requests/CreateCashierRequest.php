@@ -28,7 +28,7 @@ class CreateCashierRequest extends Request
             'username' => 'required|max:255|unique:cashier',
             'password' => 'required|confirmed|min:6',
             'commission' => 'required|between:0,99.99',
-            'bonusbalance' => 'integer'
+            
         ];
     }
 }

@@ -25,12 +25,14 @@
         					<th>Tools</th>
         					<th>ID</th>
         					<th>Name</th>
+                  <th>Type</th>
         					<th>User_name</th>
         					<th>Commission_rate</th>
         					<th>Only2service</th>
         					<th>Pay_bonus</th>
         					<th>Bonus_balance</th>
         					<th>Status</th>
+                  <th>Allow_Send_Gold</th>
         					<th>Created_at</th>
         					<th>Updated_at</th>
       					</tr>
@@ -54,11 +56,13 @@
         				<td><b>{{$cashier->id}}</b></td>
         				<td>{{$cashier->name}}</td>
         				<td>{{$cashier->username}}</td>
+                <td>{{$cashier->type}}</td>
         				<td>{{$cashier->commission_rate}}</td>
         				<td>{{$cashier->only2service}}</td>
         				<td>{{$cashier->pay_bonus}}</td>
         				<td>{{$cashier->bonus_balance}}</td>
         				<td>{{$cashier->status}}</td>
+                <td>{{$cashier->allow_send_gold}}</td>
         				<td>{{$cashier->created_at->format('M-d-Y')}}</td>
         				<td>{{$cashier->updated_at->diffForHumans()}}</td>
       				</tr>

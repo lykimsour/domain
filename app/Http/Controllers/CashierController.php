@@ -20,16 +20,20 @@ class CashierController extends Controller
     }
 
     public function getCashier(){
-      return view('cashier.newcashier');
+      $cashiertype = array('Human'=>'Human','Agent'=>'Agent');
+      return view('cashier.newcashier',['cashiertype'=>$cashiertype]);
     }
 
     public function postCashier(Requests\CreateCashierRequest $request){
       $cashier = new Cashier; 
+    
       $cashier->name = $request->input('name');
       $cashier->username = $request->input('username');
       $cashier->password = bcrypt($request->input('password'));
       $cashier->commission_rate = $request->input('commission');  
       $cashier->status = $request->has('status');
+      $cashier->allow_send_gold = $request->has('allowsendgold');
+      $cashier->type = $request->input('cashiertype');
       $cashier->only2service = false;
       $cashier->pay_bonus = false;
       $cashier->bonus_balance = 0;
@@ -39,18 +43,21 @@ class CashierController extends Controller
 
     public function geteditCashier($id){
       $cashiers = Cashier::findOrFail($id);
-      return view('cashier.editcashier',['cashiers'=>$cashiers]);
+      $cashiertype = array('Human'=>'Human','Agent'=>'Agent');
+      return view('cashier.editcashier',['cashiers'=>$cashiers,'cashiertype'=>$cashiertype]);
     }
     public function puteditCashier(Requests\EditCashierRequest $request){
       $id = input::get('id');
       $cashier = Cashier::findOrFail($id);
       $cashier->name = $request->input('name');
       $cashier->username = $request->input('username');
+      $cashier->type = $request->input('cashiertype');
       $cashier->commission_rate = $request->input('commission');  
       $cashier->only2service = false;
       $cashier->pay_bonus = false;
       $cashier->bonus_balance = 0;
       $cashier->status = $request->has('status');
+      $cashier->allow_send_gold = $request->has('allowsendgold');
       if($cashier->password != $request->input('password')){
         $cashier->password = bcrypt($request->input('password'));
       }

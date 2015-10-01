@@ -24,6 +24,7 @@
       					<tr>
         					<th>Tools</th>
         					<th>ID</th>
+                  <th>Service_Code</th>
         					<th>Name</th>
         					<th>E-Mail</th>
                   <th>logo</th>
@@ -54,6 +55,7 @@
   						
         				</td>
         				<td>{{$merchant->id}}</td>
+                <td>{{$merchant->service_code}}</td>
         				<td>{{$merchant->name}}</td>
         				<td>{{$merchant->email}}</td>
                 <td>{{$merchant->logo}}</td>
