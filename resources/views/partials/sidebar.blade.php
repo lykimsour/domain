@@ -93,8 +93,6 @@
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="{{route('cashiertoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cashier_To_Reseller')}}</span></a></li>
-                <li {{ Helper::activeMenu("servicetype") }}><a href="{{route('servicetype')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service_Type')}}</span></a></li>
-               <li {{ Helper::activeMenu("serviceclass") }}><a href="{{route('serviceclass')}}"><i class="fa fa-circle-o"></i><span>{{trans('Service_Class')}}</span></a></li>                        
               </ul>
             </li>
 

@@ -53,7 +53,7 @@
 {!! Html::script('js/jQuery.print.js') !!}
 {!! Html::script('js/scripts.js') !!}
 {!! Html::script('js/Chart.js') !!}
-
+{!! Html::script('js/bootstrap-datepicker.js') !!}
 <script type="text/javascript">
   
 $(document).ready(function() {
@@ -69,6 +69,7 @@ $(document).ready(function() {
         todayHighlight: true
   }).datepicker('update', new Date());
   $("#time").click(function(){
+
         if($("#time").val() == 'period'){
             $('#sdate').css("visibility","visible");
             $('#edate ').css("visibility","visible");
@@ -78,11 +79,9 @@ $(document).ready(function() {
           $('#edate ').css("visibility","hidden");
         }
       });
- 
     });
 });
 </script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 @yield('script')
 
 </body>
