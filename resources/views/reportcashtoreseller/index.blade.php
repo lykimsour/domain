@@ -128,7 +128,7 @@
                     @if($time!='all')
                     <td>{{$report->date}}</td>
                     @endif
-                    <td><a href="{{route('detail',['id'=>$report->id])}}">Detail</a></td>
+                    <td><a href="{{route('detail',['id'=>$report->id,'time'=>$time])}}">Detail</a></td>
                     <?php $total = $report->total + $total  ?>
               </tr>
 

@@ -21,15 +21,6 @@ class ReportCashierToReseller extends Controller
      * @return Response
      */
 
-    public function reportchart(){
-                $report = CashierToReseller::groupBy('cashier_id','reseller_id')
-                                            ->selectRaw('*,sum(amount) as total')
-                                            ->where('status','=',1)
-                                            ->paginate(3);
-                    return $report;
-               
-    }
-
     public function index()
     {   
                 $report = CashierToReseller::groupBy('cashier_id','reseller_id')->selectRaw('*,sum(amount) as total')->where('status','=',1)->paginate(10);
@@ -45,12 +36,46 @@ class ReportCashierToReseller extends Controller
      *
      * @return Response
      */
-    public function detail($id)
+    public function detail($id,$time)
     {
         $reportctor = CashierToReseller::findOrFail($id);
-        $report = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])->paginate(10);
-        $report->setPath($id);
-        $totalall = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])->sum('amount');    
+        if(strcasecmp($time,"all") == 0){
+           $report = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])->paginate(10);
+            $totalall = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])->sum('amount');      
+       }
+        else{
+                if(strcasecmp($time,"today") == 0){
+                $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
+                $to = date('Y-m-d 23:59:59',time());          
+                }
+                elseif(strcasecmp($time,"week") ==0){
+                            $preweek = time() - (7 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $preweek);
+                            $to = date('Y-m-d 23:59:59',time());                           
+                }
+                elseif(strcasecmp($time,"month") ==0){
+                            $premonth = time() - (30 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $premonth);
+                            $to = date('Y-m-d 23:59:59',time());      
+                }
+                 elseif(strcasecmp($time,"year") ==0){
+                            $preyear = time() - (364 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $preyear);
+                            $to = date('Y-m-d 23:59:59',time());
+                }
+            $report = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])
+                                        ->where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->paginate(10);
+
+            $totalall=CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])
+                                        ->where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->sum('amount');
+                                        
+        }
+        
+        $report->setPath(url('/cashiertoreseller/detail/'.$id.'/'.$time));
         return view('reportcashtoreseller.detail',['reports'=>$report,'totalall'=>$totalall]);
     }
 
@@ -62,27 +87,30 @@ class ReportCashierToReseller extends Controller
      */
     public function recorddetail($id)
     {
+        //return $id;
         $reportlog = CashierToReseller::findOrFail($id);
         $cashier = Cashier::findOrFail($reportlog->cashier_id);
         $type;
         if(strcasecmp($cashier->type,"human") == 0){
-            $reportsabay = CashToResellersabay::where('transfer_cash2reseller_log_id',$id)->firstOrFail();
+            $reports = CashToResellersabay::where('transfer_cash2reseller_log_id',$id)->firstOrFail();
             $type = "human";
-            return view('reportcashtoreseller.recorddetail',['report'=>$reportsabay,'type'=>$type]);
         }
         else{
            if(strcasecmp($cashier->name,"MPU")==0 || strcasecmp($cashier->username,"MPU")==0){
-                $reportctormpu = CashToResellermpu::where('transfer_cash2reseller_log_id',$id)->firstOrFail();
+                $reports = CashToResellermpu::where('transfer_cash2reseller_log_id',$id)->firstOrFail();
                 $type = "mpu";
-                return view('reportcashtoreseller.recorddetail',['report'=>$reportctormpu,'type'=>$type]);
            }
            else{
-                $reportwing = CashToResellerwing::where('transfer_cash2reseller_log__id',$id)->firstOrFail();
+                $reports = CashToResellerwing::where('transfer_cash2reseller_log__id',$id)->firstOrFail();
                 $type = "wing";
-                return view('reportcashtoreseller.recorddetail',['report'=>$reportwing,'type'=>$type]);    
            }
-        }   
+        } 
+        return view('reportcashtoreseller.recorddetail',['report'=>$reports,'type'=>$type]);    
+  
        
+    }
+    public function dd(){
+        return 'hi';
     }
 
     /**
