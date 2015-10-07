@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Cashier extends Model {
 
-       protected $table = 'cashier';
-	
+    protected $table = 'cashier';
+	public function cashiertoreseller(){
+		$this->hasMany('App\CashierToReseller');
+	}
+
 }

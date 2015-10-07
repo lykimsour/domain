@@ -15,8 +15,11 @@
         @endforeach
     </ul>
     @endif
+  
 <div class="row">
+   
     <div class="col-md-6">
+     <div class="table-responsive list-group-item"> 
     <form method="post" action="{{route('storemerchant')}}" enctype="multipart/form-data">
     	   {!! csrf_field() !!}
     	<div class="form-group">
@@ -64,7 +67,9 @@
 		  <button type="submit" class="btn btn-primary">{{trans('Add Merchant')}}</button>
       </form>
     </div>
+    </div>
 </div><br/>
+
 </section>
 
 @endsection
