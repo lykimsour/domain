@@ -57,8 +57,27 @@
 <script type="text/javascript">
   
 $(document).ready(function() {
+$(function () {
+  window.onload = function(){
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx).Bar(barChartData, {
+      responsive: true
+    });
 
-  $(function () {
+    var gettime = document.getElementById("time");
+    var time = gettime.options[gettime.selectedIndex].text;
+      $("#sdate").hide();
+      $("#edate").hide();
+      $("#from").hide();
+      $("#to").hide();
+    if(time == "Period"){
+      $("#sdate").show();
+      $("#edate").show();
+     document.getElementById("sdateid").value = document.getElementById("from").innerHTML;
+     document.getElementById("edateid").value = document.getElementById("to").innerHTML;
+    }
+  }
+  
   $("#startdate").datepicker({ 
         autoclose: true, 
         todayHighlight: true
@@ -68,18 +87,18 @@ $(document).ready(function() {
         autoclose: true, 
         todayHighlight: true
   }).datepicker('update', new Date());
-  
-  $("#time").click(function(){
 
-        if($("#time").val() == 'period'){
-            $('#sdate').css("visibility","visible");
-            $('#edate ').css("visibility","visible");
+  $("#time").change(function(){
+        if($("#time").val() == "period"){
+             $("#sdate").show();
+             $("#edate").show();
         }
         else{
-          $('#sdate').css("visibility","hidden");
-          $('#edate ').css("visibility","hidden");
+          $("#sdate").hide();
+          $("#edate").hide();
         }
       });
+
     });
 });
 </script>

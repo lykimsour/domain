@@ -58,11 +58,18 @@ class ReportCashierToReseller extends Controller
                             $from = date('Y-m-d'.' '.'00:00:00', $premonth);
                             $to = date('Y-m-d 23:59:59',time());      
                 }
-                 elseif(strcasecmp($time,"year") ==0){
+                elseif(strcasecmp($time,"year") ==0){
                             $preyear = time() - (364 * 24 * 60 * 60);
                             $from = date('Y-m-d'.' '.'00:00:00', $preyear);
                             $to = date('Y-m-d 23:59:59',time());
                 }
+                /*elseif(strcasecmp($time,"period") ==0){
+                        $startdate1 = date_create($request->startdate);
+                        $from = date_format($startdate1,"Y/m/d 00:00:00");
+                        $enddate1 = date_create($request->enddate);
+                        $to = date_format($enddate1,"Y/m/d 23:59:59");
+
+                }*/
             $report = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id,'reseller_id'=>$reportctor->reseller_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -74,9 +81,9 @@ class ReportCashierToReseller extends Controller
                                         ->sum('amount');
                                         
         }
-        
+
         $report->setPath(url('/cashiertoreseller/detail/'.$id.'/'.$time));
-        return view('reportcashtoreseller.detail',['reports'=>$report,'totalall'=>$totalall]);
+        return view('reportcashtoreseller.detail',['reports'=>$report,'totalall'=>$totalall,'from'=>$from,'to'=>$to]);
     }
 
     /**
@@ -127,8 +134,10 @@ class ReportCashierToReseller extends Controller
         $time = $request->time;
         $startdate = $request->startdate;
         $enddate = $request->enddate;
+        $start = $request->startdate;
+        $end = $request->enddate;
         if(strcasecmp($type,"all")==0 && strcasecmp($time,"all") == 0){
-                        $report = CashierToReseller::groupBy('cashier_id','reseller_id')->selectRaw('*,sum(amount) as total')->where('status','=',1)->paginate(10);
+                        $report = CashierToReseller::groupBy('cashier_id','reseller_id')->selectRaw('*,sum(amount) as total')->where('status','=',1)->paginate(1);
                         $totalall = CashierToReseller::where('status',1)->sum('amount');
 
         }
@@ -138,7 +147,7 @@ class ReportCashierToReseller extends Controller
                                                     ->groupBy('transfer_cash2reseller_log.cashier_id','transfer_cash2reseller_log.reseller_id')
                                                     ->where(['transfer_cash2reseller_log.status'=>1,'cashier.type'=>$type])
                                                     ->selectRaw('transfer_cash2reseller_log.id,transfer_cash2reseller_log.cashier_id,transfer_cash2reseller_log.reseller_id,transfer_cash2reseller_log.status,sum(transfer_cash2reseller_log.amount) as total,transfer_cash2reseller_log.date')
-                                                    ->paginate(10);
+                                                    ->paginate(1);
             
                         $totalall =  CashierToReseller::join('cashier','transfer_cash2reseller_log.cashier_id','=','cashier.id')
                                                      ->where(['transfer_cash2reseller_log.status'=>1,'cashier.type'=>$type])
@@ -167,6 +176,7 @@ class ReportCashierToReseller extends Controller
             }
             elseif(strcasecmp($time,"period") ==0){
                             $startdate1 = date_create($request->startdate);
+
                             $from = date_format($startdate1,"Y/m/d 00:00:00");
                             $enddate1 = date_create($request->enddate);
                             $to = date_format($enddate1,"Y/m/d 23:59:59");
@@ -174,21 +184,21 @@ class ReportCashierToReseller extends Controller
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
-                                        ->paginate(10);
+                                        ->paginate(1);
 
                             $totalall = CashierToReseller::where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
                                         ->sum('amount'); 
                             $report->setPath(url('/cashiertoreseller/type/'.$type.'/'.$time.'/'.$startdate.'/'.$enddate));
-                            return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time]);
+                            return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$start,'to'=>$end]);
 
             }
             $report = CashierToReseller::groupBy('cashier_id','reseller_id')->selectRaw('*,sum(amount) as total')
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
-                                        ->paginate(10);
+                                        ->paginate(1);
 
             $totalall = CashierToReseller::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -241,7 +251,7 @@ class ReportCashierToReseller extends Controller
 
 
                             $report->setPath(url('/cashiertoreseller/type/'.$type.'/'.$time.'/'.$startdate.'/'.$enddate));
-                            return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time]);
+                            return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=> $startdate1,'to'=> $enddate1]);
 
             }
                 $report = CashierToReseller::join('cashier','transfer_cash2reseller_log.cashier_id','=','cashier.id')
@@ -260,7 +270,7 @@ class ReportCashierToReseller extends Controller
             }
               
             $report->setPath(url('/cashiertoreseller/type/'.$type.'/'.$time.'/period/period')); 
-            return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time]);
+            return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$start,'to'=>$end]);
            
     }
 

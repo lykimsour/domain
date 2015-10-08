@@ -29,22 +29,22 @@
                {!! Form::select('time',$times,$time,['class'=>'form-control','id'=>'time']) !!}
           </div>
   </div> 
-  <div class="col-md-3" id="sdate" style="visibility:hidden">
+  <div class="col-md-3" id="sdate">
           <div class="form-group">
               <label for="name" >{{trans('Start_Date')}}</label><br/>
                 <div class='input-group date' data-date-format="MM-dd-yyyy" id="startdate" >
-                    <input type='text' class="form-control" name="startdate"  />
+                    <input type='text' class="form-control" name="startdate" id="sdateid"  />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
           </div>
   </div>
-   <div class="col-md-3" id="edate" style="visibility:hidden">
+   <div class="col-md-3" id="edate">
           <div class="form-group">
               <label for="name">{{trans('End_Date')}}</label><br/>
                 <div class='input-group date' data-date-format="MM-dd-yyyy" id='enddate'>
-                    <input type='text' class="form-control" name="enddate" />
+                    <input type='text' class="form-control" name="enddate" id="edateid"/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -148,7 +148,10 @@
     </div>
 </div><br/>
 </div>
+<p id="from">{{$from}}</p>
+<p id="to">{{$to}}</p>
 <script type="text/javascript">
+
 var barChartData = {
     labels :<?php echo json_encode($label); ?>,
     datasets : [
@@ -164,13 +167,6 @@ var barChartData = {
       }
     ]
   }
-window.onload = function(){
-    var ctx = document.getElementById("canvas").getContext("2d");
-    window.myLine = new Chart(ctx).Bar(barChartData, {
-      responsive: true
-    });
-  }
-
 </script>
 @endsection
 
