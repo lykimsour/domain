@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Users extends Model
 {
-    protected $table = 'service';
-    public $timestamps = false;
-    
+  protected $table = "user";
+  
   public function commissiontocashiers()
   {
     return $this->hasMany('App\CommissionToCashier', 'foreign_key');
@@ -17,5 +16,10 @@ class Service extends Model
   public function commissiontoresellers()
   {
     return $this->hasMany('App\CommissionToReseller', 'foreign_key');
+  }
+
+  public function usertoservicelogs()
+  {
+    return $this->hasMany('App\UserToServiceLog', 'foreign_key');
   }
 }

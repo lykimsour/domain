@@ -94,5 +94,5 @@ class Helper {
 		} 
 		return '<link media="all" type="text/css" rel="stylesheet" href="'.url().'/css/lang/'.$stylesheet.'.css">';
 	}
-
+	
 } // End Helper
