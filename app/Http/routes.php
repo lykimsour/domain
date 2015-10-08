@@ -131,8 +131,45 @@
 	Route::delete('/merchant/delete/{id}',['uses'=>'MerchantController@destroy','as'=>'deletemerchant','permission'=>'delete_merchant']);
 
 	//Report cashierToreseller
-	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
+	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller', 'permission'=>'manage_user']);
+	
+    //Report CommissionToCashier
+    Route::get('/commissiontocashier', ['uses'=>'ReportCommissionToCashierController@index','as'=>'commissiontocashier', 'permission'=>'manage_user']);
+	Route::get('/commissiontocashier/{type}', ['uses'=>'ReportCommissionToCashierController@index','as'=>'commissiontocashier', 'permission'=>'manage_user']);
 
+	//Report CommissionToCashier
+	Route::post('/commissiontocashier', ['uses'=>'ReportCommissionToCashierController@index','as'=>'commissiontocashier', 'permission'=>'manage_user']);
+
+	//Report CommissionToReseller
+	Route::get('/commissiontoreseller', ['uses'=>'ReportCommissionToResellerController@index','as'=>'commissiontoreseller', 'permission'=>'manage_user']);
+	Route::get('/commissiontoreseller/{type}', ['uses'=>'ReportCommissionToResellerController@index','as'=>'commissiontoreseller', 'permission'=>'manage_user']);
+	Route::post('/commissiontoreseller', ['uses'=>'ReportCommissionToResellerController@index','as'=>'commissiontoreseller', 'permission'=>'manage_user']);
+
+	//Report Detail CommissionToCashier
+	Route::get('/commissiontocashier/detail/{id}', ['uses'=>'ReportCommissionToCashierController@show','as'=>'detailcommissiontocashier', 'permission'=>'manage_user']);
+	
+	//Report Detail Service CommissionToCashier
+	Route::get('/commissiontocashier/servicedetail/{id}', ['uses'=>'ReportCommissionToCashierController@servicedetail','as'=>'detailservicecommissiontocashier', 'permission'=>'manage_user']);
+	
+
+	//Report Detail CommissionToReseller
+	Route::get('/commissiontoreseller/detail/{id}', ['uses'=>'ReportCommissionToResellerController@show','as'=>'detailcommissiontoreseller', 'permission'=>'manage_user']);
+
+	//Report  UserToServiceLog
+	Route::get('/usertoservicelog', ['uses'=>'ReportUserToServiceLogController@index','as'=>'usertoservicelog', 'permission'=>'manage_user']);
+
+	//Report Detail UserToServiceLog
+	Route::get('/usertoservicelog/detail/{id}', ['uses'=>'ReportUserToServiceLogController@show','as'=>'detailusertoservicelog', 'permission'=>'manage_user']);
+
+	//Report Service Detail UserLog
+	//Report Detail UserToServiceLog
+	Route::get('/usertoservicelog/servicedetail/{id}', ['uses'=>'ReportUserToServiceLogController@detailserviceuserlog','as'=>'detailserviceuserlog', 'permission'=>'manage_user']);
+	
+	
+
+	Route::get('/usertoservicelog/{type}', ['uses'=>'ReportUserToServiceLogController@index','as'=>'usertoservicelog', 'permission'=>'manage_user']);
+	
+	Route::post('/usertoservicelog', ['uses'=>'ReportUserToServiceLogController@index','as'=>'usertoservicelog', 'permission'=>'manage_user']);
 	});
 
 	

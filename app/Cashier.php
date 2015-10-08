@@ -1,5 +1,5 @@
-<?php namespace App;
-
+<?php 
+namespace App;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -10,10 +10,16 @@ use App\DB\User\Traits\UserACL;
 use App\DB\User\Traits\UserAccessors;
 use App\DB\User\Traits\UserQueryScopes;
 use App\DB\User\Traits\UserRelationShips;
+
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Cashier extends Model {
 
-       protected $table = 'cashier';
+  protected $table = 'cashier';
+
+	public function commissiontocashiers()
+	{
+	  return $this->hasMany('App\CommissionToCashier', 'foreign_key');
+	}
 	
 }
