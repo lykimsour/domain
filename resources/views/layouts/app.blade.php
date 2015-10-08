@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>@yield('title') - Sabay Chashier</title>
-
+  
 	{!! Html::style('css/bootstrap.min.css') !!}
 	{!! Html::style('css/font-awesome.min.css') !!}
 	{!! Html::style('css/core.css') !!}
@@ -60,11 +60,12 @@
   
 $(document).ready(function() {
 $(function () {
-  // window.onload = function(){
-  //   var ctx = document.getElementById("canvas").getContext("2d");
-  //   window.myLine = new Chart(ctx).Bar(barChartData, {
-  //     responsive: true
-  //   });
+
+  window.onload = function(){
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx).Bar(barChartData, {
+      responsive: true
+    });
 
     var gettime = document.getElementById("time");
     var time = gettime.options[gettime.selectedIndex].text;
@@ -91,13 +92,14 @@ $(function () {
   }).datepicker('update', new Date());
 
   $("#time").change(function(){
-        if($("#time").val() == "period"){
-             $("#sdate").show();
-             $("#edate").show();
+        if($("#time").val() != "period"){
+            $("#sdate").hide(1);
+          $("#edate").hide(1);
         }
         else{
-          $("#sdate").hide();
-          $("#edate").hide();
+           $("#sdate").show(1);
+            $("#edate").show(1);
+         
         }
       });
 
