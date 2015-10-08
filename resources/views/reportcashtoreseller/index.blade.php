@@ -6,6 +6,7 @@
   //init array
   $data  = []; 
   $label = [];
+
 ?>
 <div class="container-fluid">
 
@@ -128,7 +129,7 @@
                     @if($time!='all')
                     <td>{{$report->date}}</td>
                     @endif
-                    <td><a href="{{route('detail',['id'=>$report->id,'time'=>$time])}}">Detail</a></td>
+                    <td><a href="{{route('detail',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
                     <?php $total = $report->total + $total  ?>
               </tr>
 
@@ -151,8 +152,7 @@
 <p id="from">{{$from}}</p>
 <p id="to">{{$to}}</p>
 <script type="text/javascript">
-
-var barChartData = {
+   var barChartData = {
     labels :<?php echo json_encode($label); ?>,
     datasets : [
       {
@@ -168,5 +168,6 @@ var barChartData = {
     ]
   }
 </script>
+  
 @endsection
 
