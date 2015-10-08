@@ -16,10 +16,10 @@
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
 
-      <ul class="nav navbar-nav">
+      <!--<ul class="nav navbar-nav">
         <li class="dropdown top-language">
           <!-- Menu Toggle Button -->
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">
             {!! Helper::currentlang() !!}
           </a>
           <ul class="dropdown-menu">
@@ -50,7 +50,7 @@
             </li>
           </ul>
         </li>
-      </ul>
+      </ul>-->
 
       <ul class="nav navbar-nav navbar-right">
         

@@ -131,6 +131,7 @@
 	Route::delete('/merchant/delete/{id}',['uses'=>'MerchantController@destroy','as'=>'deletemerchant','permission'=>'delete_merchant']);
 
 	//Report cashierToreseller
+
 	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller', 'permission'=>'manage_user']);
 	
     //Report CommissionToCashier
@@ -154,6 +155,14 @@
 
 	//Report Detail CommissionToReseller
 	Route::get('/commissiontoreseller/detail/{id}', ['uses'=>'ReportCommissionToResellerController@show','as'=>'detailcommissiontoreseller', 'permission'=>'manage_user']);
+
+	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
+	Route::get('/cashiertoreseller/detail/{id}/{time}',['uses'=>'ReportCashierToReseller@detail','as'=>'detail','permission'=>'manage_user']);
+	Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'manage_user']);
+	Route::post('/cashiertoreseller/type/',['uses'=>'ReportCashierToReseller@queryreport','as'=>'queryreport','permission'=>'manage_user']);
+	Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'manage_user']);
+	Route::get('/cashiertoreseller/chart',['uses'=>'ReportCashierToReseller@reportchart','as'=>'report','permission'=>'manage_user']);
+
 
 	//Report  UserToServiceLog
 	Route::get('/usertoservicelog', ['uses'=>'ReportUserToServiceLogController@index','as'=>'usertoservicelog', 'permission'=>'manage_user']);

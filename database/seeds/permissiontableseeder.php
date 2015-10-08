@@ -110,8 +110,6 @@ class permissiontableseeder extends Seeder
             'permission_description' => 'Only for promotion user',
         ]); 
 
-
-
         DB::table('permissions')->insert([
             'permission_title' => 'View_Merchant',
             'permission_slug' => 'view_Merchant',

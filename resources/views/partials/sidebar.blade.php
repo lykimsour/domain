@@ -98,6 +98,18 @@
         </ul>
       </li>
 
+      <li class="treeview">
+          <a href="#">
+            <i class="fa fa-car"></i>
+            <span>{{trans('Report')}}</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="{{route('cashiertoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cashier_To_Reseller')}}</span></a></li>
+          </ul>
+      </li>
+
+
 
         <!--<li class="treeview">
               <a href="#">

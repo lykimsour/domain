@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>@yield('title') - Sabay Chashier</title>
 
 	{!! Html::style('css/bootstrap.min.css') !!}
@@ -56,14 +57,35 @@
 {!! Html::script('js/scripts.js') !!}
 
 <script type="text/javascript">
-$(document).ready(function(){
-    $('[rel="tooltip"]').tooltip();
-     
+  
+$(document).ready(function() {
 
+  $(function () {
+  $("#startdate").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true
+  }).datepicker('update', new Date());
+
+   $("#enddate").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true
+  }).datepicker('update', new Date());
+  
+  $("#time").click(function(){
+
+        if($("#time").val() == 'period'){
+            $('#sdate').css("visibility","visible");
+            $('#edate ').css("visibility","visible");
+        }
+        else{
+          $('#sdate').css("visibility","hidden");
+          $('#edate ').css("visibility","hidden");
+        }
+      });
+    });
 });
-
-
 </script>
+
 <script type="text/javascript">
   
   $('.form_date').datetimepicker({
@@ -77,7 +99,9 @@ $(document).ready(function(){
     forceParse: 0
     });
 </script>
+
 @yield('script')
 
 </body>
 </html> 
+

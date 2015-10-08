@@ -17,6 +17,7 @@
     @endif
 <div class="row">
     <div class="col-md-6">
+     <div class="table-responsive list-group-item"> 
     <form method="post" action="{{route('updatemerchant',['id'=>$merchant->id])}}" enctype="multipart/form-data">
     	   {!! csrf_field() !!}
       <input type="hidden" name="_method" value="PUT">
@@ -72,6 +73,7 @@
       </form>
     </div>
 </div><br/>
+</div>
 </section>
 
 @endsection
