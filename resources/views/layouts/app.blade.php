@@ -60,11 +60,11 @@
   
 $(document).ready(function() {
 $(function () {
-  window.onload = function(){
-    var ctx = document.getElementById("canvas").getContext("2d");
-    window.myLine = new Chart(ctx).Bar(barChartData, {
-      responsive: true
-    });
+  // window.onload = function(){
+  //   var ctx = document.getElementById("canvas").getContext("2d");
+  //   window.myLine = new Chart(ctx).Bar(barChartData, {
+  //     responsive: true
+  //   });
 
     var gettime = document.getElementById("time");
     var time = gettime.options[gettime.selectedIndex].text;
