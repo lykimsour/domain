@@ -133,7 +133,7 @@
 	//Report cashierToreseller
 	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
 	
-	Route::post('/cashiertoreseller/detail/{id}',['uses'=>'ReportCashierToReseller@ddd','as'=>'detail','permission'=>'manage_user']);
+	Route::post('/cashiertoreseller/detail/{id}',['uses'=>'ReportCashierToReseller@details','as'=>'detail','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@detail','as'=>'detail','permission'=>'manage_user']);
 	
 
