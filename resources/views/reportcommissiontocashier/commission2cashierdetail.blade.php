@@ -33,6 +33,7 @@
             </thead>
                <tbody>
             @foreach($report_details as $report_detail)
+             
               <tr>
                 <td>{{ $report_detail->id }}</td>
                 <td>{{ $report_detail->user->name }}</td>
