@@ -12,7 +12,8 @@
 	{!! Html::style('css/core.css') !!}
 	{!! Html::style('css/skin-mysabay.css') !!}
   {!! Html::style('css/styles.css') !!}
-  
+  {!! Html::style('css/bootstrap-datetimepicker.min.css') !!}
+  {!! Helper::langStylesheet() !!}
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,17 +49,18 @@
 {!! Html::script('js/jquery.validate.min.js') !!}
 {!! Html::script('js/jquery.validate.bootstrap.js') !!}
 {!! Html::script('js/lib/moment.min.js') !!}
+{!! Html::script('js/bootstrap-datetimepicker.min.js') !!}
 {!! Html::script('js/lib/highcharts_4.1.5.js') !!}
 {!! Html::script('js/core.js') !!}
 {!! Html::script('js/jQuery.print.js') !!}
-{!! Html::script('js/scripts.js') !!}
 {!! Html::script('js/Chart.js') !!}
-{!! Html::script('js/bootstrap-datepicker.js') !!}
+{!! Html::script('js/scripts.js') !!}
+
 <script type="text/javascript">
   
 $(document).ready(function() {
 $(function () {
-  
+
   window.onload = function(){
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx).Bar(barChartData, {
@@ -104,6 +106,21 @@ $(function () {
     });
 });
 </script>
+
+<script type="text/javascript">
+  
+  $('.form_date').datetimepicker({
+    language:  'en',
+    weekStart: 1,
+    todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    minView: 2,
+    forceParse: 0
+    });
+</script>
+
 @yield('script')
 
 </body>

@@ -84,18 +84,20 @@
         </a>
       </li>
 
-
-        <li class="treeview">
-              <a href="#">
-                <i class="fa fa-car"></i>
-                <span>{{trans('Report')}}</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="{{route('cashiertoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cashier_To_Reseller')}}</span></a></li>
-              </ul>
-            </li>
-
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-car"></i>
+          <span>{{trans('Report')}}</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li class="active"><a href="{{route('cashiertoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cashier_To_Reseller')}}</span></a></li>
+          <li {{ Helper::activeMenu("commissiontocashier") }}><a href="{{route('commissiontocashier')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Cashier')}}</span></a></li>
+          <li {{ Helper::activeMenu("commissiontoreseller") }}><a href="{{route('commissiontoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Reseller')}}</span></a></li>
+          <li {{ Helper::activeMenu("usertoservicelog") }}><a href="{{route('usertoservicelog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Service_Log')}}</span></a></li>                        
+          <li {{ Helper::activeMenu("usertomerchantlog") }}><a href="{{route('usertomerchantlog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Merchant_Log')}}</span></a></li>                        
+        </ul>
+      </li>
 
         <!--<li class="treeview">
               <a href="#">

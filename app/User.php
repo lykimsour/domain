@@ -1,5 +1,6 @@
-<?php namespace App;
+<?php 
 
+namespace App;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -18,7 +19,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Application's Traits (Separation of various types of methods)
      */
-       protected $table = 'adminusers';
+        protected $table = 'adminusers';
 		protected $fillable = ['name', 'email', 'password','role_id'];
         protected $hidden = ['password', 'remember_token'];
     use UserACL, UserRelationShips;
