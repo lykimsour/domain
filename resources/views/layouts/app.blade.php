@@ -12,7 +12,6 @@
 	{!! Html::style('css/core.css') !!}
 	{!! Html::style('css/skin-mysabay.css') !!}
   {!! Html::style('css/styles.css') !!}
-  {!! Html::style('css/bootstrap-datetimepicker.min.css') !!}
   {!! Helper::langStylesheet() !!}
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -49,7 +48,7 @@
 {!! Html::script('js/jquery.validate.min.js') !!}
 {!! Html::script('js/jquery.validate.bootstrap.js') !!}
 {!! Html::script('js/lib/moment.min.js') !!}
-{!! Html::script('js/bootstrap-datetimepicker.min.js') !!}
+{!! Html::script('js/bootstrap-datepicker.js') !!}
 {!! Html::script('js/lib/highcharts_4.1.5.js') !!}
 {!! Html::script('js/core.js') !!}
 {!! Html::script('js/jQuery.print.js') !!}
@@ -71,13 +70,19 @@ $(function () {
     var time = gettime.options[gettime.selectedIndex].text;
       $("#sdate").hide();
       $("#edate").hide();
+      $("#sdate1").hide();
+      $("#edate1").hide();
       $("#from").hide();
       $("#to").hide();
     if(time == "Period"){
       $("#sdate").show();
       $("#edate").show();
-     document.getElementById("sdateid").value = document.getElementById("from").innerHTML;
-     document.getElementById("edateid").value = document.getElementById("to").innerHTML;
+       
+      var from = $("#from").text();
+      var to = $("#to").text();
+      $("#sdateid").val(from);
+      $("#edateid").val(to);
+ 
     }
   }
   
@@ -93,12 +98,14 @@ $(function () {
 
   $("#time").change(function(){
         if($("#time").val() != "period"){
-            $("#sdate").hide(1);
+         $("#sdate").hide(1);
           $("#edate").hide(1);
+
         }
         else{
-           $("#sdate").show(1);
-            $("#edate").show(1);
+
+         $("#sdate").show(1);
+          $("#edate").show(1);
          
         }
       });
@@ -106,21 +113,6 @@ $(function () {
     });
 });
 </script>
-
-<script type="text/javascript">
-  
-  $('.form_date').datetimepicker({
-    language:  'en',
-    weekStart: 1,
-    todayBtn:  1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    minView: 2,
-    forceParse: 0
-    });
-</script>
-
 @yield('script')
 
 </body>

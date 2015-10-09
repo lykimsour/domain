@@ -103,31 +103,36 @@
                  
                   <th>ID</th>
                   <th>Cashier_Name</th>
-                  <th>Reseller_name</th>
+                  <!--<th>Reseller_name</th>-->
                   <th>Total</th>
                   <th>Status</th>
                   @if($time!='all')
-                  <th>Date</th>
+                 <!--<th>Date</th>-->
                   @endif
                   <th>Detail</th>
                 </tr>
             </thead>
                <tbody>
             <?php $total = 0 ?>
+            
+            @foreach($chart as $chart)
+                <?php  
+                array_push($data, $chart->total); 
+                $date = strtotime($chart->date);
+                $date = date('Y-M-d',$date);
+                array_push($label,$date);
+              ?>
+            @endforeach 
+
             @foreach($reports as $report)
               <tr>
-              <?php  
-                array_push($data, $report->total); 
-                $date = strtotime($report->date);
-                array_push($label, date('F', $date));
-              ?>
+            
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>
-                    <td>{{$report->reseller->name}}</td>
                     <td>{{$report->total}}</td>
                     <td>{{$report->status}}</td>
                     @if($time!='all')
-                    <td>{{$report->date}}</td>
+                    <!--<td>{{$report->date}}</td>-->
                     @endif
                     <td><a href="{{route('detail',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
                     <?php $total = $report->total + $total  ?>
@@ -149,8 +154,8 @@
     </div>
 </div><br/>
 </div>
-<p id="from">{{$from}}</p>
-<p id="to">{{$to}}</p>
+<div id="from">{{$from}}</div>
+<div id="to">{{$to}}</div>
 <script type="text/javascript">
    var barChartData = {
     labels :<?php echo json_encode($label); ?>,
