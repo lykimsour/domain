@@ -26,17 +26,28 @@ class PermissionRoleController extends Controller
         $permissionroles = $permissionroles->sortBy('role_id');
         return view('permissionrole.index',['permissionroles' => $permissionroles,'users'=>$users]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function create()
+
+    public function check(){
+      return 'hi';
+    }
+
+    public function create($roleid)
     {
-        $permissions = Permission::All();
+        //$adminpermission = PermissionRole::where('role_id','=','1')->get();
+        $manager = Permission::where('permission_slug', 'LIKE', 'manage%')->get();
+        $cashier = Permission::where('permission_slug', 'LIKE', '%cashier')->get();
+        $service = Permission::where('permission_slug', 'LIKE', '%service')->get();
+        $online_shop = Permission::where('permission_slug', 'LIKE', '%onlineshop')->get();
+        $promotion = Permission::where('permission_slug', 'LIKE', '%promotion')->get();
+        $merchant = Permission::where('permission_slug', 'LIKE', '%merchant')->get();
+        $report = Permission::where('permission_slug', 'LIKE', '%report')->get();
         $roles = Role::lists('role_slug','id');
-        return view('permissionrole.newpermissionrole',['roles'=>$roles,'permissions'=>$permissions]);
+        return view('permissionrole.newpermissionrole',['roles'=>$roles,'managers'=>$manager,'cashiers'=>$cashier,'services'=>$service,'onlineshops'=>$online_shop,'promotions'=>$promotion,'merchants'=>$merchant,'reports'=>$report,'roleid'=>$roleid]);
     }
 
     /**
@@ -49,13 +60,18 @@ class PermissionRoleController extends Controller
     {
         $permissions = Permission::All();
        
+
         foreach($permissions as $permission){
-    
+        
             if($request->has($permission->permission_slug)){
+                $check = PermissionRole::where(['role_id'=>$request->roleid,'permission_id'=>$permission->id])->get();
+                if($check->first()){}
+                else{
                     $permissionrole = new PermissionRole;
                     $permissionrole->role_id = $request->input('roleid');
                     $permissionrole->permission_id = $request->input($permission->permission_slug);
                     $permissionrole->save();
+                }
            }
         }
         return Redirect::route('permissionrole');
@@ -112,5 +128,6 @@ class PermissionRoleController extends Controller
     {
         $permissionrole = PermissionRole::findOrFail($id);
         $permissionrole->delete();
+         return Redirect::route('permissionrole');
     }
 }

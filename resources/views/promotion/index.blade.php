@@ -6,7 +6,7 @@
 <h2>{{trans('Manage Promotion')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('createpromotion')}}"><div class="btn btn-primary">{{trans('New Promorion')}}</div></a>
+       <a href="{{route('createpromotion')}}"><div class="btn btn-primary">{{trans('New Promotion')}}</div></a>
     </div>
 </div><br/>
 <div class="row">

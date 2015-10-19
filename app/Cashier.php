@@ -26,7 +26,7 @@ class Cashier extends Model {
     
 	public function cashiertoreseller()
 	{
-		$this->hasMany('App\CashierToReseller');
+		return $this->hasMany('App\CashierToReseller');
 	}
 
 }

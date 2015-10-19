@@ -10,7 +10,7 @@ use App\Role;
 <h2>{{trans('Manage Permissions')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('createpermissionrole')}}"><div class="btn btn-primary">{{trans('Assign Role_Permission')}}</div></a>
+       <a href="{{route('createpermissionrole',['roleid'=>'1'])}}"><div class="btn btn-primary">{{trans('Assign Role_Permission')}}</div></a>
     </div>
 </div><br/>
 <div class="row">
@@ -25,7 +25,6 @@ use App\Role;
             <thead>
                 <tr>
                 <th>Tool</th>
-                 <th>ID</th>
                   <th>Role_ID</th>
                   <th>Permission_ID</th>
                 </tr>
@@ -38,7 +37,7 @@ use App\Role;
              ?>
               <tr>
               <td>
-              @if($roletitle->id!=1)
+              @if($permissionslug->id!=1)
               <form method="post" action="{{route('deletepermissionrole',['id'=>$permissionrole->id])}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
@@ -53,7 +52,6 @@ use App\Role;
                </form>
                </td>
               <input type="hidden" name="_method" value="DELETE" >
-                    <td>{{$permissionrole->id}}</td>
                     <td>{{$roletitle->role_title}}</td>
                     <td>{{$permissionslug->permission_slug}} </td>
               </tr>

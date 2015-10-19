@@ -119,7 +119,9 @@
                 <?php  
                 array_push($data, $chart->total); 
                 $date = strtotime($chart->date);
-                $date = date('Y-M-d',$date);
+                if($time == 'all') $date = date('Y',$date);
+                elseif($time == 'year') $date = date('Y-M',$date);
+                else $date = date('Y-M-d',$date);
                 array_push($label,$date);
               ?>
             @endforeach 

@@ -42,7 +42,7 @@
         <label>{{trans('Description')}}</label>
         <input type="text" name="description" class="form-control" id="description">
       </div>
-		  <button type="submit" class="btn btn-primary">{{trans('Add Online_Shop')}}</button>
+		  <button type="submit" class="btn btn-primary">{{trans('Add Promotion')}}</button>
       </form>
     </div>
 </div><br/>

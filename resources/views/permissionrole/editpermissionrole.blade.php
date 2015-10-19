@@ -10,7 +10,7 @@
         @endforeach
     </ul>
     @endif
-<h2>{{trans('Edit Service')}}</h2>
+<h2>{{trans('Edit Permission_Role')}}</h2>
 <div class="row">
    <div class="col-md-6">
     <form method="post" action="{{route('updatepermissionrole',['id'=>$permissionrole->id])}}">
@@ -18,7 +18,7 @@
       <input type="hidden" name="_method" value="PUT">
       <div class="form-group">
         <label>{{trans('Role')}}</label>
-        {!! Form::select('roles', $roles,$permissionrole->role_id,['class'=>'form-control']) !!}
+        {!! Form::select('roles', $roles,$permissionrole->role_id,['class'=>'form-control']) !!} 
       </div>
       <div class="form-group">
         <label>{{trans('Permission')}}</label>

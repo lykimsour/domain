@@ -80,21 +80,28 @@
                <tbody>
             <?php $total = 0; ?>
               @foreach($chart as $chart)
-                <?php  
+                <?php
                 array_push($data, $chart->total); 
                 $date = strtotime($chart->date);
-                $date = date('Y-M-d',$date);
-                array_push($label,$date);
+                if($time == 'all') $date = date('Y',$date);
+                elseif($time == 'year') $date = date('Y-M',$date);
+                else $date = date('Y-M-d',$date);
+                array_push($label,$date);  
+               
               ?>
             @endforeach 
             @foreach($reports as $report)
               <tr>
+                    <?php 
+                      $d = strtotime($report->date);
+                      $reportdate = date('Y-M-d',$d); 
+                    ?>
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>
                     <td>{{$report->reseller->name}}</td>
                     <td>{{$report->amount}}</td>
                     <td>{{$report->status}}</td>
-                    <td>{{$report->date}}</td>
+                    <td>{{$reportdate}}</td>
                     <td><a href="{{route('recorddetail',['id'=>$report->id])}}">Detail</a></td>
                    <?php
                     $total= $report->amount + $total;

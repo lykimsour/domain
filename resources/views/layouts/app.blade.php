@@ -58,8 +58,6 @@
 <script type="text/javascript">
   
 $(document).ready(function() {
-$(function () {
-
   window.onload = function(){
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx).Bar(barChartData, {
@@ -77,7 +75,6 @@ $(function () {
     if(time == "Period"){
       $("#sdate").show();
       $("#edate").show();
-       
       var from = $("#from").text();
       var to = $("#to").text();
       $("#sdateid").val(from);
@@ -109,8 +106,13 @@ $(function () {
          
         }
       });
-
+  $("#roleid").change(function(){
+      var url = "{{URL::to('/permissionrole/create')}}" + "/" + $("#roleid").val() ;
+    $("#method").val("GET");
+    $("#createform").attr("action",url);
+    $("#createform").submit();
     });
+
 });
 </script>
 @yield('script')

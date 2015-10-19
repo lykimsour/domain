@@ -24,8 +24,6 @@ class ReportCashierToReseller extends Controller
     //time = all type=all
     public function chartdata($id,$type,$time,$from,$to){
         if($id ==0){
-
-
         if(strcasecmp($type,"all")==0 && strcasecmp($time,"all") == 0){
           $chart = DB::table('transfer_cash2reseller_log')
                         ->select('date',DB::raw('YEAR(date) as groupdate,SUM(amount) as total'))
@@ -86,44 +84,35 @@ class ReportCashierToReseller extends Controller
             }
         }
         }
-        /*else{
-                $reportctor = CashierToReseller::findOrFail($id);
-                if(strcasecmp($time,"today") == 0){
-                            $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
-                            $to = date('Y-m-d 23:59:59',time());          
-                }
-                elseif(strcasecmp($time,"week") ==0){
-                            $preweek = time() - (7 * 24 * 60 * 60);
-                            $from = date('Y-m-d'.' '.'00:00:00', $preweek);
-                            $to = date('Y-m-d 23:59:59',time());                           
-                }
-                elseif(strcasecmp($time,"month") ==0){
-                            $premonth = time() - (30 * 24 * 60 * 60);
-                            $from = date('Y-m-d'.' '.'00:00:00', $premonth);
-                            $to = date('Y-m-d 23:59:59',time());      
-                }
-                elseif(strcasecmp($time,"year") ==0){
-                            $preyear = time() - (364 * 24 * 60 * 60);
-                            $from = date('Y-m-d'.' '.'00:00:00', $preyear);
-                            $to = date('Y-m-d 23:59:59',time());
-                }
-                 elseif(strcasecmp($time,"period") ==0){
-                        $startdate1 = date_create($startdate);
-                        $from = date_format($startdate1,"Y-m-d 00:00:00");
-                        $enddate1 = date_create($enddate);
-                        $to = date_format($enddate1,"Y-m-d 23:59:59");
+        else{
+                 if(strcasecmp($time,"all") == 0){
+                         $chart = DB::table('transfer_cash2reseller_log')
+                        ->select('date',DB::raw('YEAR(date) as groupdate,SUM(amount) as total'))
+                        ->where(['status'=>1,'cashier_id'=>$id])->groupBy('groupdate')
+                        ->get();
 
                 }
-                $chart = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
-                                        ->where('date','>=',$from)
-                                        ->where('date','<=',$to)
-                                        ->paginate(10);
-
-                $totalall=CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
-                                        ->where('date','>=',$from)
-                                        ->where('date','<=',$to)
-                                        ->sum('amount');
-        }*/    
+                 elseif(strcasecmp($time,"year") == 0){
+                 $chart = DB::table('transfer_cash2reseller_log')
+                        ->select('date',DB::raw('MONTHNAME(date) as groupdate,SUM(amount) as total'))
+                        ->where(['status'=>1,'cashier_id'=>$id])
+                        ->where('date','>=',$from)
+                        ->where('date','<=',$to)
+                        ->groupBy('groupdate')
+                        ->get();
+                       
+                }
+                else{
+                      $chart = DB::table('transfer_cash2reseller_log')
+                        ->select('date',DB::raw('DAY(date) as groupdate,SUM(amount) as total'))
+                        ->where(['status'=>1,'cashier_id'=>$id])
+                        ->where('date','>=',$from)
+                        ->where('date','<=',$to)
+                        ->groupBy('groupdate')
+                        ->get();
+                }
+             
+        } 
         return $chart;
     }
 
@@ -202,12 +191,14 @@ class ReportCashierToReseller extends Controller
             elseif(strcasecmp($time,"week") ==0){
                             $preweek = time() - (7 * 24 * 60 * 60);
                             $from = date('Y-m-d'.' '.'00:00:00', $preweek);
-                            $to = date('Y-m-d 23:59:59',time());                           
+                            $to = date('Y-m-d 23:59:59',time()); 
+                            //dd($from.' '.$to);                          
             }
             elseif(strcasecmp($time,"month") ==0){
                             $premonth = time() - (30 * 24 * 60 * 60);
                             $from = date('Y-m-d'.' '.'00:00:00', $premonth);
-                            $to = date('Y-m-d 23:59:59',time());      
+                            $to = date('Y-m-d 23:59:59',time()); 
+                            //dd($from.' '.$to);      
             }
             elseif(strcasecmp($time,"year") ==0){
                             $preyear = time() - (364 * 24 * 60 * 60);
@@ -239,7 +230,6 @@ class ReportCashierToReseller extends Controller
                                         ->sum('amount'); 
 
                             $chart = $this->chartdata(0,$type,$time,$from,$to);
-
                             $report->setPath(url('/cashiertoreseller/type/'.$type.'/'.$time.'/'.$startdate.'/'.$enddate));
                             return view('reportcashtoreseller.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$start,'to'=>$end,'chart'=>$chart]);
 
@@ -281,11 +271,12 @@ class ReportCashierToReseller extends Controller
                             $to = date('Y-m-d 23:59:59',time());
                 }
                 elseif(strcasecmp($time,"period") ==0){
-                            $startdate1 = date_create($request->startdate);
-                            $from = date_format($startdate1,"Y/m/d 00:00:00");
-                            $enddate1 = date_create($request->enddate);
-                            $to = date_format($enddate1,"Y/m/d 23:59:59");
-
+                        $startd= DateTime::createFromFormat("F-d-Y", $request->startdate);
+                        $from  = $startd->format('Y-m-d 00:00:00');
+                        $endd  = DateTime::createFromFormat("F-d-Y", $request->enddate);
+                        $to   = $endd->format('Y-m-d 23:59:59');
+                         
+ 
                             $report = CashierToReseller::join('cashier','transfer_cash2reseller_log.cashier_id','=','cashier.id')
                                             ->groupBy('transfer_cash2reseller_log.cashier_id')
                                             ->where(['transfer_cash2reseller_log.status'=>1,'cashier.type'=>$type])
@@ -389,7 +380,8 @@ class ReportCashierToReseller extends Controller
 
                                         
         }
-        $chart = $this->chartdata(0,"all",$time,$from,$to);
+        //dd($reportctor->cashier_id);
+        $chart = $this->chartdata($reportctor->cashier_id,"all",$time,$from,$to);
         $report->setPath(url('/cashiertoreseller/detail/'.$id.'/'.$time.'/'.$startdate.'/'.$enddate));
         return view('reportcashtoreseller.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart]);
     }

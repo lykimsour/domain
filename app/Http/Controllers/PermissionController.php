@@ -18,7 +18,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::All();
-        
+      
         return view('permissions.index',['permissions'=>$permissions]);
     }
 
@@ -55,7 +55,7 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -66,7 +66,9 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+            $permission = Permission::findOrFail($id);
+          
+            return view('permissions.editpermission',['permission'=>$permission]);
     }
 
     /**
@@ -78,7 +80,11 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            $permission = Permission::findOrFail($id);
+            $permission->permission_title = $request->input('permissiontitle');
+            $permission->permission_slug = $request->input('permissionslug');
+            $permission->save();
+        return Redirect::route('permission');
     }
 
     /**
