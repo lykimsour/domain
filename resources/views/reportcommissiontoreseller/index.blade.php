@@ -34,11 +34,39 @@
              'year' => 'year',
              'period' => 'Period'
              ], $selected,
-             ['class' => 'form-control']
+             ['class' => 'form-control', 'id' => 'time']
               ) 
           !!}
+          <span  id="sdate">
+            <label for="name" >{{trans('Start_Date')}}</label>
+              <span class='input-group date' data-date-format="MM-dd-yyyy" id="startdate" >
+                  <input type='text' class="form-control"  name="startdate" id="sdateid"  />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </span>
+          </span>
+          <span  id="edate">
+            <label for="name">{{trans('End_Date')}}</label>
+              <span class='input-group date' data-date-format="MM-dd-yyyy" id='enddate'>
+                <input type='text' class="form-control" name="enddate" id="edateid"/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </span>
+          </span>
           {!! Form::submit('Show', array('class' => 'btn btn-danger')) !!}
         {!! Form::close() !!}
+        </li>
+      </ul>
+
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div style="width:100%">
+            <div>
+              <canvas id="canvas" height="250" width="900"></canvas>
+            </div>
+          </div>
         </li>
       </ul>
     <div class="table-responsive list-group-item">
@@ -56,14 +84,9 @@
             </thead>
             <tbody>
             @foreach($reports as $report)
-              <?php  
-                array_push($data, $report->total_amount); 
-                $date = strtotime($report->date);
-                array_push($label, date('F', $date));
-              ?>
               <tr>
                 <td>{{ $report->id }}</td>
-                <td>{{ $report->reseller->name }}</td>
+                <td>{{ $report->reseller_id }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
                 <td><a href="{{ route('detailcommissiontoreseller', ['id' => $report->reseller_id]) }}">Detail</a></td>
@@ -72,11 +95,6 @@
             </tbody>
           </table>
           <b>Total: {{ $total }}</b></span>
-          <div style="width:100%">
-            <div>
-              <canvas id="canvas" height="250" width="900"></canvas>
-            </div>
-          </div>
         @else
           <div class="alert alert-info">
             <strong>No Result</strong>
@@ -86,8 +104,20 @@
     </div>
 </div>
 </div>
+<?php 
 
-<script type="text/javascript">
+  foreach ($chart_reports as $chart_report) 
+  {
+    array_push($data, $chart_report->total_amount); 
+    $date = strtotime($chart_report->date);
+    array_push($label, date($type, $date));
+  }
+
+?>
+
+<p id="from"><?php echo date_format(new DateTime($from), 'F-d-Y'); ?></p>
+<p id="to"><?php echo date_format(new DateTime($to), 'F-d-Y'); ?></p>
+<script>
   var barChartData = {
     labels :<?php echo json_encode($label); ?>,
     datasets : [
@@ -103,7 +133,5 @@
       }
     ]
   }
-
- 
 </script>
 @endsection

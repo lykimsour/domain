@@ -15,7 +15,8 @@ use App\UserToServiceakDetail;
 use App\UserToServicenagaDetail;
 use App\UserToServicetournamentDetail;
 use App\UserToServiceavatarDetail;
-
+use DB;
+use DateTime;
 class ReportCommissionToResellerController extends Controller
 {
     /**
@@ -25,34 +26,58 @@ class ReportCommissionToResellerController extends Controller
      */
     public function index(Request $request)
     {
-       if($request->segment(2) == "")
-          $selected = $request->input('select_opt');
-        else
-          $selected = $request->segment(2);
- 
-        switch ($selected) {
-          case 'today':
-            $date = date("Y-m-d".' '.'00:00:00');
-            break;
-          case 'week':
-            $date = date("Y-m-d".' '.'00:00:00', strtotime("-7 day"));
-            break;
-          case 'month':
-            $date = date("Y-m-d".' '.'00:00:00', strtotime("-30 day"));
-            break;
-          case 'year':
-            $date = date("Y-m-d".' '.'00:00:00', strtotime("-12 month"));
-            break;
-          default:
-            $date = date("Y-m-d".' '.'00:00:00');
-            break;
-        }
-
+      $date    = date("Y-m-d 23:59:59");
       $to_date = date("Y-m-d 23:59:59");
+
+     if($request->segment(2) == "")
+        $selected = $request->input('select_opt');
+      else
+        $selected = $request->segment(2);
+ 
+      switch ($selected) {
+        case 'today':
+          $group = 'DAY';
+          $type  = 'D';
+          $date  = date("Y-m-d 00:00:00");
+          break;
+        case 'week':
+          $group = 'DAY';
+          $type  = 'D';
+          $date  = date("Y-m-d 00:00:00", strtotime("-7 day"));
+          break;
+        case 'month':
+          $group = 'MONTH';
+          $type  = 'D';
+          $date  = date("Y-m-d 00:00:00", strtotime("-30 day"));
+          break;
+        case 'year':
+          $group = 'MONTH';
+          $type  = 'F';
+          $date  = date("Y-m-d 00:00:00", strtotime("-12 month"));
+          break;
+        case 'period':
+          $startdate = DateTime::createFromFormat("F-d-Y", $request->startdate);
+          $date      = $startdate->format('Y-m-d 00:00:00');
+          $enddate   = DateTime::createFromFormat("F-d-Y", $request->enddate);
+          $to_date   = $enddate->format('Y-m-d 23:59:59'); 
+          var_dump($date);
+          var_dump($to_date);
+          $group     = 'DAY';
+          $type      = 'D';
+          break;
+        default:
+          $group = 'YEAR';
+          $type  = 'Y';
+          break;
+      }
 
       if($selected == 'all' || $selected == null) {
         $reports = CommissionToReseller::groupBy('reseller_id')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
         $total   = CommissionToReseller::sum('amount');
+        $chart_reports = CommissionToReseller::selectRaw('*,sum(amount) as total_amount')
+                                              ->groupBy(DB::raw('YEAR(date)'))
+                                              ->get();  
+                                              
       }
       else
       {
@@ -61,12 +86,29 @@ class ReportCommissionToResellerController extends Controller
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->paginate(10);
+        // Chart Report
+        $chart_reports =  CommissionToReseller::selectRaw('*,sum(amount) as total_amount')
+                                                ->where('date', '>=', $date)
+                                                ->where('date', '<=', $to_date)
+                                                ->groupBy(DB::raw(''.$group.'(date)'))
+                                                ->get();
+                                              
+                                              
+
         $total   = CommissionToReseller::where('date', '>=', $date)->where('date', '<=', $to_date)->sum('amount');                            
       }
-        
+
       $reports->setPath(url('commissiontoreseller', $selected));
 
-      return view('reportcommissiontoreseller.index', ['reports' => $reports, 'total' => $total, 'selected' => $selected]);
+      return view('reportcommissiontoreseller.index', 
+                                                ['reports' => $reports, 
+                                                'total' => $total, 
+                                                'selected' => $selected, 
+                                                'from' => $request->startdate,
+                                                'to' => $request->enddate, 
+                                                'chart_reports' => $chart_reports, 
+                                                'type' => $type
+                                                ]);
     }
 
     /**

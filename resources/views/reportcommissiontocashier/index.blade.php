@@ -87,11 +87,6 @@
             </thead>
             <tbody>
             @foreach($reports as $report)
-              <?php  
-                array_push($data, $report->total_amount); 
-                $date = strtotime($report->date);
-                array_push($label, date('F', $date));
-              ?>
               <tr>
                 <td>{{ $report->id }}</td>
                 <td>{{ $report->cashier->name }}</td>
@@ -113,6 +108,16 @@
     </div>
 </div>
 </div>
+
+<?php 
+
+  foreach ($chart_reports as $chart_report) 
+  {
+    array_push($data, $chart_report->total_amount); 
+    $date = strtotime($chart_report->date);
+    array_push($label, date($type, $date));
+  }
+?>
 
 <p id="from"><?php echo date_format(new DateTime($from), 'F-d-Y'); ?></p>
 <p id="to"><?php echo date_format(new DateTime($to), 'F-d-Y'); ?></p>
