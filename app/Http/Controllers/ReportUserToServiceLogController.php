@@ -8,6 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\UserToServiceLog;
 use App\Http\Controllers\Input;
+use DB;
+use DateTime;
+
 class ReportUserToServiceLogController extends Controller
 {
     /**
@@ -17,6 +20,8 @@ class ReportUserToServiceLogController extends Controller
      */
     public function index(Request $request)
     {
+        $date    = date("Y-m-d 23:59:59");
+        $to_date = date("Y-m-d 23:59:59");
         if($request->segment(2) == "")
           $selected = $request->select_opt;
         else
@@ -24,27 +29,46 @@ class ReportUserToServiceLogController extends Controller
  
         switch ($selected) {
           case 'today':
-            $date = date("Y-m-d".' '.'00:00:00');
+            $group = 'DAY';
+            $type  = 'D';
+            $date  = date("Y-m-d 00:00:00");
             break;
           case 'week':
-            $date = date("Y-m-d".' '.'00:00:00', strtotime("-7 day"));
+            $group = 'DAY';
+            $type  = 'D';
+            $date  = date("Y-m-d 00:00:00", strtotime("-7 day"));
             break;
           case 'month':
-            $date = date("Y-m-d".' '.'00:00:00', strtotime("-30 day"));
+            $group = 'DAY';
+            $type  = 'D';
+            $date  = date("Y-m-d 00:00:00", strtotime("-30 day"));
             break;
           case 'year':
-            $date = date("Y-m-d".' '.'00:00:00', strtotime("-12 month"));
+            $group = 'MONTH';
+            $type  = 'F';
+            $date  = date("Y-m-d 00:00:00", strtotime("-12 month"));
+            break;
+          case 'period':
+            $startdate = DateTime::createFromFormat("F-d-Y", $request->startdate);
+            $date      = $startdate->format('Y-m-d 00:00:00');
+            $enddate   = DateTime::createFromFormat("F-d-Y", $request->enddate);
+            $to_date   = $enddate->format('Y-m-d 23:59:59'); 
+            $group     = 'DAY';
+            $type      = 'D';
             break;
           default:
-            $date = date("Y-m-d".' '.'00:00:00');
+            $group = 'YEAR';
+            $type  = 'Y';
             break;
         }
-
-        $to_date = date("Y-m-d 23:59:59");
        
         if($selected == 'all' || $selected == null) {
-          $reports  = UserToServiceLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->paginate(5);
+          $reports = UserToServiceLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
           $total   = UserToServiceLog::sum('amount');
+    
+          $chart_reports = UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
+                                              ->groupBy(DB::raw('YEAR(date)'))
+                                              ->get();
         }
         else
         {
@@ -52,35 +76,28 @@ class ReportUserToServiceLogController extends Controller
                                       ->selectRaw('*,sum(amount) as total_amount')
                                       ->where('date', '>=', $date)
                                       ->where('date', '<=', $to_date)
-                                      ->paginate(5);
+                                      ->paginate(10);
+          // Chart Report
+          $chart_reports =  UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
+                                              ->where('date', '>=', $date)
+                                              ->where('date', '<=', $to_date)
+                                              ->groupBy(DB::raw(''.$group.'(date)'))
+                                              ->get();
           $total   = UserToServiceLog::where('date', '>=', $date)->where('date', '<=', $to_date)->sum('amount');                            
         }
         
         $reports->setPath(url('usertoservicelog', $selected));
         
       
-        return view('reportusertoservicelog.index', compact('reports', 'total', 'selected'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('reportusertoservicelog.index',
+                                                ['reports' => $reports, 
+                                                'total' => $total, 
+                                                'selected' => $selected, 
+                                                'from' => $request->startdate,
+                                                'to' => $request->enddate,  
+                                                'chart_reports' => $chart_reports, 
+                                                'type' => $type
+                                                ]);
     }
 
     /**
@@ -92,7 +109,7 @@ class ReportUserToServiceLogController extends Controller
     public function show($id)
     {
         $user     = UserToServiceLog::where('user_id', $id)->first();  
-        $reports  = UserToServiceLog::where('user_id', $id)->paginate(5);
+        $reports  = UserToServiceLog::where('user_id', $id)->paginate(10);
         $total    = UserToServiceLog::where('user_id', $id)->sum('amount');
         return view('reportusertoservicelog.user2servicelogdetail', ['report_details' => $reports, 'total_amount' => $total, 'user' => $user]);
     }
@@ -104,29 +121,6 @@ class ReportUserToServiceLogController extends Controller
      * @return Response
      */
     public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
     {
         //
     }

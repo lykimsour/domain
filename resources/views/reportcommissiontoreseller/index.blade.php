@@ -86,7 +86,7 @@
             @foreach($reports as $report)
               <tr>
                 <td>{{ $report->id }}</td>
-                <td>{{ $report->reseller_id }}</td>
+                <td>{{ $report->reseller->name }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
                 <td><a href="{{ route('detailcommissiontoreseller', ['id' => $report->reseller_id]) }}">Detail</a></td>

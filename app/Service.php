@@ -14,6 +14,11 @@ class Service extends Model
     return $this->hasMany('App\CommissionToCashier', 'foreign_key');
   }
 
+  public function servicetype()
+  {
+    return $this->belongsTo('App\ServiceType');
+  }
+
   public function commissiontoresellers()
   {
     return $this->hasMany('App\CommissionToReseller', 'foreign_key');

@@ -5,7 +5,7 @@
 
 <div class="container-fluid">
 
-<h2>{{trans('Report:Commission_To_Cashier_Detail')}}</h2>
+<h2>{{trans('Report:User_To_Service_Log_Detail')}}</h2>
 
 <div class="row">
     <div class="col-md-6">
@@ -16,7 +16,7 @@
 
       <ul class="list-group">
         <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
-            <span>List / <b>{{ $user->user->name }}</b></span> 
+            <span>List / <a href="{{  route('usertoservicelog') }}">{{ $user->user->name }}</a></span> 
         </li>
       </ul>
     <div class="table-responsive list-group-item">          
@@ -25,7 +25,6 @@
             <thead>  
               <tr>
                 <th>ID</th>
-                <th>User_name</th>
                 <th>Service_Code</th>
                 <th>Amount</th>
                 <th>Date</th>
@@ -36,10 +35,8 @@
             @foreach($report_details as $report_detail)
               <tr>
                 <td>{{ $report_detail->id }}</td>
-                <td>{{ $report_detail->user->name }}</td>
                 <td>{{ $report_detail->service_code }}</td>
                 <td>{{ $report_detail->amount }}</td>
-                <td>{{ $report_detail->date }}</td>
                 <td>{{ $report_detail->date }}</td>
                 <td><a href="{{ route('detailserviceuserlog', ['id' => $report_detail->id]) }}">Detail</a></td>
               </tr>
@@ -51,6 +48,4 @@
     </div>
 </div>
 </div>
-
-
 @endsection

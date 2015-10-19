@@ -180,10 +180,13 @@
 	Route::get('/usertomerchantlog', ['uses'=>'ReportUserToMerchantLogController@index','as'=>'usertomerchantlog', 'permission'=>'manage_user']);
 	Route::get('/usertomerchantlog/{type}', ['uses'=>'ReportUserToMerchantLogController@index','as'=>'usertomerchantlog', 'permission'=>'manage_user']);
 	Route::post('/usertomerchantlog', ['uses'=>'ReportUserToMerchantLogController@index','as'=>'usertomerchantlog', 'permission'=>'manage_user']);
-	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
 
-
+	//Report User To Shop Log
+	Route::get('/usertoshoplog', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
+	Route::get('/usertoshoplog/{type}', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
+	Route::post('/usertoshoplog', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
 	
+	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
 	Route::post('/cashiertoreseller/detail/{id}',['uses'=>'ReportCashierToReseller@details','as'=>'detail','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@detail','as'=>'detail','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'manage_user']);

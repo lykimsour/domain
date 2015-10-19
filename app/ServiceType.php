@@ -8,7 +8,12 @@ class ServiceType extends Model
 {
     protected $table = 'service_type';
     public $timestamps = false;
+
     public function serviceclass(){
     	return $this->belongsToMany('App\serviceclass');
+    }
+
+    public function servicetypes(){
+    	return $this->hasMany('App\Service');
     }
 }

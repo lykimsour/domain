@@ -20,6 +20,7 @@
       </ul>
     <div class="table-responsive list-group-item">          
           <table class="table table-bordered table-hover table-condensed" >
+            {!! $report_details->render() !!}
             <thead>  
               <tr>
                 <th>ID</th>
