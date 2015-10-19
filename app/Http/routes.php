@@ -103,15 +103,18 @@
 	Route::get('/permission',['uses'=>'PermissionController@index','as'=>'permission','permission'=>'manage_user']);
 	Route::get('/permission/create',['uses'=>'PermissionController@create','as'=>'createpermission','permission'=>'manage_user']);
 	Route::post('/permission/store',['uses'=>'PermissionController@store','as'=>'storepermission','permission'=>'manage_user']);
+	Route::get('/permission/edit/{id}',['uses'=>'PermissionController@edit','as'=>'editpermission','permission'=>'manage_user']);
+	Route::put('/permission/edit/{id}',['uses'=>'PermissionController@update','as'=>'updatepermission','permission'=>'manage_user']);
 
 
 	//Permission_role
 	Route::get('/permissionrole',['uses'=>'PermissionRoleController@index','as'=>'permissionrole','permission'=>'manage_user']);
-	Route::get('/permissionrole/create',['uses'=>'PermissionRoleController@create','as'=>'createpermissionrole','permission'=>'manage_user']);
+	Route::get('/permissionrole/create/{roleid}',['uses'=>'PermissionRoleController@create','as'=>'createpermissionrole','permission'=>'manage_user']);
 	Route::post('/permissionrole/store',['uses'=>'PermissionRoleController@store','as'=>'storepermissionrole','permission'=>'manage_user']);
 	Route::get('/permissionrole/edit/{id}',['uses'=>'PermissionRoleController@edit','as'=>'editpermissionrole','permission'=>'manage_user']);
 	Route::put('/permissionrole/edit/{id}',['uses'=>'PermissionRoleController@update','as'=>'updatepermissionrole','permission'=>'manage_user']);
 	Route::delete('/permissionrole/delete/{id}',['uses'=>'PermissionRoleController@destroy','as'=>'deletepermissionrole','permission'=>'manage_user']);
+	Route::get('/permissionrole/check/{id}',['uses'=>'PermissionRoleController@check','as'=>'checkpermissionrole','permission'=>'manage_user']);
 
 	//promotion
 	Route::get('/promotion',['uses'=>'PromotionController@index','as'=>'promotion','permission'=>'view_promotion']);
@@ -132,7 +135,6 @@
 
 	//Report cashierToreseller
 
-	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller', 'permission'=>'manage_user']);
 	
     //Report CommissionToCashier
     Route::get('/commissiontocashier', ['uses'=>'ReportCommissionToCashierController@index','as'=>'commissiontocashier', 'permission'=>'manage_user']);
@@ -181,6 +183,7 @@
 	Route::get('/usertomerchantlog/{type}', ['uses'=>'ReportUserToMerchantLogController@index','as'=>'usertomerchantlog', 'permission'=>'manage_user']);
 	Route::post('/usertomerchantlog', ['uses'=>'ReportUserToMerchantLogController@index','as'=>'usertomerchantlog', 'permission'=>'manage_user']);
 
+
 	//Report User To Shop Log
 	Route::get('/usertoshoplog', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
 	Route::get('/usertoshoplog/{type}', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
@@ -192,6 +195,7 @@
 	Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'manage_user']);
 	Route::post('/cashiertoreseller/type/',['uses'=>'ReportCashierToReseller@queryreport','as'=>'queryreport','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'manage_user']);
+
 	});
 
 	

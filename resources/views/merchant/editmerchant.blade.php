@@ -4,7 +4,7 @@
 
 <section class="content-header">
     <h1>
-      {{trans('New Merchant')}}
+      {{trans('Edit Merchant')}}
     </h1>
   </section>
 <section class="content">
@@ -69,7 +69,7 @@
                  <br/>
               {!! Form::file('image') !!}
            </div>
-		  <button type="submit" class="btn btn-primary">{{trans('Add Merchant')}}</button>
+		  <button type="submit" class="btn btn-primary">{{trans('Edit Merchant')}}</button>
       </form>
     </div>
 </div><br/>

@@ -7,7 +7,7 @@
 <h2>{{trans('Manage Permissions')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <!--<a href="{{route('createpermission')}}"><div class="btn btn-primary">{{trans('New Permission')}}</div></a>-->
+       <a href="{{route('createpermission')}}"><div class="btn btn-primary">{{trans('New Permission')}}</div></a>
     </div>
 </div><br/>
 <div class="row">
@@ -31,18 +31,12 @@
                <tbody>
               @foreach($permissions as $permission)
               <tr>
-                <!--<td>
-              <form method="post" action="" >
-               {!! csrf_field() !!}
-              <input type="hidden" name="_method" value="DELETE" >
-              <button type="summit" class="btn btn-xs btn btn-danger" onclick="return confirm('Are you sure?')" >
-              <span class="glyphicon glyphicon-remove"></span>
-              </button>
-              <a href=""><div class="btn btn-xs btn btn-info">
+              <td>
+            
+              <a href="{{route('editpermission',['id'=>$permission->id])}}"><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
-                </form>
-                </td>-->
+                </td>
                     <td>{{$permission->id}}</td>
                     <td>{{$permission->permission_title}}</td>
                     <td>{{$permission->permission_slug}}</td>

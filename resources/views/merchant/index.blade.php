@@ -4,7 +4,7 @@
 
 
 <div class="container-fluid">
-<h2>{{trans('Manage Cashier')}}</h2>
+<h2>{{trans('Manage Merchant')}}</h2>
 <div class="row">
     <div class="col-md-6">
        <a href="{{route('createmerchant')}}"><div class="btn btn-primary">{{trans('New Merchant')}}</div></a>
@@ -13,7 +13,6 @@
 <div class="row">
 
     <div class="col-md-12">
-    
        <ul class="list-group">
   		<li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
   				<span>List</span> 

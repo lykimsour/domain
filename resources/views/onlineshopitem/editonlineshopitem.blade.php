@@ -3,7 +3,7 @@
 
 <section class="content-header">
     <h1>
-      {{trans('New OnlineShopItem')}}
+      {{trans('Edit OnlineShopItem')}}
     </h1>
   </section>
 <section class="content">
