@@ -25,6 +25,7 @@
             <thead>  
               <tr>
                 <th>ID</th>
+                <th>Service_Code</th>
                 <th>User_Name</th>
                 <th>Amount</th>
                 <th>Date</th>
