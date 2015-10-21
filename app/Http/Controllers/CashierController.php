@@ -14,7 +14,7 @@ use Redirect;
 class CashierController extends Controller
 {
     public function showCashier(){
-      $cashiers = Cashier::paginate(1);
+      $cashiers = Cashier::paginate(50);
       //$cashiers->setPath(url('/cashier'));
       $cashiers->setPath('cashier');
       return view('cashier.index',['cashiers'=>$cashiers]);

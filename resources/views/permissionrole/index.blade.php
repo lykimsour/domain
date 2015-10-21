@@ -31,13 +31,9 @@ use App\Role;
             </thead>
                <tbody>
              @foreach($permissionroles as $permissionrole)
-             <?php
-              $roletitle = Role::findOrFail($permissionrole->role_id);
-              $permissionslug = Permission::findOrFail($permissionrole->permission_id);
-             ?>
               <tr>
               <td>
-              @if($permissionslug->id!=1)
+              @if($permissionrole->permissions->id!=1)
               <form method="post" action="{{route('deletepermissionrole',['id'=>$permissionrole->id])}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
@@ -52,8 +48,8 @@ use App\Role;
                </form>
                </td>
               <input type="hidden" name="_method" value="DELETE" >
-                    <td>{{$roletitle->role_title}}</td>
-                    <td>{{$permissionslug->permission_slug}} </td>
+                    <td>{{$permissionrole->roles->role_title}}</td>
+                    <td>{{$permissionrole->permissions->permission_slug}} </td>
               </tr>
               
              @endforeach

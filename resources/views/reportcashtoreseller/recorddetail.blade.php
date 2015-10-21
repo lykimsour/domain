@@ -41,7 +41,7 @@
                     <td>{{$report->transfer_cash2reseller_log_id}}</td>
                     <td>{{$report->resp_code}}</td>
                     <td>{{$report->pan}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{$report->mpu_amount}}</td>
                     <td>{{$report->invoice_no}}</td>
                     <td>{{$report->tran_ref}}</td>
                     <td>{{$report->approval_code}}</td>

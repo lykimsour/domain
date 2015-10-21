@@ -94,7 +94,7 @@
               <tr>
                     <?php 
                       $d = strtotime($report->date);
-                      $reportdate = date('Y-M-d',$d); 
+                      $reportdate = date('Y-M-d h:i:s',$d); 
                     ?>
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>

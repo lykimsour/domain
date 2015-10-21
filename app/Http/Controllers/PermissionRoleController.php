@@ -59,14 +59,12 @@ class PermissionRoleController extends Controller
     public function store(Request $request)
     {
         $permissions = Permission::All();
-       
-
+      
         foreach($permissions as $permission){
         
             if($request->has($permission->permission_slug)){
                 $check = PermissionRole::where(['role_id'=>$request->roleid,'permission_id'=>$permission->id])->get();
-                if($check->first()){}
-                else{
+                if($check->isEmpty()){
                     $permissionrole = new PermissionRole;
                     $permissionrole->role_id = $request->input('roleid');
                     $permissionrole->permission_id = $request->input($permission->permission_slug);
