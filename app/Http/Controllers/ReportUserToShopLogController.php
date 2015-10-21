@@ -82,7 +82,7 @@ class ReportUserToShopLogController extends Controller
       }
      
       if($selected == 'all') {
-        $reports = UserToShopLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
+        $reports = UserToShopLog::groupBy('service_code')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
         $total   = UserToShopLog::sum('amount');
 
         $chart_reports = UserToShopLog::selectRaw('*,sum(amount) as total_amount')
@@ -91,7 +91,7 @@ class ReportUserToShopLogController extends Controller
       }
       else
       {
-        $reports = UserToShopLog::groupBy('user_id')
+        $reports = UserToShopLog::groupBy('service_code')
                                     ->selectRaw('*,sum(amount) as total_amount')
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
@@ -173,22 +173,22 @@ class ReportUserToShopLogController extends Controller
           break;
       }
 
-      // Get Reseller
-      $user = UserToShopLog::where('user_id', $id)->first(); 
+      
+      $service = UserToShopLog::where('service_code', $id)->first(); 
 
       if($get_type == 'all' || $get_type == null) {
-        $reports  = UserToShopLog::where('user_id', $id)->where('status', 1)->orderBy('date', 'DESC')->paginate(10);
-        $total    = UserToShopLog::where('user_id', $id)->where('status', 1)->sum('amount');
+        $reports  = UserToShopLog::where('service_code', $id)->where('status', 1)->orderBy('date', 'DESC')->paginate(10);
+        $total    = UserToShopLog::where('service_code', $id)->where('status', 1)->sum('amount');
       }
       else
       {
-        $reports = UserToShopLog::where('user_id', $id)
+        $reports = UserToShopLog::where('service_code', $id)
                                         ->where('status', 1)
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->orderBy('date', 'DESC')
                                         ->paginate(10);
-        $total   = UserToShopLog::where('user_id', $id)
+        $total   = UserToShopLog::where('service_code', $id)
                                         ->where('status', 1)
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
@@ -196,7 +196,7 @@ class ReportUserToShopLogController extends Controller
         
       }
  
-      return view('reportusertoshoplog.user2shoplogdetail', ['report_details' => $reports, 'total_amount' => $total, 'user' => $user]);
+      return view('reportusertoshoplog.user2shoplogdetail', ['report_details' => $reports, 'total_amount' => $total, 'service' => $service]);
       
     }
     public function servicedetail($id) {

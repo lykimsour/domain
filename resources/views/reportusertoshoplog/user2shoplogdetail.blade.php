@@ -16,7 +16,7 @@
 
       <ul class="list-group">
         <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
-            <span>List / <a href="{{  route('usertoshoplog') }}">{{ $user->user->name }}</a></span> 
+            <span>List / <a href="{{  route('usertoshoplog') }}">{{ $service->service_code }}</a></span> 
         </li>
       </ul>
     <div class="table-responsive list-group-item">          
@@ -25,7 +25,7 @@
             <thead>  
               <tr>
                 <th>ID</th>
-                <th>Service_Code</th>
+                <th>User_Name</th>
                 <th>Amount</th>
                 <th>Date</th>
                 <th>Detail</th>
@@ -36,6 +36,7 @@
               <tr>
                 <td>{{ $report_detail->id }}</td>
                 <td>{{ $report_detail->service_code }}</td>
+                <td>{{ $report_detail->user->name }}</td>
                 <td>{{ $report_detail->amount }}</td>
                 <td>{{ $report_detail->date }}</td>
                 <td><a href="{{ route('detailserviceshoplog', 
