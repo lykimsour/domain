@@ -39,7 +39,14 @@
                 <td>{{ $report_detail->service->code }}</td>
                 <td>{{ $report_detail->amount }}</td>
                 <td>{{ $report_detail->date }}</td>
-                <td><a href="{{ route('detailservicecommissiontoreseller', ['id' => $report_detail->id]) }}">Detail</a></td>
+                <td><a href="{{ route('detailservicecommissiontoreseller', 
+                                [
+                                  'type' => Request::segment(4), 
+                                  'start_date' => Request::segment(5) , 
+                                  'end_date' => Request::segment(6),
+                                  'id' => $report_detail->id
+                                ]) 
+                              }}">Detail</a></td>
               </tr>
             @endforeach
             </tbody>

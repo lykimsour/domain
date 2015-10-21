@@ -59,7 +59,7 @@
         {!! Form::close() !!}
         </li>
       </ul>
-
+ 
       <ul class="list-group">
         <li class="list-group-item">
           <div style="width:100%">
@@ -69,6 +69,7 @@
           </div>
         </li>
       </ul>
+
     <div class="table-responsive list-group-item">
         @if(count($reports) > 0)       
           <table class="table table-bordered table-hover table-condensed" >
@@ -83,13 +84,35 @@
               </tr>
             </thead>
             <tbody>
+            <?php
+              if($selected == 'period')
+              {
+                $start_date = $from;
+                $end_date   = $to;
+                $get_type   = 'period';
+              }
+              else
+              {
+                $start_date = '';
+                $end_date   = '';
+                $get_type   = $selected != ""? $selected : 'today'; 
+              }
+            ?>
+
             @foreach($reports as $report)
               <tr>
                 <td>{{ $report->id }}</td>
                 <td>{{ $report->reseller->name }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
-                <td><a href="{{ route('detailcommissiontoreseller', ['id' => $report->reseller_id]) }}">Detail</a></td>
+                <td><a href="{{ route('detailcommissiontoreseller', 
+                                [
+                                  'id' => $report->reseller_id,
+                                  'type' => $get_type, 
+                                  'start_date' => $start_date, 
+                                  'end_date' => $end_date
+                                ]) 
+                              }}">Detail</a></td>
               </tr>
             @endforeach
             </tbody>
@@ -115,8 +138,8 @@
 
 ?>
 
-<p id="from"><?php echo date_format(new DateTime($from), 'F-d-Y'); ?></p>
-<p id="to"><?php echo date_format(new DateTime($to), 'F-d-Y'); ?></p>
+<p id="from">{{ $from }}</p>
+<p id="to">{{ $to }}</p>
 <script>
   var barChartData = {
     labels :<?php echo json_encode($label); ?>,

@@ -86,13 +86,34 @@
               </tr>
             </thead>
             <tbody>
+            <?php
+              if($selected == 'period')
+              {
+                $start_date = $from;
+                $end_date   = $to;
+                $get_type   = 'period';
+              }
+              else
+              {
+                $start_date = '';
+                $end_date   = '';
+                $get_type   = $selected != ""? $selected : 'today'; 
+              }
+            ?>
             @foreach($reports as $report)
               <tr>
                 <td>{{ $report->id }}</td>
                 <td>{{ $report->cashier->name }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
-                <td><a href="{{ route('detailcommissiontocashier', ['id' => $report->cashier_id]) }}">Detail</a></td>
+                <td><a href="{{ route('detailcommissiontocashier', 
+                                  [
+                                    'id' => $report->cashier_id,
+                                    'type' => $get_type, 
+                                    'start_date' => $start_date, 
+                                    'end_date' => $end_date
+                                  ]) 
+                            }}">Detail</a></td>
               </tr>
             @endforeach
 
@@ -119,8 +140,8 @@
   }
 ?>
 
-<p id="from"><?php echo date_format(new DateTime($from), 'F-d-Y'); ?></p>
-<p id="to"><?php echo date_format(new DateTime($to), 'F-d-Y'); ?></p>
+<p id="from">{{ $from }}</p>
+<p id="to">{{ $to }}</p>
 <script>
   var barChartData = {
     labels :<?php echo json_encode($label); ?>,
