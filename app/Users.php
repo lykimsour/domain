@@ -22,4 +22,14 @@ class Users extends Model
   {
     return $this->hasMany('App\UserToServiceLog', 'foreign_key');
   }
+
+  public function usertoshoplogs()
+  {
+    return $this->hasMany('App\UserToShopLog', 'foreign_key');
+  }
+
+  public function users()
+  {
+    return $this->hasMany('App\UserToMerchant', 'foreign_key');
+  }
 }
