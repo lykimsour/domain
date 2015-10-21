@@ -31,7 +31,7 @@ class Users extends Model
   public function users()
   {
     return $this->hasMany('App\UserToMerchant', 'foreign_key');
-
+  }
   public function cashtouser()
   {
     return $this->hasMany('App\CashtoUserLog');
