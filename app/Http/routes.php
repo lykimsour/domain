@@ -184,13 +184,23 @@
 	Route::post('/usertomerchantlog', ['uses'=>'ReportUserToMerchantLogController@index','as'=>'usertomerchantlog', 'permission'=>'manage_user']);
 	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
 
-
+	//report cashtoreseller
 	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller', 'permission'=>'view_cashier_report']);
 	Route::post('/cashiertoreseller/detail/{id}',['uses'=>'ReportCashierToReseller@details','as'=>'detail','permission'=>'view_cashier_report']);
 	Route::get('/cashiertoreseller/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@detail','as'=>'detail','permission'=>'view_cashier_report']);
 	Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'view_cashier_report']);
 	Route::post('/cashiertoreseller/type/',['uses'=>'ReportCashierToReseller@queryreport','as'=>'queryreport','permission'=>'view_cashier_report']);
 	Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'view_cashier_report']);
+	
+	//report cashtouser
+	Route::get('/cashtouser',['uses'=>'ReportCashtoUserController@index','as'=>'cashtouser', 'permission'=>'view_cashier_report']);
+	Route::post('/cashtouser/type/',['uses'=>'ReportCashtoUserController@queryreport','as'=>'queryreportcashtouser','permission'=>'view_cashier_report']);
+	Route::get('/cashtouser/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashtoUserController@queryreport','as'=>'cashtouserreport','permission'=>'view_cashier_report']);
+	Route::post('/cashtouser/detail/{id}/',['uses'=>'ReportCashtoUserController@details','as'=>'detailcashtouser','permission'=>'view_cashier_report']);
+	Route::get('/cashtouser/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashtoUserController@detail','as'=>'detailcashtouser','permission'=>'view_cashier_report']);
+	Route::get('/cashtouser/recorddetail/{id}',['uses'=>'ReportCashtoUserController@recorddetail','as'=>'recorddetailcashtouser','permission'=>'view_cashier_report']);
+
+
 	});
 
 	

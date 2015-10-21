@@ -1,18 +1,16 @@
 
 @extends('layouts.app')
-
-@section('content')
-<?php 
-  //init array
-  $data  = []; 
+<?php
+ $data  = []; 
   $label = [];
-
 ?>
+@section('content')
+
 <div class="container-fluid">
 
 <h2>{{trans('Report:Cashier_To_Reseller')}}</h2>
 <div class="row">
-<form method="post" action="{{route('queryreport')}}">
+<form method="post" action="{{route('queryreportcashtouser')}}">
   {!! csrf_field() !!}
  <div class="table-responsive list-group-item">  
       <div class="col-md-2">
@@ -60,34 +58,29 @@
               <canvas id="canvas" height="250" width="900"></canvas>
             </div>
           </div>
+
 <div class="row">
     <div class="col-md-12">
        <ul class="list-group">
       <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
           <span>Report</span> 
       </li>
-     
+
     <div class="table-responsive list-group-item">          
           <table class="table table-bordered table-hover table-condensed" >
-            <thead>
+               <thead>
                 {!! $reports->render() !!}
                 <tr>
-                 
                   <th>ID</th>
                   <th>Cashier_Name</th>
-                  <!--<th>Reseller_name</th>-->
                   <th>Total</th>
                   <th>Status</th>
-                  @if($time!='all')
-                 <!--<th>Date</th>-->
-                  @endif
                   <th>Detail</th>
                 </tr>
             </thead>
-               <tbody>
-            <?php $total = 0 ?>
-            
-            @foreach($chart as $chart)
+             <tbody>
+             <?php $total = 0;?>
+               @foreach($chart as $chart)
                 <?php  
                 array_push($data, $chart->total); 
                 $date = strtotime($chart->date);
@@ -97,42 +90,38 @@
                 array_push($label,$date);
               ?>
             @endforeach 
-
-            @foreach($reports as $report)
+              @foreach($reports as $report)
               <tr>
-            
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>
                     <td>{{$report->total}}</td>
                     <td>{{$report->status}}</td>
-                    @if($time!='all')
-                    <!--<td>{{$report->date}}</td>-->
-                    @endif
-                    <td><a href="{{route('detail',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
-                    <?php $total = $report->total + $total  ?>
+                    <td><a href="{{route('detailcashtouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
+                    <?php 
+                    $total = $report->total + $total  ?>
               </tr>
 
           @endforeach
-      </li>
             </tbody>
-       
           </table>
-      <div class="table-responsive list-group-item">    
+           <div class="table-responsive list-group-item">    
           <table class="table table-bordered table-hover table-condensed" >
              <tr><td><li class="list-group-item"><b>Sub_Total: {{$total}} COIN</b></li></span></td></tr>
           <tr><td> <li class="list-group-item"><b>Total:  {{$totalall}} COIN</b></li></span></td></tr>
           </table>
       </div>
-    </ul>
-      
+
     </div>
-    </ul>
-</div><br/>
+
+   </ul>
+   </div>
+   </div>
 </div>
 <div id="from">{{$from}}</div>
 <div id="to">{{$to}}</div>
 <script type="text/javascript">
    var barChartData = {
+   
     labels :<?php echo json_encode($label); ?>,
     datasets : [
       {
@@ -144,10 +133,9 @@
         pointHighlightFill : "#fff",
         pointHighlightStroke : "rgba(151,187,205,1)",
         data : <?php echo json_encode($data); ?>
+       
       }
     ]
   }
 </script>
-  
 @endsection
-

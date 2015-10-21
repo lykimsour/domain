@@ -22,4 +22,8 @@ class Users extends Model
   {
     return $this->hasMany('App\UserToServiceLog', 'foreign_key');
   }
+  public function cashtouser()
+  {
+    return $this->hasMany('App\CashtoUserLog');
+  }
 }
