@@ -289,7 +289,10 @@ class ReportCashtoUserController extends Controller
                                             ->orderBy('id','DESC')
                                             ->paginate(50);
                 $report->setPath('cashtouser');
-                $totalall = CashtoUserLog::where('status',1)->sum('amount');
+                $totalall = CashtoUserLog::where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->where(['status'=>'1'])
+                                        ->sum('amount'); 
                 $type = "all";
                 $time = "today";
                 $chart = $this->chartdata(0,$type,$time,$from,$to);

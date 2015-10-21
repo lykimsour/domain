@@ -19,4 +19,7 @@ class Reseller extends Model
     {
 		$this->hasMany('App\CashierToReseller');
 	}
+	public function credittouser(){
+		return $this->hasMany('App\CredittoUserLog');
+	}
 }

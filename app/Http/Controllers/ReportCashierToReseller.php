@@ -155,8 +155,11 @@ class ReportCashierToReseller extends Controller
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
                                             ->paginate(50);
+                $totalall = CashierToReseller::where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->where(['status'=>'1'])
+                                        ->sum('amount'); 
                 $report->setPath('cashiertoreseller');
-                $totalall = CashierToReseller::where('status',1)->sum('amount');
                 $type = "all";
                 $time = "today";
                 $chart = $this->chartdata(0,$type,$time,$from,$to);

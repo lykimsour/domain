@@ -59,8 +59,13 @@
   
 $(document).ready(function() {
   window.onload = function(){
+   
+
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx).Bar(barChartData, {responsive: true});
+    
+
+
     var gettime = document.getElementById("time");
     var time = gettime.options[gettime.selectedIndex].text;
       $("#sdate").hide();
