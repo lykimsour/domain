@@ -97,7 +97,8 @@
           <li {{ Helper::activeMenu("commissiontocashier") }}><a href="{{route('commissiontocashier')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Cashier')}}</span></a></li>
           <li {{ Helper::activeMenu("commissiontoreseller") }}><a href="{{route('commissiontoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Reseller')}}</span></a></li>
           <li {{ Helper::activeMenu("usertoservicelog") }}><a href="{{route('usertoservicelog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Service_Log')}}</span></a></li>                        
-          <li {{ Helper::activeMenu("usertomerchantlog") }}><a href="{{route('usertomerchantlog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Merchant_Log')}}</span></a></li>                        
+          <li {{ Helper::activeMenu("usertomerchantlog") }}><a href="{{route('usertomerchantlog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Merchant_Log')}}</span></a></li>
+          <li {{ Helper::activeMenu("usertoshoplog") }}><a href="{{route('usertoshoplog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Shop_Log')}}</span></a></li>                        
         </ul>
       </li>
 

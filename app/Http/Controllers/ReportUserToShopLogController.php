@@ -6,12 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\UserToServiceLog;
-use App\Http\Controllers\Input;
-use DB;
-use DateTime;
-
-class ReportUserToServiceLogController extends Controller
+use App\UserToShopLog;
+class ReportUserToShopLogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -63,33 +59,33 @@ class ReportUserToServiceLogController extends Controller
         }
        
         if($selected == 'all' || $selected == null) {
-          $reports = UserToServiceLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
-          $total   = UserToServiceLog::sum('amount');
+          $reports = UserToShopLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
+          $total   = UserToShopLog::sum('amount');
     
-          $chart_reports = UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
+          $chart_reports = UserToShopLog::selectRaw('*,sum(amount) as total_amount')
                                               ->groupBy(DB::raw('YEAR(date)'))
                                               ->get();
         }
         else
         {
-          $reports = UserToServiceLog::groupBy('user_id')
+          $reports = UserToShopLog::groupBy('user_id')
                                       ->selectRaw('*,sum(amount) as total_amount')
                                       ->where('date', '>=', $date)
                                       ->where('date', '<=', $to_date)
                                       ->paginate(10);
           // Chart Report
-          $chart_reports =  UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
+          $chart_reports =  UserToShopLog::selectRaw('*,sum(amount) as total_amount')
                                               ->where('date', '>=', $date)
                                               ->where('date', '<=', $to_date)
                                               ->groupBy(DB::raw(''.$group.'(date)'))
                                               ->get();
-          $total   = UserToServiceLog::where('date', '>=', $date)->where('date', '<=', $to_date)->sum('amount');                            
+          $total   = UserToShopLog::where('date', '>=', $date)->where('date', '<=', $to_date)->sum('amount');                            
         }
         
-        $reports->setPath(url('usertoservicelog', $selected));
+        $reports->setPath(url('usertoshoplog', $selected));
         
       
-        return view('reportusertoservicelog.index',
+        return view('reportusertoshoplog.index',
                                                 ['reports' => $reports, 
                                                 'total' => $total, 
                                                 'selected' => $selected, 
@@ -101,6 +97,27 @@ class ReportUserToServiceLogController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -108,10 +125,7 @@ class ReportUserToServiceLogController extends Controller
      */
     public function show($id)
     {
-        $user     = UserToServiceLog::where('user_id', $id)->first();  
-        $reports  = UserToServiceLog::where('user_id', $id)->paginate(10);
-        $total    = UserToServiceLog::where('user_id', $id)->sum('amount');
-        return view('reportusertoservicelog.user2servicelogdetail', ['report_details' => $reports, 'total_amount' => $total, 'user' => $user]);
+        //
     }
 
     /**
@@ -121,6 +135,29 @@ class ReportUserToServiceLogController extends Controller
      * @return Response
      */
     public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
     {
         //
     }

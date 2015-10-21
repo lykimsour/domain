@@ -9,7 +9,7 @@
 ?>
 <div class="container-fluid">
 
-<h2>{{trans('Report:Commission_To_Reseller')}}</h2>
+<h2>{{trans('Report:User_To_Service_Log')}}</h2>
 
 <div class="row">
     <div class="col-md-6">
@@ -23,8 +23,9 @@
         </li>
       </ul>
       <ul class="list-group">
-        <li class="list-group-item">   
-        {!! Form::open(array('action' => array('ReportCommissionToResellerController@index'), 'method' => 'POST', 'class' => 'form-inline')) !!}
+        <li class="list-group-item">
+      
+        {!! Form::open(array('action' => array('ReportUserToServiceLogController@index'), 'method' => 'POST', 'class' => 'form-inline')) !!}
           {!! Form::select('select_opt', 
             [
              'all' => 'All',
@@ -54,12 +55,11 @@
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
               </span>
-          </span>
+          </span> 
           {!! Form::submit('Show', array('class' => 'btn btn-danger')) !!}
         {!! Form::close() !!}
         </li>
       </ul>
-
       <ul class="list-group">
         <li class="list-group-item">
           <div style="width:100%">
@@ -69,27 +69,27 @@
           </div>
         </li>
       </ul>
-    <div class="table-responsive list-group-item">
-        @if(count($reports) > 0)       
+    <div class="table-responsive list-group-item"> 
+        @if(count($reports) > 0)         
           <table class="table table-bordered table-hover table-condensed" >
           {!! $reports->render() !!}
             <thead>  
-              <tr>
-                <th>ID</th>
-                <th>Reseller_Name</th>
-                <th>Total</th>
-                <th>Date</th>
-                <th>Detail</th>
-              </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>User_Name</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Detail</th>
+                </tr>
             </thead>
             <tbody>
             @foreach($reports as $report)
               <tr>
                 <td>{{ $report->id }}</td>
-                <td>{{ $report->reseller->name }}</td>
+                <td>{{ $report->id }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
-                <td><a href="{{ route('detailcommissiontoreseller', ['id' => $report->reseller_id]) }}">Detail</a></td>
+                <td><a href="{{ route('detailusertoservicelog', ['id' => $report->user_id]) }}">Detail</a></td>
               </tr>
             @endforeach
             </tbody>
@@ -104,15 +104,14 @@
     </div>
 </div>
 </div>
-<?php 
 
+<?php 
   foreach ($chart_reports as $chart_report) 
   {
     array_push($data, $chart_report->total_amount); 
     $date = strtotime($chart_report->date);
     array_push($label, date($type, $date));
   }
-
 ?>
 
 <p id="from"><?php echo date_format(new DateTime($from), 'F-d-Y'); ?></p>

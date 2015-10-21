@@ -10,12 +10,7 @@ use App\CommissionToCashier;
 use App\Http\Controllers\Collection;
 use App\Service;
 use App\Cashier;
-use App\UserToServicejx2Detail;
-use App\UserToServicefsDetail;
-use App\UserToServiceakDetail;
-use App\UserToServicenagaDetail;
-use App\UserToServicetournamentDetail;
-use App\UserToServiceavatarDetail;
+use App\ServiceType;
 use Carbon\Carbon;  
 use DB;
 use DateTime;
@@ -71,7 +66,7 @@ class ReportCommissionToCashierController extends Controller
         }
 
       if($selected == 'all' || $selected == null) {
-        $reports = CommissionToCashier::groupBy('cashier_id')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
+        $reports = CommissionToCashier::groupBy('cashier_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
         $total   = CommissionToCashier::sum('amount');
         $chart_reports = CommissionToCashier::selectRaw('*,sum(amount) as total_amount')
                                               ->groupBy(DB::raw('YEAR(date)'))
@@ -81,6 +76,7 @@ class ReportCommissionToCashierController extends Controller
       else
       {
         $reports = CommissionToCashier::groupBy('cashier_id')
+                                      ->orderBy('date', 'DESC')
                                       ->selectRaw('*,sum(amount) as total_amount')
                                       ->where('date', '>=', $date)
                                       ->where('date', '<=', $to_date)
@@ -111,27 +107,6 @@ class ReportCommissionToCashierController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -141,7 +116,7 @@ class ReportCommissionToCashierController extends Controller
     {  
       $cashier = Cashier::where('id', $id)->first();  
 
-      $reports = CommissionToCashier::where('cashier_id', $id)->paginate(10);
+      $reports = CommissionToCashier::where('cashier_id', $id)->orderBy('date', 'DESC')->paginate(10);
 
       $total   = CommissionToCashier::where('cashier_id', $id)->sum('amount');
   
@@ -151,80 +126,22 @@ class ReportCommissionToCashierController extends Controller
     public function servicedetail($id)
     { 
 
-      $service = CommissionToCashier::where('id', $id)->first(); 
-      $cashier = Cashier::where('id', $service->cashier_id)->first();   
-      switch ($service->service->code) {
-        case 'jx2':
-              $service_detail = UserToServicejx2Detail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-            break;
-        case 'fs':
-              $service_detail = UserToServicefsDetail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-              break;
-        case 'ak':
-              $service_detail = UserToServiceakDetail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-              break;
-        case 'avatar':
-              $service_detail = UserToServiceavatarDetail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-              break;
-        case 'naga':
-              $service_detail = UserToServicenagaDetail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-              break;  
-        case 'ykaw':
-              $service_detail = UserToServiceykawDetail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-              break;
-        case 'tournament':
-              $service_detail = UserToServicetournamentDetail::where('transfer_user2service_log_id', $service->transfer_log_id)
-                                                ->first();
-            break;
-      }
+      $service      = CommissionToCashier::where('id', $id)->firstOrFail();
+      $service_type = ServiceType::where('id', $service->service->service_type_id)->firstOrFail(); 
+      $cashier      = Cashier::where('id', $service->cashier_id)->first();
       
+      $service_detail = DB::table('transfer_user2'.$service_type->name.'_'.$service->service->code.'_d')
+                      ->where('transfer_user2'.$service_type->name.'_log_id', $service->transfer_log_id)
+                      ->first();
 
       return view('reportcommissiontocashier.commission2cashierservicedetail', 
                     [
                       "service_detail" => $service_detail, 
                       "cashier"        => $cashier,
-                      "service_code"   => $service->service->code
+                      "service_code"   => $service->service->code,
+                      "service_type"   => $service_type->name
                     ]
                   );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
