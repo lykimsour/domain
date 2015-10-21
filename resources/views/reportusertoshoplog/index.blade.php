@@ -9,7 +9,7 @@
 ?>
 <div class="container-fluid">
 
-<h2>{{trans('Report:User_To_Service_Log')}}</h2>
+<h2>{{trans('Report:User_To_Shop_Log')}}</h2>
 
 <div class="row">
     <div class="col-md-6">
@@ -25,7 +25,7 @@
       <ul class="list-group">
         <li class="list-group-item">
       
-        {!! Form::open(array('action' => array('ReportUserToServiceLogController@index'), 'method' => 'POST', 'class' => 'form-inline')) !!}
+        {!! Form::open(array('action' => array('ReportUserToShopLogController@index'), 'method' => 'POST', 'class' => 'form-inline')) !!}
           {!! Form::select('select_opt', 
             [
              'all' => 'All',
@@ -76,20 +76,41 @@
             <thead>  
                 <tr>
                   <th>ID</th>
-                  <th>User_Name</th>
+                  <th>Service</th>
                   <th>Amount</th>
                   <th>Date</th>
                   <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
+            <?php
+              if($selected == 'period')
+              {
+                $start_date = $from;
+                $end_date   = $to;
+                $get_type   = 'period';
+              }
+              else
+              {
+                $start_date = '';
+                $end_date   = '';
+                $get_type   = $selected != ""? $selected : 'today'; 
+              }
+            ?>
             @foreach($reports as $report)
               <tr>
                 <td>{{ $report->id }}</td>
-                <td>{{ $report->id }}</td>
+                <td>{{ $report->service_code }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
-                <td><a href="{{ route('detailusertoservicelog', ['id' => $report->user_id]) }}">Detail</a></td>
+                <td><a href="{{ route('detailusertoshoplog', 
+                                [
+                                  'id' => $report->service_code,
+                                  'type' => $get_type, 
+                                  'start_date' => $start_date, 
+                                  'end_date' => $end_date
+                                ]) 
+                              }}">Detail</a></td>
               </tr>
             @endforeach
             </tbody>
@@ -114,8 +135,8 @@
   }
 ?>
 
-<p id="from"><?php echo date_format(new DateTime($from), 'F-d-Y'); ?></p>
-<p id="to"><?php echo date_format(new DateTime($to), 'F-d-Y'); ?></p>
+<p id="from">{{ $from }}</p>
+<p id="to">{{ $to }}</p>
 <script>
   var barChartData = {
     labels :<?php echo json_encode($label); ?>,

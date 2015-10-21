@@ -34,11 +34,39 @@
              'year' => 'year',
              'period' => 'Period'
              ], $selected,
-             ['class' => 'form-control']
+             ['class' => 'form-control', 'id' => 'time']
               ) 
           !!}
+          <span  id="sdate">
+            <label for="name" >{{trans('Start_Date')}}</label>
+              <span class='input-group date' data-date-format="MM-dd-yyyy" id="startdate" >
+                  <input type='text' class="form-control"  name="startdate" id="sdateid"  />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </span>
+          </span>
+          <span  id="edate">
+            <label for="name">{{trans('End_Date')}}</label>
+              <span class='input-group date' data-date-format="MM-dd-yyyy" id='enddate'>
+                <input type='text' class="form-control" name="enddate" id="edateid"/>
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </span>
+          </span>
           {!! Form::submit('Show', array('class' => 'btn btn-danger')) !!}
         {!! Form::close() !!}
+        </li>
+      </ul>
+
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div style="width:100%">
+            <div>
+              <canvas id="canvas" height="250" width="900"></canvas>
+            </div>
+          </div>
         </li>
       </ul>
     <div class="table-responsive list-group-item">
@@ -56,15 +84,35 @@
               </tr>
             </thead>
             <tbody>
+            <?php
+              if($selected == 'period')
+              {
+                $start_date = $from;
+                $end_date   = $to;
+                $get_type   = 'period';
+              }
+              else
+              {
+                $start_date = '';
+                $end_date   = '';
+                $get_type   = $selected != ""? $selected : 'today'; 
+              }
+            ?>
             @foreach($reports as $report)
-              
               <tr>
                 <td>{{ $report->id }}</td>
-                <td>{{ $report->user_id }}</td>
+                <td>{{ $report->user->name }}</td>
                 <td>{{ $report->service_code }}</td>
                 <td>{{ $report->date }}</td>
                 <td>{{ $report->total_amount }}</td>
-                <td><a href="{{ route('detailcommissiontoreseller', ['id' => $report->user_id]) }}">Detail</a></td>
+                <td><a href="{{ route('detailusertomerchant', 
+                                [
+                                  'id' => $report->user_id,
+                                  'type' => $get_type, 
+                                  'start_date' => $start_date, 
+                                  'end_date' => $end_date
+                                ]) 
+                              }}">Detail</a></td>
               </tr>
             @endforeach
             </tbody>
@@ -84,4 +132,36 @@
     </div>
 </div>
 </div>
+
+<?php 
+
+  foreach ($chart_reports as $chart_report) 
+  {
+    array_push($data, $chart_report->total_amount); 
+    $date = strtotime($chart_report->date);
+    array_push($label, date($type, $date));
+  }
+
+?>
+
+<p id="from">{{ $from }}</p>
+<p id="to">{{ $to }}</p>
+<script>
+  var barChartData = {
+    labels :<?php echo json_encode($label); ?>,
+    datasets : [
+      {
+        label: "My dataset",
+        fillColor : "rgba(151,187,205,0.2)",
+        strokeColor : "rgba(151,187,205,1)",
+        pointColor : "rgba(151,187,205,1)",
+        pointStrokeColor : "#fff",
+        pointHighlightFill : "#fff",
+        pointHighlightStroke : "rgba(151,187,205,1)",
+        data : <?php echo json_encode($data); ?>
+      }
+    ]
+  }
+</script>
+
 @endsection
