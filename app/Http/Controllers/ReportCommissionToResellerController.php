@@ -86,7 +86,7 @@ class ReportCommissionToResellerController extends Controller
       }
 
       if($selected == 'all') {
-        $reports = CommissionToReseller::groupBy('reseller_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(10);
+        $reports = CommissionToReseller::groupBy('reseller_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(env('page'));
         $total   = CommissionToReseller::sum('amount');
         $chart_reports = CommissionToReseller::selectRaw('*,sum(amount) as total_amount')
                                               ->groupBy(DB::raw('YEAR(date)'))
@@ -101,7 +101,7 @@ class ReportCommissionToResellerController extends Controller
                                         ->selectRaw('*,sum(amount) as total_amount')
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
-                                        ->paginate(10);
+                                        ->paginate(env('page'));
         // Chart Report
         $chart_reports =  CommissionToReseller::selectRaw('*,sum(amount) as total_amount')
                                                 ->where('date', '>=', $date)
@@ -186,7 +186,7 @@ class ReportCommissionToResellerController extends Controller
       $reseller = CommissionToReseller::where('reseller_id', $id)->first(); 
 
       if($get_type == 'all' || $get_type == null) {
-        $reports  = CommissionToReseller::where('reseller_id', $id)->orderBy('date', 'DESC')->paginate(10);
+        $reports  = CommissionToReseller::where('reseller_id', $id)->orderBy('date', 'DESC')->paginate(env('page'));
         $total    = CommissionToReseller::where('reseller_id', $id)->sum('amount');
       }
       else
@@ -195,7 +195,7 @@ class ReportCommissionToResellerController extends Controller
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->orderBy('date', 'DESC')
-                                        ->paginate(10);
+                                        ->paginate(env('page'));
         $total   = CommissionToReseller::where('reseller_id', $id)
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
