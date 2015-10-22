@@ -84,7 +84,7 @@ class ReportUserToMerchantLogController extends Controller
 
       if($selected == 'all') 
       {
-        $reports = UserToMerchant::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->where('status', 1)->paginate(1);
+        $reports = UserToMerchant::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->where('status', 1)->paginate(env('page'));
         $total   = UserToMerchant::sum('amount');
         $chart_reports = UserToMerchant::selectRaw('*,sum(amount) as total_amount')
                                           ->where('status', 1)
@@ -98,7 +98,7 @@ class ReportUserToMerchantLogController extends Controller
                                       ->where('status', 1)
                                       ->where('date', '>=', $date)
                                       ->where('date', '<=', $to_date)
-                                      ->paginate(2);
+                                      ->paginate(env('page'));
         // Chart Report
         $chart_reports =  UserToMerchant::selectRaw('*,sum(amount) as total_amount')
                                           ->where('status', 1)
@@ -180,7 +180,7 @@ class ReportUserToMerchantLogController extends Controller
       $user     = UserToMerchant::where('user_id', $id)->first();  
         
       if($get_type == 'all' || $get_type == null) {
-        $reports  = UserToMerchant::where('status', 1)->where('user_id', $id)->orderBy('date', 'DESC')->paginate(10);
+        $reports  = UserToMerchant::where('status', 1)->where('user_id', $id)->orderBy('date', 'DESC')->paginate(env('page'));
         $total    = UserToMerchant::where('status', 1)->where('user_id', $id)->sum('amount');
       }
       else
@@ -189,7 +189,7 @@ class ReportUserToMerchantLogController extends Controller
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->orderBy('date', 'DESC')
-                                        ->paginate(10);
+                                        ->paginate(env('page'));
         $total   = UserToMerchant::where('user_id', $id)
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)

@@ -86,7 +86,7 @@ class ReportUserToServiceLogController extends Controller
       }
        
       if($selected == 'all') {
-        $reports = UserToServiceLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->where('status', 1)->paginate(10);
+        $reports = UserToServiceLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->where('status', 1)->paginate(env('page'));
         $total   = UserToServiceLog::where('status', 1)->sum('amount');
   
         $chart_reports = UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
@@ -102,7 +102,7 @@ class ReportUserToServiceLogController extends Controller
                                     ->where('status', 1)
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
-                                    ->paginate(1);
+                                    ->paginate(env('page'));
         // Chart Report
         $chart_reports =  UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
                                             ->where('status', 1)
@@ -118,7 +118,7 @@ class ReportUserToServiceLogController extends Controller
         $reports->setPath(url('usertoservicelog', [$selected, $format_stdate, $format_endate]));
       else  
         $reports->setPath(url('usertoservicelog', $selected));
-    
+   
       return view('reportusertoservicelog.index',
                     [
                       'reports' => $reports, 
@@ -185,7 +185,7 @@ class ReportUserToServiceLogController extends Controller
       if($get_type == 'all' || $get_type == null) {
         $reports = UserToServiceLog::where('user_id', $id)
                                     ->where('status', 1)
-                                    ->paginate(10);
+                                    ->paginate(env('page'));
 
         $total   = UserToServiceLog::where('user_id', $id)
                                     ->where('status', 1)
@@ -197,7 +197,7 @@ class ReportUserToServiceLogController extends Controller
                                     ->where('status', 1)
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
-                                    ->paginate(1);
+                                    ->paginate(env('page'));
 
         $total   = UserToServiceLog::where('user_id', $id)
                                     ->where('status', 1)
