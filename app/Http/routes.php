@@ -201,6 +201,7 @@
 	Route::get('/credittouser/type/{time}/{startdate}/{enddate}', ['uses'=>'ReportCredittoUserController@queryreport','as'=>'queryreportcredittouser1', 'permission'=>'manage_user']);
 	Route::get('/credittouser/detail/{id}/{time}/{startdate}/{enddate}', ['uses'=>'ReportCredittoUserController@detail','as'=>'detailcredittouser', 'permission'=>'manage_user']);
 	Route::post('/credittouser/detail/{id}', ['uses'=>'ReportCredittoUserController@details','as'=>'detailscredittouser', 'permission'=>'manage_user']);
+	Route::get('/credittouser/recorddetail/{id}', ['uses'=>'ReportCredittoUserController@recorddetail','as'=>'recorddetailscredittouser', 'permission'=>'manage_user']);
 
 
 
@@ -209,7 +210,6 @@
 	Route::get('/usertoshoplog/{type}', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
 	Route::get('/usertoshoplog/period/{startdate}/{enddate}', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
 	Route::post('/usertoshoplog', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);
-
 	Route::get('/usertoshoplog/detail/{id}/{type}', ['uses'=>'ReportUserToShopLogController@show','as'=>'detailusertoshoplog', 'permission'=>'manage_user']);
 	Route::get('/usertoshoplog/detail/{id}/{type}/{startdate}/{enddate}', ['uses'=>'ReportUserToShopLogController@show','as'=>'detailusertoshoplog', 'permission'=>'manage_user']);
 	Route::get('/usertoshoplog/servicedetail/{id}/{type}', ['uses'=>'ReportUserToShopLogController@servicedetail','as'=>'detailserviceshoplog', 'permission'=>'manage_user']);

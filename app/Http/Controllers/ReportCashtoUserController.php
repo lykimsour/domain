@@ -101,7 +101,7 @@ class ReportCashtoUserController extends Controller
                 }
             }
             }
-             else{
+        else{
                  if(strcasecmp($time,"all") == 0){
                          $chart = DB::table('transfer_cash2user_log')
                         ->select('date',DB::raw('YEAR(date) as groupdate,SUM(amount) as total'))

@@ -100,7 +100,7 @@
                     <td>{{$report->user_id}}</td>
                     <td>{{$report->amount}}</td>
                     <td>{{$reportdate}}</td>
-                    <td><a href="{{route('recorddetailcashtouser',['id'=>$report->id])}}">Detail</a></td>
+                    <td><a href="{{route('recorddetailscredittouser',['id'=>$report->id])}}">Detail</a></td>
                    <?php
                     $total= $report->amount + $total;
                    ?>

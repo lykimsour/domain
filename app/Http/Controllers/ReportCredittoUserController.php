@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\CredittoUserLog;
 use DB;
+use App\CredittoUserDetail;
 use DateTime;
 class ReportCredittoUserController extends Controller
 {
@@ -115,7 +116,7 @@ class ReportCredittoUserController extends Controller
         $type = "all";
         $time = "today";
         $chart = $this->chartdata(0,$type,$time,$from,$to);
-        return view('reportcredittouser.index',['type'=>$type,'time'=>$time,'reports'=>$report,'chart'=>$chart,'from'=>$from,'to'=>$to]);
+        return view('reportcredittouser.index',['type'=>$type,'time'=>$time,'reports'=>$report,'chart'=>$chart,'from'=>$from,'to'=>$to,'totalall'=>$totalall]);
     }
 
     public function queryreport(Request $request)
@@ -202,9 +203,55 @@ class ReportCredittoUserController extends Controller
             $from = $startdate;
             $to = $enddate;
        }
+      else{
+                if(strcasecmp($time,"today") == 0){
+                            $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
+                            $to = date('Y-m-d 23:59:59',time());          
+                }
+                elseif(strcasecmp($time,"week") ==0){
+                            $preweek = time() - (7 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $preweek);
+                            $to = date('Y-m-d 23:59:59',time());                           
+                }
+                elseif(strcasecmp($time,"month") ==0){
+                            $premonth = time() - (30 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $premonth);
+                            $to = date('Y-m-d 23:59:59',time());      
+                }
+                elseif(strcasecmp($time,"year") ==0){
+                            $preyear = time() - (365 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $preyear);
+                            $to = date('Y-m-d 23:59:59',time());
+                }
+                elseif(strcasecmp($time,"period") ==0){
+
+                    $startd= DateTime::createFromFormat("F-d-Y", $startdate);
+                    $from  = $startd->format('Y-m-d 00:00:00');
+                    $endd  = DateTime::createFromFormat("F-d-Y", $enddate);
+                    $to   = $endd->format('Y-m-d 23:59:59');
+
+
+                }
+            $report = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])
+                                        ->where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->paginate(50);
+
+            $totalall = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])
+                                        ->where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->sum('amount');
+
+                                        
+        }
+
         $chart = $this->chartdata($reportctor->reseller_id,"all",$time,$from,$to);
         $report->setPath(url('/credittouser/detail/'.$id.'/'.$time.'/'.$startdate.'/'.$enddate));
         return view('reportcredittouser.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart]);
-        //return view('reportcashtouser.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart]);
+    }
+     public function recorddetail($id)
+    {
+        $reportlog = CredittoUserDetail::where('transfer_credit2user_id',$id)->firstOrFail();
+       return view('reportcredittouser.recorddetail',['report'=>$reportlog]);
     }
 }

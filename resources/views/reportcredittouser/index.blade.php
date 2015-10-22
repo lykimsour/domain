@@ -97,7 +97,12 @@
           @endforeach
             </tbody>
           </table>
-
+      <div class="table-responsive list-group-item">    
+          <table class="table table-bordered table-hover table-condensed" >
+             <tr><td><li class="list-group-item"><b>Sub_Total: {{$total}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:  {{$totalall}} COIN</b></li></span></td></tr>
+          </table>
+      </div>
 
     </div>
 
