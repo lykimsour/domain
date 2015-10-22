@@ -22,10 +22,9 @@
 	//Route::get('auth/register', ['uses' => 'Auth\AuthController@getRegister','as' => 'register']);
 	Route::get('lang/{dil}', array('as' => 'languageChoose', 'uses' => 'AppController@languageChoose'));
 	Route::group(['middleware' => 'auth'], function () {
-
-		Route::get('/', ['uses'=>'DashboardController@index','as' => 'dashboard.index']);
-		Route::get('/usersedit', ['uses'=>'UserController@edit','as' => 'edituser']);
-		Route::put('/usersedit', ['uses'=>'UserController@update','as' => 'updateuser']);
+	Route::get('/', ['uses'=>'DashboardController@index','as' => 'dashboard.index']);
+	Route::get('/usersedit', ['uses'=>'UserController@edit','as' => 'edituser']);
+	Route::put('/usersedit', ['uses'=>'UserController@update','as' => 'updateuser']);
 
 
 	});
@@ -195,14 +194,7 @@
 
 
 
-	//Report Credit to User
-	Route::get('/credittouser', ['uses'=>'ReportCredittoUserController@index','as'=>'credittouser', 'permission'=>'manage_user']);
-	Route::post('/credittouser/type', ['uses'=>'ReportCredittoUserController@queryreport','as'=>'queryreportcredittouser', 'permission'=>'manage_user']);
-	Route::get('/credittouser/type/{time}/{startdate}/{enddate}', ['uses'=>'ReportCredittoUserController@queryreport','as'=>'queryreportcredittouser1', 'permission'=>'manage_user']);
-	Route::get('/credittouser/detail/{id}/{time}/{startdate}/{enddate}', ['uses'=>'ReportCredittoUserController@detail','as'=>'detailcredittouser', 'permission'=>'manage_user']);
-	Route::post('/credittouser/detail/{id}', ['uses'=>'ReportCredittoUserController@details','as'=>'detailscredittouser', 'permission'=>'manage_user']);
-	Route::get('/credittouser/recorddetail/{id}', ['uses'=>'ReportCredittoUserController@recorddetail','as'=>'recorddetailscredittouser', 'permission'=>'manage_user']);
-
+	
 
 
 	//Report User To Shop Log
@@ -223,6 +215,23 @@
 	Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'manage_user']);
 	Route::post('/cashiertoreseller/type/',['uses'=>'ReportCashierToReseller@queryreport','as'=>'queryreport','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'manage_user']);
+	
+	//Report Credit to User
+	Route::get('/credittouser', ['uses'=>'ReportCredittoUserController@index','as'=>'credittouser', 'permission'=>'manage_user']);
+	Route::post('/credittouser/type', ['uses'=>'ReportCredittoUserController@queryreport','as'=>'queryreportcredittouser', 'permission'=>'manage_user']);
+	Route::get('/credittouser/type/{time}/{startdate}/{enddate}', ['uses'=>'ReportCredittoUserController@queryreport','as'=>'queryreportcredittouser1', 'permission'=>'manage_user']);
+	Route::get('/credittouser/detail/{id}/{time}/{startdate}/{enddate}', ['uses'=>'ReportCredittoUserController@detail','as'=>'detailcredittouser', 'permission'=>'manage_user']);
+	Route::post('/credittouser/detail/{id}', ['uses'=>'ReportCredittoUserController@details','as'=>'detailscredittouser', 'permission'=>'manage_user']);
+	Route::get('/credittouser/recorddetail/{id}', ['uses'=>'ReportCredittoUserController@recorddetail','as'=>'recorddetailscredittouser', 'permission'=>'manage_user']);
+
+	//Report Credit2Reseller
+	Route::get('/credittoreseller',['uses'=>'ReportCredittoResellerController@index','as'=>'credittoreseller','permission'=>'manage_user']);
+	Route::post('/credittoreseller/type',['uses'=>'ReportCredittoResellerController@queryreport','as'=>'queryreportcredittoreseller','permission'=>'manage_user']);
+	Route::get('/credittoreseller/type/{time}/{startdate}/{enddate}',['uses'=>'ReportCredittoResellerController@queryreport','as'=>'queryreportcredittoreseller1','permission'=>'manage_user']);
+	Route::get('/credittoreseller/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCredittoResellerController@detail','as'=>'detailcredittoreseller','permission'=>'manage_user']);
+	Route::post('/credittoreseller/detail/{id}',['uses'=>'ReportCredittoResellerController@details','as'=>'detailscredittoreseller','permission'=>'manage_user']);
+
+
 	});
 
 	

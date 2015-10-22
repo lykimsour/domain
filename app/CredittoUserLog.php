@@ -10,4 +10,7 @@ class CredittoUserLog extends Model
 	public function reseller(){
 		return $this->belongsTo('App\Reseller','reseller_id');
 	}
+	public function user(){
+		return $this->belongsTo('App\Users');
+	}
 }

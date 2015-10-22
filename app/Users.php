@@ -36,4 +36,8 @@ class Users extends Model
   {
     return $this->hasMany('App\CashtoUserLog');
   }
+  public function credittouser()
+  {
+    return $this->hasMany('App\CredittoUserLog');
+  }
 }

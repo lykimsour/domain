@@ -94,6 +94,10 @@
           <li class="active"><a href="{{route('cashiertoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cashier_To_Reseller')}}</span></a></li>
           <li {{ Helper::activeMenu("cashtouser") }}><a href="{{route('cashtouser')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cash_To_User')}}</span></a></li>
           <li {{ Helper::activeMenu("credittouser") }}><a href="{{route('credittouser')}}"><i class="fa fa-circle-o"></i><span>{{trans('Credit_To_User')}}</span></a></li>
+          <li {{ Helper::activeMenu("credittoreseller") }}><a href="{{route('credittoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Credit_To_Reseller')}}</span></a></li>
+    
+
+
           <li {{ Helper::activeMenu("commissiontocashier") }}><a href="{{route('commissiontocashier')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Cashier')}}</span></a></li>
           <li {{ Helper::activeMenu("commissiontoreseller") }}><a href="{{route('commissiontoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Reseller')}}</span></a></li>
           <li {{ Helper::activeMenu("usertoservicelog") }}><a href="{{route('usertoservicelog')}}"><i class="fa fa-circle-o"></i><span>{{trans('User_To_Service_Log')}}</span></a></li>                        

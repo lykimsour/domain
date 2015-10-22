@@ -14,7 +14,7 @@
 <h2>{{trans('Report:Cash_To_User')}}</h2>
 
 <div class="row">
-<form method="post" action="{{route('detailscredittouser',['id'=>$reportid])}}">
+<form method="post" action="{{route('detailscredittoreseller',['id'=>$reportid])}}">
   {!! csrf_field() !!}
  <div class="table-responsive list-group-item">  
    <div class="col-md-2">
@@ -71,10 +71,11 @@
                   <th>ID</th>
                   <th>Reseller_Name</th>
                    <th>From_user_id</th>
-                  <th>User_id</th>
-                  <th>Total</th>
+                  <th>To_Reseller_ID</th>
+                  <th>To_User_ID</th>
+                  <th>Amount</th>
                   <th>Date</th>
-                  <th>Detail</th>
+                  <th>IP</th>
                 </tr>
             </thead>
                <tbody>
@@ -97,11 +98,12 @@
                       $reportdate = date('Y-M-d h:i:s',$d); 
                     ?>
                     <td>{{$report->id}}</td>
-                    <td>{{$report->reseller->name}}</td>
-                       <td>{{$report->from_user_id}}</td>
-                    <td>{{$report->user->name}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{$report->from_reseller_id}}</td>
+                    <td>{{$report->from_user_id}}</td>
+                    <td>{{$report->to_reseller_id}}</td>
+                    <td>{{$report->to_user_id}}</td>
                     <td>{{$reportdate}}</td>
+                    <td>{{$report->ip}}</td>
                     <td><a href="{{route('recorddetailscredittouser',['id'=>$report->id])}}">Detail</a></td>
                    <?php
                     $total= $report->amount + $total;
