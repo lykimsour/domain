@@ -98,9 +98,9 @@
                     ?>
                     <td>{{$report->id}}</td>
                     <td>{{$report->reseller->name}}</td>
-                       <td>{{$report->from_user_id}}</td>
-                    <td>{{$report->user->name}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{$report->fromuser->name}}</td>
+                    <td>{{$report->touser->name}}</td>
+                    <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$reportdate}}</td>
                     <td><a href="{{route('recorddetailscredittouser',['id'=>$report->id])}}">Detail</a></td>
                    <?php
@@ -114,8 +114,8 @@
           </table>
          <div class="table-responsive list-group-item">    
           <table class="table table-bordered table-hover table-condensed" >
-           <tr><td><li class="list-group-item"><b>Sub_Total: {{$total}} COIN</b></li></span></td></tr>
-          <tr><td> <li class="list-group-item"><b>Total:  {{$totalall}} COIN</b></li></span></td></tr>
+           <tr><td><li class="list-group-item"><b>Sub_Total: {{number_format($total,2)}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:  {{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
         

@@ -41,7 +41,7 @@
                     <td>{{$report->transfer_cash2reseller_log_id}}</td>
                     <td>{{$report->resp_code}}</td>
                     <td>{{$report->pan}}</td>
-                    <td>{{$report->mpu_amount}}</td>
+                    <td>{{number_format($report->mpu_amount,2)}}</td>
                     <td>{{$report->invoice_no}}</td>
                     <td>{{$report->tran_ref}}</td>
                     <td>{{$report->approval_code}}</td>
@@ -71,7 +71,7 @@
                     <td>{{$report->wing_transaction__id}}</td>
                     <td>{{$report->wing_account}}</td>
                     <td>{{$report->currency}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$report->remote_address}}</td>  
               </tr>
       </li>

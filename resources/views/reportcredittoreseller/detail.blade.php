@@ -98,11 +98,11 @@
                       $reportdate = date('Y-M-d h:i:s',$d); 
                     ?>
                     <td>{{$report->id}}</td>
-                    <td>{{$report->from_reseller_id}}</td>
-                    <td>{{$report->from_user_id}}</td>
-                    <td>{{$report->to_reseller_id}}</td>
-                    <td>{{$report->to_user_id}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{$report->fromreseller->name}}</td>
+                    <td>{{$report->fromuser->name}}</td>
+                    <td>{{$report->toreseller->name}}</td>
+                    <td>{{$report->touser->name}}</td>
+                    <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$reportdate}}</td>
                     <td>{{$report->ip}}</td>
                     <td><a href="{{route('recorddetailscredittouser',['id'=>$report->id])}}">Detail</a></td>
@@ -117,8 +117,8 @@
           </table>
          <div class="table-responsive list-group-item">    
           <table class="table table-bordered table-hover table-condensed" >
-           <tr><td><li class="list-group-item"><b>Sub_Total: {{$total}} COIN</b></li></span></td></tr>
-          <tr><td> <li class="list-group-item"><b>Total:  {{$totalall}} COIN</b></li></span></td></tr>
+           <tr><td><li class="list-group-item"><b>Sub_Total:{{number_format($total,2)}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:{{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
         

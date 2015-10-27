@@ -87,9 +87,9 @@
               <tr>
                     <td>{{$report->id}}</td>
                     <td>{{$report->reseller->name}}</td>
-                    <td>{{$report->total}}</td>
+                    <td>{{number_format($report->total,2)}}</td>
                     <td>{{$report->date}}</td>
-                    <td><a href="{{route('detailcredittouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detaildf</a></td>
+                    <td><a href="{{route('detailcredittouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
                     <?php 
                     $total = $report->total + $total  ?>
               </tr>
@@ -98,9 +98,9 @@
             </tbody>
           </table>
       <div class="table-responsive list-group-item">    
-          <table class="table table-bordered table-hover table-condensed" >
-             <tr><td><li class="list-group-item"><b>Sub_Total: {{$total}} COIN</b></li></span></td></tr>
-          <tr><td> <li class="list-group-item"><b>Total:  {{$totalall}} COIN</b></li></span></td></tr>
+          <table class="table table-bordered table-hover table-condensed">
+             <tr><td><li class="list-group-item"><b>Sub_Total: {{number_format($total,2)}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:  {{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
 

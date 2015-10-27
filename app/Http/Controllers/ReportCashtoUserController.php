@@ -17,6 +17,7 @@ use App\CashtoUsermycard;
 use App\CashtoUserpayngo;
 use App\CashtoUserogmgc;
 use App\CashtoUsersrc;
+use Redirect;
 class ReportCashtoUserController extends Controller
 {
     /**
@@ -146,6 +147,8 @@ class ReportCashtoUserController extends Controller
 
      public function queryreport(Request $request)
     {
+        //return url();
+        
        
         $type = $request->type;
         $time = $request->time;
@@ -159,7 +162,7 @@ class ReportCashtoUserController extends Controller
                         $report = CashtoUserLog::groupBy('cashier_id')
                                                     ->selectRaw('*,sum(amount) as total')->where('status','=',1)
                                                     ->orderBy('id','asc')
-                                                    ->paginate(1);
+                                                    ->paginate(env('page'));
 
                        
 
@@ -179,7 +182,7 @@ class ReportCashtoUserController extends Controller
                                                     ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
                                                     ->selectRaw('transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
                                                     ->orderBy('id','asc')
-                                                    ->paginate(10);
+                                                    ->paginate(env('page'));
             
                         $totalall =  CashtoUserLog::join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
                                                      ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
@@ -224,7 +227,7 @@ class ReportCashtoUserController extends Controller
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
                                         ->orderBy('date','ASC')
-                                        ->paginate(10);
+                                        ->paginate(env('page'));
 
             $totalall = CashtoUserLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -266,7 +269,7 @@ class ReportCashtoUserController extends Controller
                                             ->where('date','<=',$to)
                                             ->orderBy('date','ASC')
                                             ->selectRaw('transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
-                                            ->paginate(1);
+                                            ->paginate(env('page'));
 
                 $totalall = CashtoUserLog::join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
                                             ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
@@ -288,7 +291,7 @@ class ReportCashtoUserController extends Controller
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
-                                            ->paginate(50);
+                                            ->paginate(env('page'));
                 $report->setPath('cashtouser');
                 $totalall = CashtoUserLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -306,6 +309,7 @@ class ReportCashtoUserController extends Controller
 
 
     public function details($id,Request $request){
+
         return $this->detail($id,$request->time,$request->startdate,$request->enddate);
     }
 
@@ -316,7 +320,7 @@ class ReportCashtoUserController extends Controller
 
         if(strcasecmp($time,"all") == 0){
            $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
-                                    ->orderBy('id','DESC')->paginate(50);
+                                    ->orderBy('id','DESC')->paginate(env('page'));
             $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])->sum('amount');      
             $from = $startdate;
             $to = $enddate;
@@ -353,7 +357,7 @@ class ReportCashtoUserController extends Controller
             $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
-                                        ->paginate(50);
+                                        ->paginate(env('page'));
 
             $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)
@@ -395,7 +399,8 @@ class ReportCashtoUserController extends Controller
                 elseif(strcasecmp($cashier->name,"ogmgc")==0){
                     $reports = CashtoUserogmgc::where('transfer_cash2user_log_id',$id)->firstOrFail();
                 }
-                elseif(strcasecmp($cashier->name,"src")==0){
+                elseif(strcasecmp($cashier->name,"scr")==0){
+                    //return $cashier->name;
                     $reports = CashtoUsersrc::where('transfer_cash2user_log_id',$id)->firstOrFail();
                 }
                 $type =  $cashier->name;

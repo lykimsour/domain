@@ -197,7 +197,7 @@ class ReportCashierToReseller extends Controller
                                                     ->where(['transfer_cash2reseller_log.status'=>1,'cashier.type'=>$type])
                                                     ->selectRaw('transfer_cash2reseller_log.id,transfer_cash2reseller_log.cashier_id,transfer_cash2reseller_log.reseller_id,transfer_cash2reseller_log.status,sum(transfer_cash2reseller_log.amount) as total,transfer_cash2reseller_log.date')
                                                     ->orderBy('id','asc')
-                                                    ->paginate(1);
+                                                    ->paginate(env('page'));
                         $totalall =  CashierToReseller::join('cashier','transfer_cash2reseller_log.cashier_id','=','cashier.id')
                                                      ->where(['transfer_cash2reseller_log.status'=>1,'cashier.type'=>$type])
                                                      ->sum('transfer_cash2reseller_log.amount');
@@ -240,7 +240,7 @@ class ReportCashierToReseller extends Controller
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
                                         ->orderBy('date','ASC')
-                                        ->paginate(1);
+                                        ->paginate(env('page'));
 
             $totalall = CashierToReseller::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -352,7 +352,7 @@ class ReportCashierToReseller extends Controller
             $report = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
-                                        ->paginate(50);
+                                        ->paginate(env('page'));
 
             $totalall=CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)

@@ -18,6 +18,7 @@ class ReportCredittoUserController extends Controller
      * @return Response
      */
      public function chartdata($id,$type,$time,$from,$to){
+
         if($id ==0){
            if(strcasecmp($time,"all") == 0){
                 $chart = DB::table('transfer_credit2user_log')
@@ -119,7 +120,7 @@ class ReportCredittoUserController extends Controller
 
     public function queryreport(Request $request)
     {
-       
+        
         $type = $request->type;
         $time = $request->time;
         $startdate = $request->startdate;
@@ -176,6 +177,7 @@ class ReportCredittoUserController extends Controller
                                         ->where('date','<=',$to)
                                         ->sum('amount'); 
         }
+        //return $type;
         $chart = $this->chartdata(0,$type,$time,$from,$to);
         $report->setPath(url('/credittouser/type'.'/'.$time.'/'.$start.'/'.$end)); 
         return view('reportcredittouser.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$start,'to'=>$end,'chart'=>$chart]);
@@ -192,7 +194,7 @@ class ReportCredittoUserController extends Controller
 
         if(strcasecmp($time,"all") == 0){
            $report = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])
-                                    ->orderBy('id','DESC')->paginate(50);
+                                    ->orderBy('id','DESC')->paginate(env('page'));
             $totalall = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])->sum('amount');      
             $from = $startdate;
             $to = $enddate;
@@ -229,7 +231,7 @@ class ReportCredittoUserController extends Controller
             $report = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
-                                        ->paginate(50);
+                                        ->paginate(env('page'));
 
             $totalall = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])
                                         ->where('date','>=',$from)
