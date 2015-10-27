@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
 
-<h2>{{trans('Report:Cashier_To_Reseller')}}</h2>
+<h2>{{trans('Report:Credit_To_Reseller')}}</h2>
 <div class="row">
 <form method="post" action="{{route('queryreportcredittoreseller')}}">
   {!! csrf_field() !!}

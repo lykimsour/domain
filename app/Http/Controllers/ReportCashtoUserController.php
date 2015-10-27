@@ -16,6 +16,7 @@ use App\CashtoUsersabay;
 use App\CashtoUsermycard;
 use App\CashtoUserpayngo;
 use App\CashtoUserogmgc;
+use App\CashtoUsersrc;
 class ReportCashtoUserController extends Controller
 {
     /**
@@ -311,6 +312,8 @@ class ReportCashtoUserController extends Controller
     public function detail($id,$time,$startdate,$enddate)
     {
         $reportctor = CashtoUserLog::findOrFail($id);
+        $cashiername = $reportctor->cashier->name;
+
         if(strcasecmp($time,"all") == 0){
            $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                     ->orderBy('id','DESC')->paginate(50);
@@ -362,7 +365,7 @@ class ReportCashtoUserController extends Controller
         
         $chart = $this->chartdata($reportctor->cashier_id,"all",$time,$from,$to);
         $report->setPath(url('/cashtouser/detail/'.$id.'/'.$time.'/'.$startdate.'/'.$enddate));
-        return view('reportcashtouser.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart]);
+        return view('reportcashtouser.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart,'cashiername'=>$cashiername]);
     }
    
 
@@ -389,8 +392,11 @@ class ReportCashtoUserController extends Controller
                 elseif(strcasecmp($cashier->name,"payngo")==0){
                     $reports = CashtoUserpayngo::where('transfer_cash2user_log_id',$id)->firstOrFail();
                 }
-                 elseif(strcasecmp($cashier->name,"ogmgc")==0){
+                elseif(strcasecmp($cashier->name,"ogmgc")==0){
                     $reports = CashtoUserogmgc::where('transfer_cash2user_log_id',$id)->firstOrFail();
+                }
+                elseif(strcasecmp($cashier->name,"src")==0){
+                    $reports = CashtoUsersrc::where('transfer_cash2user_log_id',$id)->firstOrFail();
                 }
                 $type =  $cashier->name;
            } 

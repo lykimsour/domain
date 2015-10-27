@@ -8,7 +8,7 @@
 
 <div class="container-fluid">
 
-<h2>{{trans('Report:Cashier_To_Reseller')}}</h2>
+<h2>{{trans('Report:Credit_To_Reseller')}}</h2>
 <div class="row">
 <form method="post" action="{{route('queryreportcredittouser')}}">
   {!! csrf_field() !!}
@@ -87,9 +87,9 @@
               <tr>
                     <td>{{$report->id}}</td>
                     <td>{{$report->reseller->name}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{$report->total}}</td>
                     <td>{{$report->date}}</td>
-                    <td><a href="{{route('detailcredittouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
+                    <td><a href="{{route('detailcredittouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detaildf</a></td>
                     <?php 
                     $total = $report->total + $total  ?>
               </tr>

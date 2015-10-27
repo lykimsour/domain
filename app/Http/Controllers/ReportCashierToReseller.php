@@ -154,7 +154,7 @@ class ReportCashierToReseller extends Controller
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
-                                            ->paginate(50);
+                                            ->paginate(env('page'));
                 $totalall = CashierToReseller::where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
@@ -181,7 +181,7 @@ class ReportCashierToReseller extends Controller
                         $report = CashierToReseller::groupBy('cashier_id')
                                                     ->selectRaw('*,sum(amount) as total')->where('status','=',1)
                                                     ->orderBy('id','asc')
-                                                    ->paginate(1);
+                                                    ->paginate(env('page'));
                         $totalall = CashierToReseller::where('status',1)->sum('amount');
                         $type = "all";
                         $from = "0";
@@ -284,7 +284,7 @@ class ReportCashierToReseller extends Controller
                                             ->where('date','<=',$to)
                                             ->orderBy('date','ASC')
                                             ->selectRaw('transfer_cash2reseller_log.id,transfer_cash2reseller_log.cashier_id,transfer_cash2reseller_log.reseller_id,transfer_cash2reseller_log.status,sum(transfer_cash2reseller_log.amount) as total,transfer_cash2reseller_log.date')
-                                            ->paginate(1);
+                                            ->paginate(env('page'));
 
                 $totalall = CashierToReseller::join('cashier','transfer_cash2reseller_log.cashier_id','=','cashier.id')
                                             ->where(['transfer_cash2reseller_log.status'=>1,'cashier.type'=>$type])
@@ -311,9 +311,11 @@ class ReportCashierToReseller extends Controller
     public function detail($id,$time,$startdate,$enddate)
     {
         $reportctor = CashierToReseller::findOrFail($id);
+        $cashiername = $reportctor->cashier->name;
+
         if(strcasecmp($time,"all") == 0){
            $report = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
-                                        ->orderBy('id','DESC')->paginate(50);
+                                        ->orderBy('id','DESC')->paginate(env('page'));
             $totalall = CashierToReseller::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])->sum('amount');      
             $from = $startdate;
             $to = $enddate;
@@ -362,7 +364,7 @@ class ReportCashierToReseller extends Controller
         //dd($reportctor->cashier_id);
         $chart = $this->chartdata($reportctor->cashier_id,"all",$time,$from,$to);
         $report->setPath(url('/cashiertoreseller/detail/'.$id.'/'.$time.'/'.$startdate.'/'.$enddate));
-        return view('reportcashtoreseller.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart]);
+        return view('reportcashtoreseller.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart,'cashiername'=>$cashiername]);
     }
 
   

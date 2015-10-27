@@ -169,7 +169,25 @@
               </tr>
             </tbody>
             </table>
+          @elseif(strcasecmp($type,"src")==0)
+              <thead>
+                <tr>
+                  <th>Transfer_cash2reseller_log_id</th>
+                  <th>From_User_Id</th>
+                  <th>To_User_Id</th>
+                  <th>Coin</th>
+                  <th>Date</th>
+                  <th>Sabay_Coin</th>
+                  <th>Message</th>
+                  <th>Remote_address</th>
+                </tr>
+            </thead>
+               <tbody>
+
+
           @endif
+      
+
         </div>
 
     </ul>

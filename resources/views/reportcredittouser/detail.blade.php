@@ -11,7 +11,7 @@
 ?>
 <div class="container-fluid">
 
-<h2>{{trans('Report:Cash_To_User')}}</h2>
+<h2>Report:{{$resellername}} To_User</h2>
 
 <div class="row">
 <form method="post" action="{{route('detailscredittouser',['id'=>$reportid])}}">

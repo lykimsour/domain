@@ -145,14 +145,12 @@ class ReportCredittoUserController extends Controller
                 elseif(strcasecmp($time,"week") ==0){
                             $preweek = time() - (7 * 24 * 60 * 60);
                             $from = date('Y-m-d'.' '.'00:00:00', $preweek);
-                            $to = date('Y-m-d 23:59:59',time()); 
-                            //dd($from.' '.$to);                          
+                            $to = date('Y-m-d 23:59:59',time());        
                 }
                 elseif(strcasecmp($time,"month") ==0){
                             $premonth = time() - (30 * 24 * 60 * 60);
                             $from = date('Y-m-d'.' '.'00:00:00', $premonth);
-                            $to = date('Y-m-d 23:59:59',time()); 
-                            //dd($from.' '.$to);      
+                            $to = date('Y-m-d 23:59:59',time());     
                 }
                 elseif(strcasecmp($time,"year") ==0){
                             $preyear = time() - (365 * 24 * 60 * 60);
@@ -190,7 +188,8 @@ class ReportCredittoUserController extends Controller
     public function detail($id,$time,$startdate,$enddate)
     {
         $reportctor = CredittoUserLog::findOrFail($id);
-    
+        $resellername = $reportctor->reseller->name;
+
         if(strcasecmp($time,"all") == 0){
            $report = CredittoUserLog::where(['reseller_id'=>$reportctor->reseller_id])
                                     ->orderBy('id','DESC')->paginate(50);
@@ -242,7 +241,7 @@ class ReportCredittoUserController extends Controller
 
         $chart = $this->chartdata($reportctor->reseller_id,"all",$time,$from,$to);
         $report->setPath(url('/credittouser/detail/'.$id.'/'.$time.'/'.$startdate.'/'.$enddate));
-        return view('reportcredittouser.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart]);
+        return view('reportcredittouser.detail',['reports'=>$report,'totalall'=>$totalall,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart,'resellername'=>$resellername]);
     }
      public function recorddetail($id)
     {

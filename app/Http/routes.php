@@ -209,12 +209,12 @@
 	
 	//Report cashierToreseller
 
-	Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
+	/*Route::get('/cashiertoreseller',['uses'=>'ReportCashierToReseller@index','as'=>'cashiertoreseller','permission'=>'manage_user']);
 	Route::post('/cashiertoreseller/detail/{id}',['uses'=>'ReportCashierToReseller@details','as'=>'detail','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@detail','as'=>'detail','permission'=>'manage_user']);
 	Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'manage_user']);
 	Route::post('/cashiertoreseller/type/',['uses'=>'ReportCashierToReseller@queryreport','as'=>'queryreport','permission'=>'manage_user']);
-	Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'manage_user']);
+	Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'manage_user']);*/
 	
 	//Report Credit to User
 	Route::get('/credittouser', ['uses'=>'ReportCredittoUserController@index','as'=>'credittouser', 'permission'=>'manage_user']);
