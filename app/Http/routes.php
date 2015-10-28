@@ -232,6 +232,14 @@
 	Route::post('/credittoreseller/detail/{id}',['uses'=>'ReportCredittoResellerController@details','as'=>'detailscredittoreseller','permission'=>'manage_user']);
 
 
+	//Report Gold2User
+	Route::get('/goldtouser',['uses'=>'ReportGoldtoUserController@index','as'=>'goldtouser','permission'=>'manage_user']);
+	Route::post('/goldtouser/type',['uses'=>'ReportGoldtoUserController@queryreport','as'=>'queryreportgoldtouser','permission'=>'manage_user']);
+	Route::get('/goldtouser/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportGoldtoUserController@queryreport','as'=>'getqueryreportgoldtouser','permission'=>'manage_user']);
+	Route::post('/goldtouser/detail/{id}',['uses'=>'ReportGoldtoUserController@details','as'=>'detailgoldtouser','permission'=>'manage_user']);
+	Route::get('/goldtouser/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportGoldtoUserController@detail','as'=>'detailsreportgoldtouser','permission'=>'manage_user']);
+	Route::get('/goldtouser/recorddetail/{id}',['uses'=>'ReportGoldtoUserController@recorddetail','as'=>'recorddetailsreportgoldtouser','permission'=>'manage_user']);
+
 	});
 
 	

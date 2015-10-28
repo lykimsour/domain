@@ -1,25 +1,34 @@
 
 @extends('layouts.app')
-<?php
- $data  = []; 
-  $label = [];
-?>
-@section('content')
 
+@section('content')
+<?php 
+  //init array
+  $data  = []; 
+  $label = [];
+
+?>
 <div class="container-fluid">
 
-<h2>{{trans('Report:Credit_To_User')}}</h2>
+<h2>{{trans('Report:Gold_To_User')}}</h2>
 <div class="row">
-<form method="post" action="{{route('queryreportcredittouser')}}">
+<form method="post" action="{{route('queryreportgoldtouser')}}">
   {!! csrf_field() !!}
  <div class="table-responsive list-group-item">  
+      <div class="col-md-2">
+          <div class="form-group">
+             <label for="name">{{trans('Cashier Types')}}</label>
+                <?php $types=["all"=>"All","human"=>"Human","agent"=>"Agent"]; ?>
+               {!! Form::select('type',$types,$type,['class'=>'form-control']) !!}
+          </div> 
+           <button type="submmit" class="btn btn-md btn btn-danger">Show</button>
+  </div>
    <div class="col-md-2">
           <div class="form-group">
              <label for="name">{{trans('Time')}}</label>
                 <?php $times=["all"=>"All","today"=>"Today","week"=>"Week","month"=>"Month","year"=>"Year","period"=>"Period"]; ?>
                {!! Form::select('time',$times,$time,['class'=>'form-control','id'=>'time']) !!}
           </div>
-           <button type="submmit" class="btn btn-md btn btn-danger">Show</button>
   </div> 
   <div class="col-md-3" id="sdate">
           <div class="form-group">
@@ -50,30 +59,30 @@
             <div>
               <canvas id="canvas" height="250" width="900"></canvas>
             </div>
-  </div>
-
-
+          </div>
 <div class="row">
     <div class="col-md-12">
        <ul class="list-group">
       <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
           <span>Report</span> 
       </li>
-    <div class="table-responsive list-group-item"> 
-      <table class="table table-bordered table-hover table-condensed" >
-               <thead>
+     
+    <div class="table-responsive list-group-item">          
+          <table class="table table-bordered table-hover table-condensed" >
+            <thead>
                 {!! $reports->render() !!}
                 <tr>
+                 
                   <th>ID</th>
-                  <th>Reseller_name</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                   <th>Detail</th>
+                  <th>Cashier_Name</th>
+                  <th>Total</th>
+                  <th>Detail</th>
                 </tr>
             </thead>
-             <tbody>
-             <?php $total = 0;?>
-                @foreach($chart as $chart)
+               <tbody>
+            <?php $total = 0 ?>
+            
+            @foreach($chart as $chart)
                 <?php  
                 array_push($data, $chart->total); 
                 $date = strtotime($chart->date);
@@ -82,44 +91,40 @@
                 else $date = date('Y-M-d',$date);
                 array_push($label,$date);
               ?>
+           
               @endforeach
-              @foreach($reports as $report)
+            @foreach($reports as $report)
               <tr>
                     <td>{{$report->id}}</td>
-                    <td>{{$report->reseller->name}}</td>
+                    <td>{{$report->cashier->name}}</td>
                     <td>{{number_format($report->total,2)}}</td>
-                    <td>{{$report->date}}</td>
-                    <td><a href="{{route('detailcredittouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
-                    <?php 
-                    $total = $report->total + $total  ?>
+                    <td><a href="{{route('detailsreportgoldtouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
+                    <?php $total = $report->total + $total  ?>
               </tr>
 
           @endforeach
+      </li>
             </tbody>
+       
           </table>
       <div class="table-responsive list-group-item">    
-          <table class="table table-bordered table-hover table-condensed">
+          <table class="table table-bordered table-hover table-condensed" >
              <tr><td><li class="list-group-item"><b>Sub_Total: {{number_format($total,2)}} COIN</b></li></span></td></tr>
           <tr><td> <li class="list-group-item"><b>Total:  {{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
-
+    </ul>
+      
     </div>
-
-</ul>
-
+    </ul>
+</div><br/>
 </div>
-</div>
-
-  </div>
 <div id="from">{{$from}}</div>
 <div id="to">{{$to}}</div>
 <script type="text/javascript">
- 
-var barChartData = {
-   
-    labels: <?php echo json_encode($label); ?>,
-      datasets : [
+   var barChartData = {
+    labels :<?php echo json_encode($label); ?>,
+    datasets : [
       {
         label: "My dataset",
         fillColor : "rgba(151,187,205,0.2)",
@@ -128,10 +133,11 @@ var barChartData = {
         pointStrokeColor : "#fff",
         pointHighlightFill : "#fff",
         pointHighlightStroke : "rgba(151,187,205,1)",
-        data: <?php echo json_encode($data); ?>,
-       
+        data : <?php echo json_encode($data); ?>
       }
     ]
   }
 </script>
+  
 @endsection
+

@@ -95,7 +95,8 @@
           <li {{ Helper::activeMenu("cashtouser") }}><a href="{{route('cashtouser')}}"><i class="fa fa-circle-o"></i><span>{{trans('Cash_To_User')}}</span></a></li>
           <li {{ Helper::activeMenu("credittouser") }}><a href="{{route('credittouser')}}"><i class="fa fa-circle-o"></i><span>{{trans('Credit_To_User')}}</span></a></li>
           <li {{ Helper::activeMenu("credittoreseller") }}><a href="{{route('credittoreseller')}}"><i class="fa fa-circle-o"></i><span>{{trans('Credit_To_Reseller')}}</span></a></li>
-    
+          <li {{ Helper::activeMenu("goldtouser") }}><a href="{{route('goldtouser')}}"><i class="fa fa-circle-o"></i><span>{{trans('Gold_To_User')}}</span></a></li>
+   
 
 
           <li {{ Helper::activeMenu("commissiontocashier") }}><a href="{{route('commissiontocashier')}}"><i class="fa fa-circle-o"></i><span>{{trans('Commission_To_Cashier')}}</span></a></li>
