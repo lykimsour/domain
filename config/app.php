@@ -113,7 +113,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
+        Illuminate\Foundation\Providers\ArtisanServiceProvider::class, 
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -145,6 +145,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        App\Providers\LdapServiceProvider::class,
+
 
     ],
 
@@ -194,13 +196,13 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
+        'Form'      => Collective\Html\FormFacade::class,
+        'Html'      => Collective\Html\HtmlFacade::class,
 
         'Helper'    => App\Classes\Helper::class,
         'Flash'     => App\Classes\Flash::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Image' => Intervention\Image\Facades\Image::class,
+        'PDF'       => Barryvdh\DomPDF\Facade::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
     ],
 
 ];

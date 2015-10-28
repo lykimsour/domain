@@ -29,7 +29,8 @@
 	            <label for="exampleInputEmail1" class="sr-only">User name</label>
 	            <div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-							  <input type="email" name="email" class="form-control" autocomplete="off" placeholder="User name" required autofocus value="{{ old('email') }}" >
+			
+							  <input type="text" name="username" class="form-control" autocomplete="off" placeholder="User name"  required autofocus  >
 							</div>
 	        </div>
 	        <div class="form-group">
