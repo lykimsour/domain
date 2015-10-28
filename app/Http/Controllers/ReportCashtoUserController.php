@@ -162,7 +162,7 @@ class ReportCashtoUserController extends Controller
                         $report = CashtoUserLog::groupBy('cashier_id')
                                                     ->selectRaw('*,sum(amount) as total')->where('status','=',1)
                                                     ->orderBy('id','asc')
-                                                    ->paginate(env('page'));
+                                                    ->paginate(env('PAGINATION'));
 
                        
 
@@ -182,7 +182,7 @@ class ReportCashtoUserController extends Controller
                                                     ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
                                                     ->selectRaw('transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
                                                     ->orderBy('id','asc')
-                                                    ->paginate(env('page'));
+                                                    ->paginate(env('PAGINATION'));
             
                         $totalall =  CashtoUserLog::join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
                                                      ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
@@ -227,7 +227,7 @@ class ReportCashtoUserController extends Controller
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
                                         ->orderBy('date','ASC')
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
 
             $totalall = CashtoUserLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -269,7 +269,7 @@ class ReportCashtoUserController extends Controller
                                             ->where('date','<=',$to)
                                             ->orderBy('date','ASC')
                                             ->selectRaw('transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
-                                            ->paginate(env('page'));
+                                            ->paginate(env('PAGINATION'));
 
                 $totalall = CashtoUserLog::join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
                                             ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
@@ -291,7 +291,7 @@ class ReportCashtoUserController extends Controller
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
-                                            ->paginate(env('page'));
+                                            ->paginate(env('PAGINATION'));
                 $report->setPath('cashtouser');
                 $totalall = CashtoUserLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -320,7 +320,7 @@ class ReportCashtoUserController extends Controller
 
         if(strcasecmp($time,"all") == 0){
            $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
-                                    ->orderBy('id','DESC')->paginate(env('page'));
+                                    ->orderBy('id','DESC')->paginate(env('PAGINATION'));
             $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])->sum('amount');      
             $from = $startdate;
             $to = $enddate;
@@ -357,7 +357,7 @@ class ReportCashtoUserController extends Controller
             $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
 
             $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)

@@ -86,7 +86,7 @@ class ReportCommissionToResellerController extends Controller
       }
 
       if($selected == 'all') {
-        $reports = CommissionToReseller::groupBy('reseller_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(env('page'));
+        $reports = CommissionToReseller::groupBy('reseller_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(env('PAGINATION'));
         $total   = CommissionToReseller::sum('amount');
         $chart_reports = CommissionToReseller::selectRaw('*,sum(amount) as total_amount')
                                               ->groupBy(DB::raw('YEAR(date)'))
@@ -101,7 +101,7 @@ class ReportCommissionToResellerController extends Controller
                                         ->selectRaw('*,sum(amount) as total_amount')
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
         // Chart Report
         $chart_reports =  CommissionToReseller::selectRaw('*,sum(amount) as total_amount')
                                                 ->where('date', '>=', $date)
@@ -195,7 +195,7 @@ class ReportCommissionToResellerController extends Controller
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->orderBy('date', 'DESC')
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
         $total   = CommissionToReseller::where('reseller_id', $id)
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)

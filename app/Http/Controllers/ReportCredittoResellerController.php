@@ -104,7 +104,7 @@ class ReportCredittoResellerController extends Controller
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
-                                            ->paginate(env('page'));
+                                            ->paginate(env('PAGINATION'));
          $totalall = CredittoResellerLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->sum('amount');
@@ -129,7 +129,7 @@ class ReportCredittoResellerController extends Controller
                         $report = CredittoResellerLog::groupBy('from_reseller_id')
                                                     ->selectRaw('*,sum(amount) as total')
                                                     ->orderBy('id','asc')
-                                                    ->paginate(env('page'));
+                                                    ->paginate(env('PAGINATION'));
                         $totalall = CredittoResellerLog::sum('amount');
                         $type = "all";
                         $from = "0";
@@ -171,7 +171,7 @@ class ReportCredittoResellerController extends Controller
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->orderBy('date','ASC')
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
 
         $totalall = CredittoResellerLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
@@ -195,7 +195,7 @@ class ReportCredittoResellerController extends Controller
     
         if(strcasecmp($time,"all") == 0){
            $report = CredittoResellerLog::where(['from_reseller_id'=>$reportctor->from_reseller_id])
-                                    ->orderBy('id','DESC')->paginate(env('page'));
+                                    ->orderBy('id','DESC')->paginate(env('PAGINATION'));
             $totalall = CredittoResellerLog::where(['from_reseller_id'=>$reportctor->from_reseller_id])->sum('amount');      
             $from = $startdate;
             $to = $enddate;
@@ -232,7 +232,7 @@ class ReportCredittoResellerController extends Controller
             $report = CredittoResellerLog::where(['from_reseller_id'=>$reportctor->from_reseller_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
 
             $totalall = CredittoResellerLog::where(['from_reseller_id'=>$reportctor->from_reseller_id])
                                         ->where('date','>=',$from)

@@ -87,7 +87,7 @@ class ReportCommissionToCashierController extends Controller
       }
 
       if($selected == 'all') {
-        $reports = CommissionToCashier::groupBy('cashier_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(env('page'));
+        $reports = CommissionToCashier::groupBy('cashier_id')->orderBy('date', 'DESC')->selectRaw('*,sum(amount) as total_amount')->paginate(env('PAGINATION'));
         $total   = CommissionToCashier::sum('amount');
         $chart_reports = CommissionToCashier::selectRaw('*,sum(amount) as total_amount')
                                               ->groupBy(DB::raw('YEAR(date)'))
@@ -101,7 +101,7 @@ class ReportCommissionToCashierController extends Controller
                                       ->selectRaw('*,sum(amount) as total_amount')
                                       ->where('date', '>=', $date)
                                       ->where('date', '<=', $to_date)
-                                      ->paginate(env('page'));
+                                      ->paginate(env('PAGINATION'));
         // Chart Report
         $chart_reports =  CommissionToCashier::selectRaw('*,sum(amount) as total_amount')
                                               ->where('date', '>=', $date)
@@ -185,7 +185,7 @@ class ReportCommissionToCashierController extends Controller
       $cashier = Cashier::where('id', $id)->first(); 
 
       if($get_type == 'all' || $get_type == null) {
-        $reports = CommissionToCashier::where('cashier_id', $id)->orderBy('date', 'DESC')->paginate(env('page'));
+        $reports = CommissionToCashier::where('cashier_id', $id)->orderBy('date', 'DESC')->paginate(env('PAGINATION'));
         $total   = CommissionToCashier::where('cashier_id', $id)->sum('amount');
       }
       else
@@ -194,7 +194,7 @@ class ReportCommissionToCashierController extends Controller
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->orderBy('date', 'DESC')
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
         $total   = CommissionToCashier::where('cashier_id', $id)
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)

@@ -82,7 +82,7 @@ class ReportUserToShopLogController extends Controller
       }
      
       if($selected == 'all') {
-        $reports = UserToShopLog::groupBy('service_code')->selectRaw('*,sum(amount) as total_amount')->paginate(env('page'));
+        $reports = UserToShopLog::groupBy('service_code')->selectRaw('*,sum(amount) as total_amount')->paginate(env('PAGINATION'));
         $total   = UserToShopLog::sum('amount');
 
         $chart_reports = UserToShopLog::selectRaw('*,sum(amount) as total_amount')
@@ -95,7 +95,7 @@ class ReportUserToShopLogController extends Controller
                                     ->selectRaw('*,sum(amount) as total_amount')
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
-                                    ->paginate(env('page'));
+                                    ->paginate(env('PAGINATION'));
         // Chart Report
         $chart_reports =  UserToShopLog::selectRaw('*,sum(amount) as total_amount')
                                             ->where('date', '>=', $date)
@@ -177,7 +177,7 @@ class ReportUserToShopLogController extends Controller
       $service = UserToShopLog::where('service_code', $id)->first(); 
 
       if($get_type == 'all' || $get_type == null) {
-        $reports  = UserToShopLog::where('service_code', $id)->where('status', 1)->orderBy('date', 'DESC')->paginate(env('page'));
+        $reports  = UserToShopLog::where('service_code', $id)->where('status', 1)->orderBy('date', 'DESC')->paginate(env('PAGINATION'));
         $total    = UserToShopLog::where('service_code', $id)->where('status', 1)->sum('amount');
       }
       else
@@ -187,7 +187,7 @@ class ReportUserToShopLogController extends Controller
                                         ->where('date', '>=', $date)
                                         ->where('date', '<=', $to_date)
                                         ->orderBy('date', 'DESC')
-                                        ->paginate(env('page'));
+                                        ->paginate(env('PAGINATION'));
         $total   = UserToShopLog::where('service_code', $id)
                                         ->where('status', 1)
                                         ->where('date', '>=', $date)
