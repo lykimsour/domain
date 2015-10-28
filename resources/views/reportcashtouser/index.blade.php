@@ -7,8 +7,7 @@
 @section('content')
 
 <div class="container-fluid">
-
-<h2>{{trans('Report:Cashier_To_Reseller')}}</h2>
+<h2>Report:Cash_To_User</h2>
 <div class="row">
 <form method="post" action="{{route('queryreportcashtouser')}}">
   {!! csrf_field() !!}
@@ -94,7 +93,7 @@
               <tr>
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>
-                    <td>{{$report->total}}</td>
+                    <td>{{number_format($report->total,2)}}</td>
                     <td>{{$report->status}}</td>
                     <td><a href="{{route('detailcashtouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
                     <?php 
@@ -106,8 +105,8 @@
           </table>
            <div class="table-responsive list-group-item">    
           <table class="table table-bordered table-hover table-condensed" >
-             <tr><td><li class="list-group-item"><b>Sub_Total: {{$total}} COIN</b></li></span></td></tr>
-          <tr><td> <li class="list-group-item"><b>Total:  {{$totalall}} COIN</b></li></span></td></tr>
+             <tr><td><li class="list-group-item"><b>Sub_Total: {{number_format($total,2)}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:  {{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
 

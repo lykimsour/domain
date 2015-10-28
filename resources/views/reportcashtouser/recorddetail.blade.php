@@ -41,7 +41,7 @@
                     <td>{{$report->transfer_cash2user_log_id}}</td>
                     <td>{{$report->resp_code}}</td>
                     <td>{{$report->pan}}</td>
-                    <td>{{$report->mpu_amount}}</td>
+                    <td>{{number_format($report->mpu_amount,2)}}</td>
                     <td>{{$report->invoice_no}}</td>
                     <td>{{$report->tran_ref}}</td>
                     <td>{{$report->approval_code}}</td>
@@ -72,7 +72,7 @@
                     <td>{{$report->wing_transaction__id}}</td>
                     <td>{{$report->wing_account}}</td>
                     <td>{{$report->currency}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$report->remote_address}}</td>  
               </tr>
       
@@ -116,7 +116,7 @@
                     <td>{{$report->game_no}}</td>
                     <td>{{$report->mycard_id}}</td>
                     <td>{{$report->mycard_password}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$report->sabay_coin}}</td>
                     <td>{{$report->detail}}</td>
                     <td>{{$report->remote_address}}</td>
@@ -138,7 +138,7 @@
                     <td>{{$report->transfer_cash2user_log_id}}</td>
                     <td>{{$report->transaction_id}}</td>
                     <td>{{$report->topup_code}}</td>
-                    <td>{{$report->coin}}</td>
+                    <td>{{number_format($report->coin,2)}}</td>
                     <td>{{$report->remote_address}}</td>
               </tr>
             </tbody>
@@ -157,19 +157,44 @@
                 </tr>
             </thead>
                <tbody>
-              <tr>
+             
+            </table> <tr>
                     <td>{{$report->transfer_cash2user_log_id}}</td>
                     <td>{{$report->reference_id}}</td>
                     <td>{{$report->payment_id}}</td>
                     <td>{{$report->account_id}}</td>
-                    <td>{{$report->amount}}</td>
+                    <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$report->sabay_coins}}</td>
                     <td>{{$report->message}}</td>
                     <td>{{$report->remote_address}}</td>
               </tr>
             </tbody>
-            </table>
+          @elseif(strcasecmp($type,"scr")==0)
+              <thead>
+                <tr>
+                  <th>Transfer_cash2reseller_log_id</th>
+                  <th>From_User_Id</th>
+                  <th>To_User_Id</th>
+                  <th>Coin</th>
+                  <th>Date</th>
+                  <th>Sabay_Coin</th>
+                  <th>IP</th>
+                </tr>
+            </thead>
+               <tbody>
+                 </table> <tr>
+                    <td>{{$report->transfer_cash2user_log_id}}</td>
+                    <td>{{$report->from_user_id}}</td>
+                    <td>{{$report->to_user_id}}</td>
+                    <td>{{number_format($report->coin,2)}}</td>
+                    <td>{{$report->date}}</td>
+                    <td>{{$report->sabay_coin}}</td>
+                    <td>{{$report->IP}}</td>
+              </tr>
+            </tbody>
           @endif
+      
+
         </div>
 
     </ul>

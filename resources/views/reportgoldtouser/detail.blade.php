@@ -6,15 +6,15 @@
   //init array
   $data  = []; 
   $label = [];
- // $name = [];
+  $name = [];
 
 ?>
 <div class="container-fluid">
 
-<h2>Report:Cash_To_User')</h2>
+<h2>Report:{{$cashiername}}_To_Reseller</h2>
 
 <div class="row">
-<form method="post" action="{{route('detailscredittoreseller',['id'=>$reportid])}}">
+<form method="post" action="{{route('detailgoldtouser',['id'=>$reportid])}}">
   {!! csrf_field() !!}
  <div class="table-responsive list-group-item">  
    <div class="col-md-2">
@@ -69,18 +69,16 @@
              {!! $reports->render()!!}
                 <tr>
                   <th>ID</th>
-                  <th>Reseller_Name</th>
-                   <th>From_user_id</th>
-                  <th>To_Reseller_ID</th>
-                  <th>To_User_ID</th>
-                  <th>Amount</th>
+                  <th>Cashier_Name</th>
+                  <th>User_Name</th>
+                  <th>Total</th>
                   <th>Date</th>
-                  <th>IP</th>
+                  <th>Detail</th>
                 </tr>
             </thead>
                <tbody>
             <?php $total = 0; ?>
-             @foreach($chart as $chart)
+              @foreach($chart as $chart)
                 <?php
                 array_push($data, $chart->total); 
                 $date = strtotime($chart->date);
@@ -88,24 +86,20 @@
                 elseif($time == 'year') $date = date('Y-M',$date);
                 else $date = date('Y-M-d',$date);
                 array_push($label,$date);  
-               
               ?>
-              @endforeach
-                    @foreach($reports as $report)
+            @endforeach 
+            @foreach($reports as $report)
               <tr>
                     <?php 
                       $d = strtotime($report->date);
                       $reportdate = date('Y-M-d h:i:s',$d); 
                     ?>
                     <td>{{$report->id}}</td>
-                    <td>{{$report->fromreseller->name}}</td>
-                    <td>{{$report->fromuser->name}}</td>
-                    <td>{{$report->toreseller->name}}</td>
-                    <td>{{$report->touser->name}}</td>
+                    <td>{{$report->cashier->name}}</td>
+                    <td>{{$report->user->name}}
                     <td>{{number_format($report->amount,2)}}</td>
                     <td>{{$reportdate}}</td>
-                    <td>{{$report->ip}}</td>
-                    <td><a href="{{route('recorddetailscredittouser',['id'=>$report->id])}}">Detail</a></td>
+                    <td><a href="{{route('recorddetailsreportgoldtouser',['id'=>$report->id])}}">Detail</a></td>
                    <?php
                     $total= $report->amount + $total;
                    ?>
@@ -117,8 +111,8 @@
           </table>
          <div class="table-responsive list-group-item">    
           <table class="table table-bordered table-hover table-condensed" >
-           <tr><td><li class="list-group-item"><b>Sub_Total:{{number_format($total,2)}} COIN</b></li></span></td></tr>
-          <tr><td> <li class="list-group-item"><b>Total:{{number_format($totalall,2)}} COIN</b></li></span></td></tr>
+           <tr><td><li class="list-group-item"><b>Sub_Total: {{number_format($total,2)}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:  {{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
         

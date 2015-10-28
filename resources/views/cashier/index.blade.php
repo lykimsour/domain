@@ -55,8 +55,8 @@
         				</td>
         				<td><b>{{$cashier->id}}</b></td>
         				<td>{{$cashier->name}}</td>
-        				<td>{{$cashier->username}}</td>
-                <td>{{$cashier->type}}</td>
+        				<td>{{$cashier->type}}</td>
+                <td>{{$cashier->username}}</td>
         				<td>{{$cashier->commission_rate}}</td>
         				<td>{{$cashier->only2service}}</td>
         				<td>{{$cashier->pay_bonus}}</td>

@@ -6,29 +6,34 @@
   //init array
   $data  = []; 
   $label = [];
- // $name = [];
 
 ?>
 <div class="container-fluid">
 
-<h2>Report:Cash_To_User')</h2>
-
+<h2>{{trans('Report:Gold_To_User')}}</h2>
 <div class="row">
-<form method="post" action="{{route('detailscredittoreseller',['id'=>$reportid])}}">
+<form method="post" action="{{route('queryreportgoldtouser')}}">
   {!! csrf_field() !!}
  <div class="table-responsive list-group-item">  
+      <div class="col-md-2">
+          <div class="form-group">
+             <label for="name">{{trans('Cashier Types')}}</label>
+                <?php $types=["all"=>"All","human"=>"Human","agent"=>"Agent"]; ?>
+               {!! Form::select('type',$types,$type,['class'=>'form-control']) !!}
+          </div> 
+           <button type="submmit" class="btn btn-md btn btn-danger">Show</button>
+  </div>
    <div class="col-md-2">
           <div class="form-group">
              <label for="name">{{trans('Time')}}</label>
                 <?php $times=["all"=>"All","today"=>"Today","week"=>"Week","month"=>"Month","year"=>"Year","period"=>"Period"]; ?>
                {!! Form::select('time',$times,$time,['class'=>'form-control','id'=>'time']) !!}
           </div>
-          <button type="submmit" class="btn btn-md btn btn-danger">Show</button>
   </div> 
   <div class="col-md-3" id="sdate">
           <div class="form-group">
               <label for="name" >{{trans('Start_Date')}}</label><br/>
-                <div class='input-group date' data-date-format="MM-dd-yyyy" id="startdate" >
+                <div class="input-group date" data-date-format="MM-dd-yyyy" id="startdate"  >
                     <input type='text' class="form-control" name="startdate" id="sdateid"  />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -39,7 +44,7 @@
    <div class="col-md-3" id="edate">
           <div class="form-group">
               <label for="name">{{trans('End_Date')}}</label><br/>
-                <div class='input-group date' data-date-format="MM-dd-yyyy" id='enddate'>
+                <div class="input-group date" data-date-format="MM-dd-yyyy" id='enddate'>
                     <input type='text' class="form-control" name="enddate" id="edateid"/>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
@@ -50,88 +55,74 @@
 </div>
 </form>
 </div><br/>
-</div><br/>
-  <div style="width:100%">
+ <div style="width:100%">
             <div>
               <canvas id="canvas" height="250" width="900"></canvas>
             </div>
           </div>
 <div class="row">
-
     <div class="col-md-12">
        <ul class="list-group">
       <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
           <span>Report</span> 
       </li>
+     
     <div class="table-responsive list-group-item">          
           <table class="table table-bordered table-hover table-condensed" >
             <thead>
-             {!! $reports->render()!!}
+                {!! $reports->render() !!}
                 <tr>
+                 
                   <th>ID</th>
-                  <th>Reseller_Name</th>
-                   <th>From_user_id</th>
-                  <th>To_Reseller_ID</th>
-                  <th>To_User_ID</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                  <th>IP</th>
+                  <th>Cashier_Name</th>
+                  <th>Total</th>
+                  <th>Detail</th>
                 </tr>
             </thead>
                <tbody>
-            <?php $total = 0; ?>
-             @foreach($chart as $chart)
-                <?php
+            <?php $total = 0 ?>
+            
+            @foreach($chart as $chart)
+                <?php  
                 array_push($data, $chart->total); 
                 $date = strtotime($chart->date);
                 if($time == 'all') $date = date('Y',$date);
                 elseif($time == 'year') $date = date('Y-M',$date);
                 else $date = date('Y-M-d',$date);
-                array_push($label,$date);  
-               
+                array_push($label,$date);
               ?>
+           
               @endforeach
-                    @foreach($reports as $report)
+            @foreach($reports as $report)
               <tr>
-                    <?php 
-                      $d = strtotime($report->date);
-                      $reportdate = date('Y-M-d h:i:s',$d); 
-                    ?>
                     <td>{{$report->id}}</td>
-                    <td>{{$report->fromreseller->name}}</td>
-                    <td>{{$report->fromuser->name}}</td>
-                    <td>{{$report->toreseller->name}}</td>
-                    <td>{{$report->touser->name}}</td>
-                    <td>{{number_format($report->amount,2)}}</td>
-                    <td>{{$reportdate}}</td>
-                    <td>{{$report->ip}}</td>
-                    <td><a href="{{route('recorddetailscredittouser',['id'=>$report->id])}}">Detail</a></td>
-                   <?php
-                    $total= $report->amount + $total;
-                   ?>
+                    <td>{{$report->cashier->name}}</td>
+                    <td>{{number_format($report->total,2)}}</td>
+                    <td><a href="{{route('detailsreportgoldtouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
+                    <?php $total = $report->total + $total  ?>
               </tr>
-          @endforeach
 
+          @endforeach
       </li>
             </tbody>
+       
           </table>
-         <div class="table-responsive list-group-item">    
+      <div class="table-responsive list-group-item">    
           <table class="table table-bordered table-hover table-condensed" >
-           <tr><td><li class="list-group-item"><b>Sub_Total:{{number_format($total,2)}} COIN</b></li></span></td></tr>
-          <tr><td> <li class="list-group-item"><b>Total:{{number_format($totalall,2)}} COIN</b></li></span></td></tr>
+             <tr><td><li class="list-group-item"><b>Sub_Total: {{number_format($total,2)}} COIN</b></li></span></td></tr>
+          <tr><td> <li class="list-group-item"><b>Total:  {{number_format($totalall,2)}} COIN</b></li></span></td></tr>
           </table>
       </div>
-        
-        </div>
-
     </ul>
+      
     </div>
+    </ul>
 </div><br/>
 </div>
 <div id="from">{{$from}}</div>
 <div id="to">{{$to}}</div>
 <script type="text/javascript">
-  var barChartData = {
+   var barChartData = {
     labels :<?php echo json_encode($label); ?>,
     datasets : [
       {
@@ -146,6 +137,7 @@
       }
     ]
   }
-  
 </script>
+  
 @endsection
+

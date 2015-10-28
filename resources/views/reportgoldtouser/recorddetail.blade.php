@@ -79,14 +79,14 @@
       @else
           <thead>
                 <tr>
-                  <th>Transfer_cash2reseller_log_id</th>
+                  <th>Transfer_gold2user_log</th>
                   <th>IP</th>
                  
                 </tr>
             </thead>
                <tbody>
               <tr>
-                    <td>{{$report->transfer_cash2reseller_log_id}}</td>
+                    <td>{{$report->transfer_gold2user_log_id}}</td>
                     <td>{{$report->ip}}</td>
               </tr>
       </li>
