@@ -61,7 +61,7 @@
     <div class="col-md-12">
        <ul class="list-group">
       <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
-          <span>Report</span> 
+          <span>Report</span> <a href="{{route('cashiertoreseller')}}">b</a>
       </li>
     <div class="table-responsive list-group-item">          
           <table class="table table-bordered table-hover table-condensed" >

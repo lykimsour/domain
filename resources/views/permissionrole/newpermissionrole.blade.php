@@ -1,9 +1,9 @@
-@extends('layouts.app')
+
 <?php
 use App\PermissionRole;
 use App\Permission;
 ?>
-
+@extends('layouts.app')
 @section('content')
 <div class="container-fluid">
 @if($errors->any())
@@ -13,7 +13,9 @@ use App\Permission;
         @endforeach
     </ul>
     @endif
+
 <h2>{{trans('Assign Permission')}}</h2>
+
 <div class="row">
    <div class="col-md-8">
     <form method="post" action="{{route('storepermissionrole')}}" id="createform">
@@ -109,7 +111,6 @@ use App\Permission;
          <td><label><input type="checkbox" name="{{$onlineshop->permission_slug}}" id="{{$onlineshop->permission_slug}}" value="{{$onlineshop->id}}" checked="true"><b>{{$onlineshop->permission_title}}</b></label></td>
         @else
          <td><label><input type="checkbox" name="{{$onlineshop->permission_slug}}" id="{{$onlineshop->permission_slug}}" value="{{$onlineshop->id}}"><b>{{$onlineshop->permission_title}}</b></label></td>
-
         @endif
         @endforeach
         </tr>
@@ -179,14 +180,8 @@ use App\Permission;
       </table>
       </div>
       </div>
-    </div>
-       
+    </div> 
  	</form>
  </div>
- 
  </div>
-
-
-
- 
-@endsection
+  @endsection

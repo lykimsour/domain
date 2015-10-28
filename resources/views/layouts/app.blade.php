@@ -59,13 +59,8 @@
   
 $(document).ready(function() {
   window.onload = function(){
-   
-
     var ctx = document.getElementById("canvas").getContext("2d");
     window.myLine = new Chart(ctx).Bar(barChartData, {responsive: true});
-    
-
-
     var gettime = document.getElementById("time");
     var time = gettime.options[gettime.selectedIndex].text;
       $("#sdate").hide();
@@ -81,10 +76,7 @@ $(document).ready(function() {
       var to = $("#to").text();
       $("#sdateid").val(from);
       $("#edateid").val(to);
- 
     }
-
-
   }
   
   $("#startdate").datepicker({ 
@@ -111,11 +103,11 @@ $(document).ready(function() {
       });
 
   $("#roleid").change(function(){
-    var url = "{{URL::to('/permissionrole/create')}}" + "/" + $("#roleid").val() ;
+    var url = "{{URL::to('/permissionrole/create')}}" + "/" + $("#roleid").val();
     $("#method").val("GET");
     $("#createform").attr("action",url);
     $("#createform").submit();
-    });
+  });
 
 });
 </script>

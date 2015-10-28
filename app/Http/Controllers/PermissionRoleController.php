@@ -59,10 +59,10 @@ class PermissionRoleController extends Controller
     public function store(Request $request)
     {
         $permissions = Permission::All();
-      
+        $checked = array();
         foreach($permissions as $permission){
-        
             if($request->has($permission->permission_slug)){
+                array_push($checked,$permission->id);
                 $check = PermissionRole::where(['role_id'=>$request->roleid,'permission_id'=>$permission->id])->get();
                 if($check->isEmpty()){
                     $permissionrole = new PermissionRole;
@@ -70,9 +70,19 @@ class PermissionRoleController extends Controller
                     $permissionrole->permission_id = $request->input($permission->permission_slug);
                     $permissionrole->save();
                 }
-           }
+           }        
         }
-        return Redirect::route('permissionrole');
+        $uncheckpermissions = Permission::whereNotIn('id',$checked)->get();
+        foreach ($uncheckpermissions as $uncheckpermission) {
+            $check = PermissionRole::where(['role_id'=>$request->roleid,'permission_id'=>$uncheckpermission->id])->get();
+            if(!$check->isEmpty()){
+                 foreach ($check as $ch){
+                    $this->destroy($ch->id);
+                 }
+            }
+        }
+       
+        return Redirect::back();
     }
 
     /**

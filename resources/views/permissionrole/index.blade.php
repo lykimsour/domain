@@ -63,6 +63,4 @@ use App\Role;
     </div>
 </div><br/>
 </div>
-
-
 @endsection
