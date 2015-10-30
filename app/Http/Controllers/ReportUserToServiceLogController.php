@@ -86,7 +86,7 @@ class ReportUserToServiceLogController extends Controller
       }
        
       if($selected == 'all') {
-        $reports = UserToServiceLog::groupBy('user_id')->selectRaw('*,sum(amount) as total_amount')->where('status', 1)->paginate(env('PAGINATION'));
+        $reports = UserToServiceLog::groupBy('service_code')->selectRaw('*,sum(amount) as total_amount')->where('status', 1)->paginate(env('PAGINATION'));
         $total   = UserToServiceLog::where('status', 1)->sum('amount');
   
         $chart_reports = UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
@@ -97,7 +97,7 @@ class ReportUserToServiceLogController extends Controller
       else
       {
 
-        $reports = UserToServiceLog::groupBy('user_id')
+        $reports = UserToServiceLog::groupBy('service_code')
                                     ->selectRaw('*,sum(amount) as total_amount')
                                     ->where('status', 1)
                                     ->where('date', '>=', $date)
