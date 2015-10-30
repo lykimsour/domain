@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Lang;
 use App\User;
 use Auth;
+
 class Authenticate
 {
     /**
@@ -24,7 +25,9 @@ class Authenticate
      */
     public function __construct(Guard $auth)
     {
+
         $this->auth = $auth;
+
     }
 
     /**
@@ -44,20 +47,9 @@ class Authenticate
             }
 
         }
-        $checkstatus = User::findOrFail(Auth::id());
-        if($checkstatus->status){
-            return $next($request);
-        }
-        else{
-             Auth::logout();
-             return view('auth.login')->withErrors([
-                $this->loginUsername() => $this->getBlockedsms(),
-            ]);
-        }
-        
-       
-
+        return $next($request);
     }
+
      protected function getBlockedsms(){
           return Lang::has('auth.failed')
                 ? Lang::get('auth.failed')
@@ -65,6 +57,6 @@ class Authenticate
     }
      public function loginUsername()
     {
-        return property_exists($this, 'username') ? $this->username : 'email';
+        return property_exists($this, 'username') ? $this->username : 'username';
     }
 }

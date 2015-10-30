@@ -6,7 +6,7 @@
 
     <div class="user-panel">
       <div class="pull-left info">
-        <p>{{Auth::user()->name}}</p> 
+        <p>{{Session::get('username')}}</p> 
         <p>{{Auth::user()->email}}</p>
         <a href="{{route('edituser')}}">(Change My Profile)</a>
 
