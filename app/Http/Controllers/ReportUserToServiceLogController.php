@@ -137,7 +137,7 @@ class ReportUserToServiceLogController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id, $get_type, $start_date = "", $to_end_date = "")
+    public function show($service_code, $get_type, $start_date = "", $to_end_date = "")
     {
       $date     = date("Y-m-d 00:00:00");
       $to_date  = date("Y-m-d 23:59:59");
@@ -180,26 +180,26 @@ class ReportUserToServiceLogController extends Controller
           break;
       }
 
-      $user     = UserToServiceLog::where('user_id', $id)->first();  
+      $user = UserToServiceLog::where('service_code', $service_code)->first();  
 
       if($get_type == 'all' || $get_type == null) {
-        $reports = UserToServiceLog::where('user_id', $id)
+        $reports = UserToServiceLog::where('service_code', $service_code)
                                     ->where('status', 1)
                                     ->paginate(env('PAGINATION'));
 
-        $total   = UserToServiceLog::where('user_id', $id)
+        $total   = UserToServiceLog::where('service_code', $service_code)
                                     ->where('status', 1)
                                     ->sum('amount');
       }
       else
       {
-        $reports = UserToServiceLog::where('user_id', $id)
+        $reports = UserToServiceLog::where('service_code', $service_code)
                                     ->where('status', 1)
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
                                     ->paginate(env('PAGINATION'));
 
-        $total   = UserToServiceLog::where('user_id', $id)
+        $total   = UserToServiceLog::where('service_code', $service_code)
                                     ->where('status', 1)
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)

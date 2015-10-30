@@ -76,7 +76,7 @@
             <thead>  
                 <tr>
                   <th>ID</th>
-                  <th>User_Name</th>
+                  <th>Service_Code</th>
                   <th>Amount</th>
                   <th>Date</th>
                   <th>Detail</th>
@@ -100,12 +100,12 @@
             @foreach($reports as $report)
               <tr>
                 <td>{{ $report->id }}</td>
-                <td>{{ $report->user->name }}</td>
+                <td>{{ $report->service_code }}</td>
                 <td>{{ $report->total_amount }}</td>
                 <td>{{ $report->date }}</td>
                 <td><a href="{{ route('detailusertoservicelog', 
                                 [
-                                  'id' => $report->user_id, 
+                                  'id' => $report->service_code, 
                                   'type' => $get_type, 
                                   'start_date' => $start_date, 
                                   'end_date' => $end_date

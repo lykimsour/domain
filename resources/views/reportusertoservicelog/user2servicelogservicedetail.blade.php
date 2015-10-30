@@ -16,7 +16,7 @@
       <ul class="list-group">
         <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
             <span>List / <a href="{{ route('usertoservicelog')}}">{{ $user->user->name }}</a>
-                       / <a href="{{ route('detailusertoservicelog', [$user->user->id, Request::segment(4), Request::segment(5), Request::segment(6)])}}">{{ $service_code }}</a>
+                       / <a href="{{ route('detailusertoservicelog', [$service_code, Request::segment(4), Request::segment(5), Request::segment(6)])}}">{{ $service_code }}</a>
             </span> 
         </li>
       </ul>

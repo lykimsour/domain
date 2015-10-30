@@ -25,6 +25,7 @@
             <thead>  
               <tr>
                 <th>ID</th>
+                <th>User Name</th>
                 <th>Service_Code</th>
                 <th>Amount</th>
                 <th>Date</th>
@@ -35,6 +36,7 @@
             @foreach($report_details as $report_detail)
               <tr>
                 <td>{{ $report_detail->id }}</td>
+                <td>{{ $report_detail->user->name }}</td>
                 <td>{{ $report_detail->service_code }}</td>
                 <td>{{ $report_detail->amount }}</td>
                 <td>{{ $report_detail->date }}</td>
