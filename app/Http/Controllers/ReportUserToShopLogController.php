@@ -49,22 +49,22 @@ class ReportUserToShopLogController extends Controller
       switch ($selected) {
         case 'today':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00");
           break;
         case 'week':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00", strtotime("-7 day"));
           break;
         case 'month':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00", strtotime("-30 day"));
           break;
         case 'year':
           $group = 'MONTH';
-          $type  = 'F';
+          $type  = 'Y-M';
           $date  = date("Y-m-d 00:00:00", strtotime("-12 month"));
           break;
         case 'period':
@@ -73,7 +73,7 @@ class ReportUserToShopLogController extends Controller
           $enddate   = DateTime::createFromFormat("F-d-Y", $format_endate);
           $to_date   = $enddate->format('Y-m-d 23:59:59'); 
           $group     = 'DAY';
-          $type      = 'D';
+          $type      = 'Y-M-d';
           break;
         default:
           $group = 'YEAR';
@@ -96,12 +96,14 @@ class ReportUserToShopLogController extends Controller
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
                                     ->paginate(env('PAGINATION'));
+
         // Chart Report
         $chart_reports =  UserToShopLog::selectRaw('*,sum(amount) as total_amount')
-                                            ->where('date', '>=', $date)
-                                            ->where('date', '<=', $to_date)
-                                            ->groupBy(DB::raw(''.$group.'(date)'))
-                                            ->get();
+                                          ->where('date', '>=', $date)
+                                          ->where('date', '<=', $to_date)
+                                          ->groupBy(DB::raw(''.$group.'(date)'))
+                                          ->get();
+        
         $total   = UserToShopLog::where('date', '>=', $date)->where('date', '<=', $to_date)->sum('amount');                            
       }
       

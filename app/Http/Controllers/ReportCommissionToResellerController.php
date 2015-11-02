@@ -51,22 +51,22 @@ class ReportCommissionToResellerController extends Controller
       switch ($selected) {
         case 'today':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00");
           break;
         case 'week':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00", strtotime("-7 day"));
           break;
         case 'month':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00", strtotime("-30 day"));
           break;
         case 'year':
           $group = 'MONTH';
-          $type  = 'F';
+          $type  = 'Y-M';
           $date  = date("Y-m-d 00:00:00", strtotime("-12 month"));
           break;
         case 'period':
@@ -77,7 +77,7 @@ class ReportCommissionToResellerController extends Controller
           $to_date   = $enddate->format('Y-m-d 23:59:59');
           $to        = $enddate->format('F-d-Y');
           $group     = 'DAY';
-          $type      = 'D';
+          $type      = 'Y-M-d';
           break;
         default:
           $group = 'YEAR';

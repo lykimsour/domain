@@ -51,22 +51,22 @@ class ReportUserToServiceLogController extends Controller
       switch ($selected) {
         case 'today':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00");
           break;
         case 'week':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00", strtotime("-7 day"));
           break;
         case 'month':
           $group = 'DAY';
-          $type  = 'D';
+          $type  = 'Y-M-d';
           $date  = date("Y-m-d 00:00:00", strtotime("-30 day"));
           break;
         case 'year':
           $group = 'MONTH';
-          $type  = 'F';
+          $type  = 'Y-M';
           $date  = date("Y-m-d 00:00:00", strtotime("-12 month"));
           break;
         case 'period':
@@ -77,7 +77,7 @@ class ReportUserToServiceLogController extends Controller
           $to_date   = $enddate->format('Y-m-d 23:59:59');
           $to        = $enddate->format('F-d-Y'); 
           $group     = 'DAY';
-          $type      = 'D';
+          $type      = 'Y-M-d';
           break;
         default:
           $group = 'YEAR';
@@ -103,13 +103,14 @@ class ReportUserToServiceLogController extends Controller
                                     ->where('date', '>=', $date)
                                     ->where('date', '<=', $to_date)
                                     ->paginate(env('PAGINATION'));
-        // Chart Report
+        // Chart Report                         
         $chart_reports =  UserToServiceLog::selectRaw('*,sum(amount) as total_amount')
-                                            ->where('status', 1)
-                                            ->where('date', '>=', $date)
-                                            ->where('date', '<=', $to_date)
-                                            ->groupBy(DB::raw(''.$group.'(date)'))
-                                            ->get();
+                                          ->where('status', 1)
+                                          ->where('date', '>=', $date)
+                                          ->where('date', '<=', $to_date)
+                                          ->groupBy(DB::raw(''.$group.'(date)'))
+                                          ->get();
+                                 
         $total = UserToServiceLog::where('status', 1)->where('date', '>=', $date)->where('date', '<=', $to_date)->sum('amount');                            
       }
       
