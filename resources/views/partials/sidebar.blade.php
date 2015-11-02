@@ -1,22 +1,34 @@
 <!-- Left side column. contains the sidebar -->
+
 <aside class="main-sidebar">
 
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
 
     <div class="user-panel">
+
       <div class="pull-left info">
         <p>{{Session::get('username')}}</p> 
         <p>{{Auth::user()->email}}</p>
-        <a href="{{route('edituser')}}">(Change My Profile)</a>
+        <!--<a href="{{route('edituser')}}">(Change My Profile)</a>-->
 
         <!-- Status -->
         <!--<a href="#">{{trans('user.id')}}: {{Auth::user()->id}}</a>-->
       </div>
     </div>
     <!-- Sidebar Menu -->
+
     <ul class="sidebar-menu">
+        <li>
+        <a id="back" href="#">
+        <i class="glyphicon glyphicon-backward"></i> 
+          <span>{{trans('Back')}}</span>
+          <div class="clear"></div>
+        </a>
+      </li>
       <li class="header">MAIN NAVIGATION</li>
+
+
       <li {{ Helper::activeMenu("/") }}>
         <a href="{{URL::route('dashboard.index')}}">
           <i class="fa fa-dashboard"></i> 

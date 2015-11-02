@@ -19,6 +19,7 @@ use App\CashtoUserogmgc;
 use App\CashtoUsersrc;
 use Redirect;
 use Route;
+use URL;
 class ReportCashtoUserController extends Controller
 {
 
@@ -382,7 +383,7 @@ class ReportCashtoUserController extends Controller
 
      public function recorddetail($id)
     {
-       
+        //return URL::previous();
         $reportlog = CashtoUserLog::findOrFail($id);
         $cashier = Cashier::findOrFail($reportlog->cashier_id);
         $type;

@@ -23,9 +23,12 @@
 
 </head>
 <body class="skin-mysabay">
+
   <div class="wrapper">
+
     <!-- Header -->
     @include('partials.header')
+
 
     <!-- Sidebar -->
     @include('partials.sidebar')
@@ -109,6 +112,9 @@ $(document).ready(function() {
     $("#createform").submit();
   });
 
+});
+$("#back").click(function(){
+     window.history.back();
 });
 </script>
 @yield('script')

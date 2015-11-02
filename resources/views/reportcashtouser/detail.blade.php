@@ -13,7 +13,7 @@
 
 <h2>Report:{{$cashiername}} To_User</h2>
 <div class="row">
-<form method="post" action="{{route('detailcashtouser',['id'=>$reportid])}}">
+<form method="post" action="{{route('detailscashtouser',['id'=>$reportid])}}">
   {!! csrf_field() !!}
  <div class="table-responsive list-group-item">  
    <div class="col-md-2">
@@ -22,7 +22,6 @@
                 <?php $times=["all"=>"All","today"=>"Today","week"=>"Week","month"=>"Month","year"=>"Year","period"=>"Period"]; ?>
                {!! Form::select('time',$times,$time,['class'=>'form-control','id'=>'time']) !!}
           </div>
-            <a class="btn btn-md btn btn-info" href="{{route('cashtouser')}}"><i class="glyphicon glyphicon-backward"></i> Back</a>
           <button type="submmit" class="btn btn-md btn btn-danger">Show</button>
 
   </div> 

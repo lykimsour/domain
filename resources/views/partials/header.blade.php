@@ -8,7 +8,9 @@
   </a>
 
   <!-- Header Navbar -->
-  <nav class="navbar navbar-static-top" role="navigation">
+  <nav class="navbar navbar-static-top" role="navigation">     
+
+
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
       <span class="sr-only">Toggle navigation</span>
@@ -53,9 +55,10 @@
       </ul>-->
 
       <ul class="nav navbar-nav navbar-right">
-        
+  
         <!-- Notifications Menu -->
         <li class="dropdown notifications-menu">
+
           <!-- Menu toggle button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-bell-o"></i>
@@ -63,6 +66,7 @@
           </a>
           <ul class="dropdown-menu">
             <li class="header">You have no notification</li>
+
             {{-- <li>
               <!-- Inner Menu: contains the notifications -->
               <ul class="menu">
@@ -76,7 +80,7 @@
             <li class="footer"><a href="#">View all</a></li>
           </ul>
         </li>
-       
+
         <!-- Tasks Menu -->
         <li class="dropdown">
           <!-- Menu Toggle Button -->
