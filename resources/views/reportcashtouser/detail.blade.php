@@ -22,7 +22,9 @@
                 <?php $times=["all"=>"All","today"=>"Today","week"=>"Week","month"=>"Month","year"=>"Year","period"=>"Period"]; ?>
                {!! Form::select('time',$times,$time,['class'=>'form-control','id'=>'time']) !!}
           </div>
+            <a class="btn btn-md btn btn-info" href="{{route('cashtouser')}}"><i class="glyphicon glyphicon-backward"></i> Back</a>
           <button type="submmit" class="btn btn-md btn btn-danger">Show</button>
+
   </div> 
   <div class="col-md-3" id="sdate">
           <div class="form-group">

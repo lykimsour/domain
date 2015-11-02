@@ -4,7 +4,7 @@
 
 <section class="content-header">
     <h1>
-      {{trans('New Cashier')}}
+      {{trans('New User')}}
     </h1>
   </section>
 <section class="content">

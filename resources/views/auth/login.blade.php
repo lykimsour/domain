@@ -29,7 +29,6 @@
 	            <label for="exampleInputEmail1" class="sr-only">User name</label>
 	            <div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-			
 							  <input type="text" name="username" class="form-control" autocomplete="off" placeholder="User name"  required autofocus  >
 							</div>
 	        </div>
@@ -60,7 +59,7 @@
 			 $('form#login').validate({
 				rules: {
 					username: {
-						minlength: 4
+						minlength: 1
 					},
 					password: {
 						minlength: 6

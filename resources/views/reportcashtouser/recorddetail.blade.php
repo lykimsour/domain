@@ -9,11 +9,13 @@
 
 <div class="row">
     <div class="col-md-6">
+         <a class="btn btn-md btn btn-info" href="{{Redirect::back()}}"><i class="glyphicon glyphicon-backward"></i> Back</a>
     </div>
-</div><br/>
+</div>
 <div class="row">
 
     <div class="col-md-12">
+     </br>
        <ul class="list-group">
       <li class="list-group-item"><span class="glyphicon glyphicon-list-alt"></span>
           <span>Report</span> 
