@@ -62,9 +62,13 @@ class LdapProvider implements LdapProviderContract
         $ldap_user->manager   = $info[0]['manager'][0];
  
         Auth::login($ldap_user); 
+        
         Session::set('username', $ldap_user->name);
         if (Auth::check()) 
           return redirect('/');      
       }
+      else
+        return redirect($this->loginPath())
+                ->withErrors([$this->getFailedLoginMessage()]);
     }
 }
