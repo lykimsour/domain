@@ -18,13 +18,17 @@ use App\CashtoUserpayngo;
 use App\CashtoUserogmgc;
 use App\CashtoUsersrc;
 use Redirect;
+use Route;
 class ReportCashtoUserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
+    //public $url = "dfgg";
+   
       public function chartdata($id,$type,$time,$from,$to){
         if($id ==0){
             if(strcasecmp($type,"all")==0 && strcasecmp($time,"all") == 0){
@@ -147,9 +151,9 @@ class ReportCashtoUserController extends Controller
 
      public function queryreport(Request $request)
     {
-        //return url();
-        
-       
+        //return $this->geturl();
+        //return $url = Route::('credittouser');
+        //return $url = route(Route::CurrentRouteName());
         $type = $request->type;
         $time = $request->time;
         $startdate = $request->startdate;
@@ -165,8 +169,7 @@ class ReportCashtoUserController extends Controller
                                                     ->paginate(env('PAGINATION'));
 
                        
-
-                       //dd($chart);
+                       
                         $totalall = CashtoUserLog::where('status',1)->sum('amount');
                         $type = "all";
                         $from = "0";
@@ -229,7 +232,7 @@ class ReportCashtoUserController extends Controller
                                         ->orderBy('date','ASC')
                                         ->paginate(env('PAGINATION'));
 
-            $totalall = CashtoUserLog::where('date','>=',$from)
+             $totalall = CashtoUserLog::where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
                                         ->sum('amount'); 
@@ -277,12 +280,15 @@ class ReportCashtoUserController extends Controller
                                             ->where('date','<=',$to)
                                             ->sum('transfer_cash2user_log.amount');
             }
+             //dd($report->all());
         $chart = $this->chartdata(0,$type,$time,$from,$to);
+        //dd($chart);
         $report->setPath(url('/cashtouser/type/'.$type.'/'.$time.'/'.$start.'/'.$end)); 
         return view('reportcashtouser.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$start,'to'=>$end,'chart'=>$chart]);
     }
     public function index()
     {
+                $url = route(Route::CurrentRouteName());
                 $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
                 $to = date('Y-m-d 23:59:59',time());          
                 $report = CashtoUserLog::groupBy('cashier_id')
@@ -300,7 +306,7 @@ class ReportCashtoUserController extends Controller
                 $type = "all";
                 $time = "today";
                 $chart = $this->chartdata(0,$type,$time,$from,$to);
-                return view('reportcashtouser.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$from,'to'=>$to,'chart'=>$chart]);
+                return view('reportcashtouser.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$from,'to'=>$to,'chart'=>$chart,'url'=>$url]);
 
     }
 
@@ -376,6 +382,7 @@ class ReportCashtoUserController extends Controller
 
      public function recorddetail($id)
     {
+       
         $reportlog = CashtoUserLog::findOrFail($id);
         $cashier = Cashier::findOrFail($reportlog->cashier_id);
         $type;

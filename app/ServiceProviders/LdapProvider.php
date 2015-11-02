@@ -22,6 +22,7 @@ class LdapProvider implements LdapProviderContract
 
     public function __construct(){
       // ldap rdn or dn
+     //dd(env("LDAP_BASE_DN"));
       $this->ldaprdn  = env("LDAP_BASE_DN"); 
       // connect to ldap server
       $this->ldapconn = ldap_connect(env("LDAP_HOST")) or die("Could not connect to LDAP server.");
