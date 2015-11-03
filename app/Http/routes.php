@@ -360,6 +360,7 @@
 		Route::get('/cashiertoreseller/recorddetail/{id}',['uses'=>'ReportCashierToReseller@recorddetail','as'=>'recorddetail','permission'=>'manage_user']);
 		Route::post('/cashiertoreseller/type/',['uses'=>'ReportCashierToReseller@queryreport','as'=>'queryreport','permission'=>'manage_user']);
 		Route::get('/cashiertoreseller/type/{type}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashierToReseller@queryreport','as'=>'report','permission'=>'manage_user']);*/
+		
 		//Report Credit to User
 		Route::get('/credittouser', ['uses'=>'ReportCredittoUserController@index','as'=>'credittouser', 'permission'=>'manage_user']);
 		Route::post('/credittouser/type', ['uses'=>'ReportCredittoUserController@queryreport','as'=>'queryreportcredittouser', 'permission'=>'manage_user']);
@@ -382,6 +383,11 @@
 		Route::post('/goldtouser/detail/{id}',['uses'=>'ReportGoldtoUserController@details','as'=>'detailgoldtouser','permission'=>'manage_user']);
 		Route::get('/goldtouser/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportGoldtoUserController@detail','as'=>'detailsreportgoldtouser','permission'=>'manage_user']);
 		Route::get('/goldtouser/recorddetail/{id}',['uses'=>'ReportGoldtoUserController@recorddetail','as'=>'recorddetailsreportgoldtouser','permission'=>'manage_user']);
+
+		//Item Management
+		Route::get('/item',['uses'=>'ItemController@index','as'=>'item','permission'=>'manage_user']);
+		Route::get('/item/create',['uses'=>'ItemController@create','as'=>'createitem','permission'=>'manage_user']);
+		Route::post('/item/store',['uses'=>'ItemController@store','as'=>'storeitem','permission'=>'manage_user']);
 
 	});
 

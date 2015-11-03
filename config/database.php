@@ -63,6 +63,17 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
+         'mysql1' => [
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'adminuser',
+            'username'  => 'root',
+            'password'  => '123456',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
 
         'pgsql' => [
             'driver'   => 'pgsql',
@@ -83,6 +94,16 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset'  => 'utf8',
             'prefix'   => '',
+        ],
+        'oracle' => [
+            'driver' => 'oracle',
+            'host' => '118.67.201.152',
+            'port' => '1521',
+            'database' => 'orcl',
+            'username' => 'csdba',
+            'password' => 'csdba',
+            'charset' => 'AL32UTF8',
+            'prefix' => '',
         ],
 
     ],

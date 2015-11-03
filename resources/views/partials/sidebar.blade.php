@@ -57,6 +57,15 @@
           <div class="clear"></div>
         </a>
       </li>
+
+       <li {{ Helper::activeMenu("item") }}>
+        <a href="{{URL::route('item')}}">
+          <span><i class="glyphicon glyphicon-italic"></i> {{trans('tems Management')}}</span>
+          <div class="clear"></div>
+        </a>
+      </li>
+
+
       <li class="treeview">
               <a href="#">
                 <i class="fa fa-car"></i>
