@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Item;
 use Redirect;
 use DB;
+use App\ItemGroup;
 class ItemController extends Controller
 {
     /**
@@ -18,9 +19,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $item = Item::paginate(50);
-
-        $item->setPath('item');
+        $item = Item::paginate(env('PAGINATION'))->setPath('item');
         return view('item.index',['items'=>$item]);
     }
 
@@ -31,7 +30,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('item.newitem');
+        $itemgroup = ItemGroup::lists('name','id');
+        return view('item.newitem',['itemgroup'=>$itemgroup]);
     }
 
     /**
@@ -43,17 +43,26 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $item =  new Item;
-        $id = Item::orderBy('id', 'desc')->first();
-        $item->ID = $id->id + 1;
-        $item->NAME = $request->name;
-        $item->TYPE = $request->itemtype;
-        $item->PRICE = $request->price;
-        $item->DATE_ADDED = $request->dateadded;
-        $item->GROUP_ID = $request->groupid;
-        $item->save();
+        $id = Item::where('id',$request->id)->first();
+        if(!is_null($id)){
+            return Redirect::back()->withErrors('ID Already Exist');
+        }
+        else{
+                $item->id = $request->id;
+                $item->name = $request->name;
+                $item->type = $request->itemtype;
+                if(strcasecmp($request->itemtype,"periodic") == 0){
+                    $item->duration = $request->duration;
+                    }
+                    else{ $item->duration = '' ;}
+                $item->price= $request->price;
+                    if(is_null($request->dateadded)){$item->date_added = "";}
+                    else{$item->date_added = $request->dateadded;}
+                $item->group_id = $request->itemgroup;
+                $item->save();
         return Redirect::back();
     }
-
+}   
     /**
      * Display the specified resource.
      *
@@ -73,7 +82,10 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        $itemgroup = ItemGroup::lists('name','id');
+        $item = Item::findOrFail($id);
+        return view('item.edititem',['item'=>$item,'itemgroup'=>$itemgroup]);
+        
     }
 
     /**
@@ -85,7 +97,20 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $item = Item::findOrFail($id);
+        $item->id = $request->id;
+        $item->name = $request->name;
+        $item->type = $request->itemtype;
+        if(strcasecmp($request->itemtype,"periodic") == 0){
+        $item->duration = $request->duration;
+        }
+        else{$item->duration = '';}
+        $item->price = $request->price;
+        $item->date_added = $request->dateadded;
+        $item->group_id = $request->itemgroup;
+        $item->save();
+        return Redirect::route('item');
     }
 
     /**
@@ -96,6 +121,8 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Item::findOrFail($id);
+        $item->delete();
+        return Redirect::back();
     }
 }

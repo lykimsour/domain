@@ -388,6 +388,18 @@
 		Route::get('/item',['uses'=>'ItemController@index','as'=>'item','permission'=>'manage_user']);
 		Route::get('/item/create',['uses'=>'ItemController@create','as'=>'createitem','permission'=>'manage_user']);
 		Route::post('/item/store',['uses'=>'ItemController@store','as'=>'storeitem','permission'=>'manage_user']);
+		Route::get('/item/edit/{id}',['uses'=>'ItemController@edit','as'=>'edititem','permission'=>'manage_user']);
+		Route::put('/item/update/{id}',['uses'=>'ItemController@update','as'=>'updateitem','permission'=>'manage_user']);
+		Route::delete('/item/destroy/{id}',['uses'=>'ItemController@destroy','as'=>'destroyitem','permission'=>'manage_user']);
+	
+
+		//ItemGroup
+		Route::get('/itemgroup',['uses'=>'ItemGroupController@index','as'=>'itemgroup','permission'=>'manage_user']);
+		Route::get('/itemgroup/create',['uses'=>'ItemGroupController@create','as'=>'createitemgroup','permission'=>'manage_user']);
+		Route::post('/itemgroup/store',['uses'=>'ItemGroupController@store','as'=>'storeitemgroup','permission'=>'manage_user']);
+		Route::get('/itemgroup/edit/{id}',['uses'=>'ItemGroupController@edit','as'=>'edititemgroup','permission'=>'manage_user']);
+		Route::put('/itemgroup/update/{id}',['uses'=>'ItemGroupController@update','as'=>'updateitemgroup','permission'=>'manage_user']);
+		Route::delete('/itemgroup/destroy/{id}',['uses'=>'ItemGroupController@destroy','as'=>'destroyitemgroup','permission'=>'manage_user']);
 
 	});
 

@@ -58,14 +58,17 @@
         </a>
       </li>
 
-       <li {{ Helper::activeMenu("item") }}>
-        <a href="{{URL::route('item')}}">
-          <span><i class="glyphicon glyphicon-italic"></i> {{trans('tems Management')}}</span>
-          <div class="clear"></div>
-        </a>
-      </li>
-
-
+       <li class="treeview">
+              <a href="#">
+                <i class="glyphicon glyphicon-italic"></i>
+                <span>{{trans('Tems Management')}}</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="{{URL::route('item')}}"><i class="fa fa-circle-o"></i><span>{{trans('Item')}}</span></a></li>
+                <li {{ Helper::activeMenu("servicetype") }}><a href="{{route('itemgroup')}}"><i class="fa fa-circle-o"></i><span>{{trans('Item_Group')}}</span></a></li>
+              </ul>
+            </li>
       <li class="treeview">
               <a href="#">
                 <i class="fa fa-car"></i>

@@ -52,6 +52,9 @@
 {!! Html::script('js/jquery.validate.bootstrap.js') !!}
 {!! Html::script('js/lib/moment.min.js') !!}
 {!! Html::script('js/bootstrap-datepicker.js') !!}
+
+{!! Html::script('js/jquery.datetimepicker.js') !!}
+
 {!! Html::script('js/lib/highcharts_4.1.5.js') !!}
 {!! Html::script('js/core.js') !!}
 {!! Html::script('js/jQuery.print.js') !!}
@@ -62,16 +65,20 @@
   
 $(document).ready(function() {
   window.onload = function(){
-    var ctx = document.getElementById("canvas").getContext("2d");
-    window.myLine = new Chart(ctx).Bar(barChartData, {responsive: true});
-    var gettime = document.getElementById("time");
-    var time = gettime.options[gettime.selectedIndex].text;
+    $("#duration").hide();
+    if($("#datevalue").val() == 'null'){
+       $("#dateadded1").val(null);
+    }
+    else{
+      $("#dateadded").val($("#datevalue").val());
+    }
       $("#sdate").hide();
       $("#edate").hide();
       $("#sdate1").hide();
       $("#edate1").hide();
       $("#from").hide();
       $("#to").hide();
+
     if(time == "Period"){
       $("#sdate").show();
       $("#edate").show();
@@ -80,7 +87,18 @@ $(document).ready(function() {
       $("#sdateid").val(from);
       $("#edateid").val(to);
     }
+    if($("#itemtype").val() == "periodic"){
+       $("#duration").show();
+    }
+    var ctx = document.getElementById("canvas").getContext("2d");
+    window.myLine = new Chart(ctx).Bar(barChartData, {responsive: true});
+    var gettime = document.getElementById("time");
+    var time = gettime.options[gettime.selectedIndex].text;
   }
+  $("#dateadded").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true
+  }).datepicker('update', new Date());
   
   $("#startdate").datepicker({ 
         autoclose: true, 
@@ -94,28 +112,35 @@ $(document).ready(function() {
 
   $("#time").change(function(){
         if($("#time").val() != "period"){
-         $("#sdate").hide(1);
-        $("#edate").hide(1);
+            $("#sdate").hide(1);
+            $("#edate").hide(1);
 
         }
         else{
-        $("#sdate").show(1);
-        $("#edate").show(1);
-         
+            $("#sdate").show(1);
+            $("#edate").show(1);
         }
       });
-
   $("#roleid").change(function(){
-    var url = "{{URL::to('/permissionrole/create')}}" + "/" + $("#roleid").val();
-    $("#method").val("GET");
-    $("#createform").attr("action",url);
-    $("#createform").submit();
+          var url = "{{URL::to('/permissionrole/create')}}" + "/" + $("#roleid").val();
+          $("#method").val("GET");
+          $("#createform").attr("action",url);
+          $("#createform").submit();
   });
-
-});
-$("#back").click(function(){
+  $("#back").click(function(){
      window.history.back();
+  });
+   $("#itemtype").change(function(){
+        if($("#itemtype").val() == "periodic"){
+          $("#duration").show();
+        }
+        else{
+            $("#duration").hide();
+        }
+       
+      });
 });
+
 </script>
 @yield('script')
 

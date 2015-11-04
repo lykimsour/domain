@@ -10,4 +10,7 @@ class Item extends Model
     protected $connection = 'oracle';
     //public $timestamps = false;
     protected $table = 'ITEM';
+    public function itemgroup(){
+    	return $this->belongsTo('App\ItemGroup','group_id');
+    }
 }

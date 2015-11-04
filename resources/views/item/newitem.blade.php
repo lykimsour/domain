@@ -4,7 +4,7 @@
 
 <section class="content-header">
     <h1>
-      {{trans('New Cashier')}}
+      {{trans('New Item')}}
     </h1>
   </section>
 <section class="content">
@@ -17,39 +17,67 @@
     @endif
 <div class="row">
     <div class="col-md-6">
-    <form method="post" action="{{route('storeitem')}}">
+    <form method="post" action="{{route('storeitem')}}" id="additem">
     	   {!! csrf_field() !!}
+      <div class="form-group">
+        <label for="name">{{trans('ID')}}</label>
+        <input type="text" name="id" class="form-control" id="id">
+      </div>
     	<div class="form-group">
     		<label for="name">{{trans('Name')}}</label>
     		<input type="text" name="name" class="form-control" id="name">
   		</div>
        <div class="form-group">
        <?php $itemtypes = ["durable"=>"Durable","consumable"=>"Consumable","periodic"=>"Periodic"]; ?>
-        <label for="username">{{trans('Cashier_Type')}}</label>
-        {!! Form::select('itemtype',$itemtypes, Input::old('itemtype'),['class'=>'form-control',]) !!}
+        <label for="username">{{trans('Item_Type')}}</label>
+        {!! Form::select('itemtype',$itemtypes, Input::old('itemtype'),['class'=>'form-control','id'=>'itemtype']) !!}
+      </div>
+        <div class="form-group" id="duration">
+        <label>Duration</label>
+        <input type="text" name="duration" class="form-control">
       </div>
   		<div class="form-group">
-    		<label for="pwd">Price</label>
+    		<label>Price</label>
     		<input type="text" name="price" class="form-control" id="price">
   		</div>
       <div class="form-group">
-              <label for="name" >{{trans('Start_Date')}}</label><br/>
-                <div class="input-group date" data-date-format="dd-M-yy" id="startdate"  >
-                    <input type='text' class="form-control" name="dateadded" id="sdateid" />
+              <label for="name" >{{trans('Date_Add')}}</label><br/>
+                <div class="input-group date" data-date-format="yyyy-M-dd" id="dateadded"  >
+                    <input type='text' class="form-control" name="dateadded" id="dateadded1" />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
           </div>
-  		<div class="form-group">
-    		<label>Group_ID</label>
-    		<input type="text" name="groupid" class="form-control" id="groupid">
-  		</div>
+        <input type="hidden" value="null" id="datevalue">
   	
-		  <button type="submit" class="btn btn-primary">{{trans('Add Cashier')}}</button>
+
+       <div class="form-group">
+        <label for="username">{{trans('Group_ID')}}</label>
+        {!! Form::select('itemgroup',$itemgroup, Input::old('itemgroup'),['class'=>'form-control',]) !!}
+      </div>
+  	
+		  <button type="submit" class="btn btn-primary">{{trans('Save')}}</button>
       </form>
     </div>
 </div><br/>
 </section>
 
+@endsection
+
+@section('script')
+  <script type="text/javascript">
+    $(document).ready(function(){
+       $('form#additem').validate({
+        rules: {
+          name: {
+             required : true
+          },
+          price: {
+            number: true,required : true
+          }
+        }
+      });
+    });
+  </script>
 @endsection
