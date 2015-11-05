@@ -61,7 +61,7 @@
        <li class="treeview">
               <a href="#">
                 <i class="glyphicon glyphicon-italic"></i>
-                <span>{{trans('Tems Management')}}</span>
+                <span>{{trans('Items Management')}}</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">

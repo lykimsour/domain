@@ -63,17 +63,7 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
-         'mysql1' => [
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'adminuser',
-            'username'  => 'root',
-            'password'  => '123456',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ],
+         
 
         'pgsql' => [
             'driver'   => 'pgsql',
@@ -105,6 +95,21 @@ return [
             'charset' => 'AL32UTF8',
             'prefix' => '',
         ],
+         'odbc' => [
+            'driver' => 'odbc',
+            'dsn'    => env('DSN_JX', 'forge'),
+            'host' => env('DB_JX_HOST', 'localhost'),
+            'database' =>  env('DB_JX_DATABASE', 'forge'),
+            'username' => env('DB_JX_USERNAME', 'forge'),
+            'password' => env('DB_JX_PASSWORD', 'forge'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+          
+           
+        ],
+
 
     ],
 

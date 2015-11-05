@@ -140,6 +140,7 @@ return [
         /*
          * Application Service Providers...
          */
+
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
@@ -147,8 +148,9 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\LdapServiceProvider::class,
         yajra\Oci8\Oci8ServiceProvider::class,
-
-
+        //TCK\Odbc\OdbcServiceProvider::class,
+        TCK\Odbc\OdbcServiceProvider::class,
+       
     ],
 
     /*

@@ -20,6 +20,11 @@
     <form method="post" action="{{route('storeitem')}}" id="additem">
     	   {!! csrf_field() !!}
       <div class="form-group">
+       <?php $gametypes = ["ak"=>"ak","jx2"=>"jx2"]; ?>
+        <label for="username">{{trans('Game_Type')}}</label>
+        {!! Form::select('gametypes',$gametypes, Input::old('gametypes'),['class'=>'form-control','id'=>'gametypes']) !!}
+      </div>
+      <div class="form-group">
         <label for="name">{{trans('ID')}}</label>
         <input type="text" name="id" class="form-control" id="id">
       </div>
@@ -34,7 +39,7 @@
       </div>
         <div class="form-group" id="duration">
         <label>Duration</label>
-        <input type="text" name="duration" class="form-control">
+        <input type="text" name="duration" class="form-control" value="0">
       </div>
   		<div class="form-group">
     		<label>Price</label>
@@ -67,7 +72,7 @@
 
 @section('script')
   <script type="text/javascript">
-    $(document).ready(function(){
+    /*$(document).ready(function(){
        $('form#additem').validate({
         rules: {
           name: {
@@ -78,6 +83,6 @@
           }
         }
       });
-    });
+    });*/
   </script>
 @endsection
