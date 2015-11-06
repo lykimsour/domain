@@ -8,6 +8,6 @@ class ItemGroup extends Model
 {
       protected $connection = 'oracle';
       public  $timestamps = false;
-    	protected $table = 'ITEM_GROUP';
+    	protected $table = 'SABAY_ITEM_GROUPS';
    
 }

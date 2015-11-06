@@ -127,11 +127,19 @@ $(document).ready(function() {
           $("#createform").attr("action",url);
           $("#createform").submit();
   });
+
+  $("#gametype").change(function(){
+          var url = "{{URL::to('/item/game')}}" + "/" + $("#gametype").val();
+          //$("#method").val("GET");
+          $("#getgametype").attr("action",url);
+          $("#getgametype").submit();
+  });
   $("#back").click(function(){
      window.history.back();
   });
    $("#itemtype").change(function(){
-        if($("#itemtype").val() == "periodic"){
+    //alert($("#itemtype").val());
+        if($("#itemtype").val() == "3"){
           $("#duration").show();
         }
         else{

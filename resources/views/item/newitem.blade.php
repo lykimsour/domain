@@ -22,7 +22,7 @@
       <div class="form-group">
        <?php $gametypes = ["ak"=>"ak","jx2"=>"jx2"]; ?>
         <label for="username">{{trans('Game_Type')}}</label>
-        {!! Form::select('gametypes',$gametypes, Input::old('gametypes'),['class'=>'form-control','id'=>'gametypes']) !!}
+        {!! Form::select('gametypes',$gameservice, Input::old('gametypes'),['class'=>'form-control','id'=>'gametypes']) !!}
       </div>
       <div class="form-group">
         <label for="name">{{trans('ID')}}</label>
@@ -33,9 +33,8 @@
     		<input type="text" name="name" class="form-control" id="name">
   		</div>
        <div class="form-group">
-       <?php $itemtypes = ["durable"=>"Durable","consumable"=>"Consumable","periodic"=>"Periodic"]; ?>
         <label for="username">{{trans('Item_Type')}}</label>
-        {!! Form::select('itemtype',$itemtypes, Input::old('itemtype'),['class'=>'form-control','id'=>'itemtype']) !!}
+        {!! Form::select('itemtype',$itemtype, Input::old('itemtype'),['class'=>'form-control','id'=>'itemtype']) !!}
       </div>
         <div class="form-group" id="duration">
         <label>Duration</label>

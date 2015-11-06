@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ItemGroup;
 use Redirect;
+use DB;
 class ItemGroupController extends Controller
 {
     /**
@@ -18,7 +19,6 @@ class ItemGroupController extends Controller
     public function index()
     {
         $itemgroup = ItemGroup::paginate(50)->setPath('itemgroup');
-        //$itemgroup = $itemgroup->sortBy('id');
         return view('itemgroup.index',['itemgroups'=>$itemgroup]);
     }
 
@@ -49,9 +49,10 @@ class ItemGroupController extends Controller
         else {
             $itemgroup->id = $itemgroupid->id +1;
         }
+        DB::connection('odbc')->statement(DB::raw("insert into sabay_item_groups (name) values('".$request->name."')"));
 
-            $itemgroup->name = $request->name;
-            $itemgroup->save();
+        $itemgroup->name = $request->name;
+        $itemgroup->save();
 
         return Redirect::back();
     }
@@ -89,8 +90,10 @@ class ItemGroupController extends Controller
     public function update(Request $request, $id)
     {
         $itemgroup = ItemGroup::findOrFail($id);
-         $itemgroup->name = $request->name;
-          $itemgroup->save();
+        $itemgroup->name = $request->name;
+        $itemgroup->save();
+        DB::connection('odbc')->statement(DB::raw("update sabay_item_groups set name ='".$request->name."'where id=".$id));
+          return Redirect::route('itemgroup');
     }
 
     /**
@@ -103,6 +106,8 @@ class ItemGroupController extends Controller
     {
         $itemgroup = ItemGroup::findOrFail($id);
         $itemgroup->delete();
+        DB::connection('odbc')->statement(DB::raw("delete from sabay_item_groups where id=".$id));
+
         return Redirect::back();
     }
 }

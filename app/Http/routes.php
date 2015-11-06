@@ -385,12 +385,13 @@
 		Route::get('/goldtouser/recorddetail/{id}',['uses'=>'ReportGoldtoUserController@recorddetail','as'=>'recorddetailsreportgoldtouser','permission'=>'manage_user']);
 
 		//Item Management
+		Route::get('/item/game/{gametype}',['uses'=>'ItemController@getgametype','as'=>'getgametype','permission'=>'manage_user']);
 		Route::get('/item',['uses'=>'ItemController@index','as'=>'item','permission'=>'manage_user']);
 		Route::get('/item/create',['uses'=>'ItemController@create','as'=>'createitem','permission'=>'manage_user']);
 		Route::post('/item/store',['uses'=>'ItemController@store','as'=>'storeitem','permission'=>'manage_user']);
-		Route::get('/item/edit/{id}',['uses'=>'ItemController@edit','as'=>'edititem','permission'=>'manage_user']);
-		Route::put('/item/update/{id}',['uses'=>'ItemController@update','as'=>'updateitem','permission'=>'manage_user']);
-		Route::delete('/item/destroy/{id}',['uses'=>'ItemController@destroy','as'=>'destroyitem','permission'=>'manage_user']);
+		Route::get('/item/edit/{id}/{gametype}',['uses'=>'ItemController@edit','as'=>'edititem','permission'=>'manage_user']);
+		Route::put('/item/update/{id}/{gametype}',['uses'=>'ItemController@update','as'=>'updateitem','permission'=>'manage_user']);
+		Route::delete('/item/destroy/{id}/{gametype}',['uses'=>'ItemController@destroy','as'=>'destroyitem','permission'=>'manage_user']);
 	
 
 		//ItemGroup

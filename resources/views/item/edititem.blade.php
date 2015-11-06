@@ -17,7 +17,7 @@
     @endif
 <div class="row">
     <div class="col-md-6">
-    <form method="post" action="{{route('updateitem',['id'=>$item->id])}}" id="edititem">
+    <form method="post" action="{{route('updateitem',['id'=>$item->id,'gametype'=>$gametype])}}" id="edititem">
     	   {!! csrf_field() !!}
     <input type="hidden" name="_method" value="PUT">
      <div class="form-group">
@@ -29,9 +29,8 @@
     		<input type="text" name="name" class="form-control" id="name" value="{{$item->name}}">
   		</div>
        <div class="form-group">
-       <?php $itemtypes = ["durable"=>"Durable","consumable"=>"Consumable","periodic"=>"Periodic"]; ?>
         <label for="username">{{trans('Item_Type')}}</label>
-        {!! Form::select('itemtype',$itemtypes, $item->type,['class'=>'form-control','id'=>'itemtype']) !!}
+        {!! Form::select('itemtype',$itemtype, $item->type_id,['class'=>'form-control','id'=>'itemtype']) !!}
       </div>
         <div class="form-group" id="duration">
         <label>Duration</label>
