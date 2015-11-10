@@ -25,23 +25,17 @@ class ItemController extends Controller
         $gameservice = Service::lists('code','code');
         if(strcasecmp($gametype,'ak')==0){
              $item = Item::paginate(env('PAGINATION'))->setPath('item');
+        }
+       else{ 
+        $item = DB::connection(strtolower($gametype))
+        ->select(DB::raw("select *,item.id as id,item.name as name,type.name as typename,groups.name as groupname from sabay_items as item LEFT JOIN sabay_item_types as type on item.type_id=type.id LEFT JOIN sabay_item_groups as groups on item.group_id = groups.id "));
        }
-       elseif(strcasecmp($gametype,'jx2')==0){ 
-        $item = DB::connection('odbc')
-        ->select(DB::raw("select *,item.id as id,item.name as name,type.name as typename,groups.name as groupname from sabay_items as item INNER JOIN sabay_item_types as type on item.type_id=type.id INNER JOIN sabay_item_groups as groups on item.group_id = groups.id "));
-       }
-       else{
-        return Redirect::back();
-       }
-       //return Redirect::route('item');
         return view('item.index',['items'=>$item,'gametype'=>$gametype,'gameservice'=>$gameservice]);
     }
     public function index()
     {
-        //$jxitem = DB::connection('odbc')->select(DB::raw("select * from item"));
         $gameservice = Service::lists('code','code');
         $item = Item::paginate(env('PAGINATION'))->setPath('item');
-       
         return view('item.index',['items'=>$item,'gametype'=>'ak','gameservice'=>$gameservice]);
     }
 
@@ -50,14 +44,31 @@ class ItemController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($gametype)
     {
+       
         $gameservice = Service::lists('code','code');
-        $itemtype = SabayItemTypes::lists('name','id');
-        $itemgroup = ItemGroup::lists('name','id');
-        return view('item.newitem',['itemgroup'=>$itemgroup,'itemtype'=>$itemtype,'gameservice'=>$gameservice]);
-    }
+        if(strcasecmp($gametype,'ak') == 0 ){
+            $itemtype = SabayItemTypes::lists('name','id');
+            $itemgroup = ItemGroup::lists('name','id');
+        }
+        elseif(strcasecmp($gametype,'jx2') == 0 || strcasecmp($gametype,'naga') == 0  ){
+             $itemgroup = [];
+             $itemtype = [];
+             $itemtypes = DB::connection(strtolower($gametype))
+                          ->select(DB::raw("select * from sabay_item_types"));
+                          foreach($itemtypes as $types){
+                                $itemtype = array_add($itemtype,$types->id,$types->name);
+                          }
+             $itemgroups = DB::connection(strtolower($gametype))
+                          ->select(DB::raw("select * from sabay_item_groups"));  
+                          foreach($itemgroups as $groups){
+                                $itemgroup = array_add($itemgroup,$groups->id,$groups->name);
+                          }
+       }
+        return view('item.newitem',['itemgroup'=>$itemgroup,'itemtype'=>$itemtype,'gameservice'=>$gameservice,'gametype'=>$gametype]);
 
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -87,15 +98,15 @@ class ItemController extends Controller
                         $item->save();
         }
     }
-    elseif(strcasecmp($request->gametypes,'jx2')==0){
+    else{
         $date = date('Y-m-d H:i:s');
         $date_added = strtotime($request->dateadded);
         $date_added = date('Y-m-d',$date_added);
 
-        $checkid = DB::connection('odbc')->select(DB::raw("select * from sabay_items where ID=".$request->id));
+        $checkid = DB::connection(strtolower($request->gametypes))->select(DB::raw("select * from sabay_items where ID=".$request->id));
                 if(!$checkid){
                         if(!$request->dateadded){$request->dateadded = '0000-00-00';}
-                         DB::connection('odbc')->statement(DB::raw("insert into sabay_items (id,name,type_id,duration,price,created_at,updated_at,date_added,group_id) values(".$request->id.",'".$request->name."','".$request->itemtype."',".$request->duration.",".$request->price.",'".$date."','".$date."','".$request->dateadded."',".$request->itemgroup.")"));
+                         DB::connection(strtolower($request->gametypes))->statement(DB::raw("insert into sabay_items (id,name,type_id,duration,price,created_at,updated_at,date_added,group_id) values(".$request->id.",'".$request->name."','".$request->itemtype."',".$request->duration.",".$request->price.",'".$date."','".$date."','".$request->dateadded."',".$request->itemgroup.")"));
                         }
                 else{
                     return Redirect::back()->withErrors('ID Already Exist');
@@ -126,15 +137,27 @@ class ItemController extends Controller
     public function edit($id,$gametype)
     {
         $itemtype = SabayItemTypes::lists('name','id');
-        $itemgroup = ItemGroup::lists('name','id');
         if(strcasecmp($gametype, 'ak')==0){
+            $itemgroup = ItemGroup::lists('name','id');
             $item = Item::findOrFail($id);
-            //dd($item);
         }
-        elseif(strcasecmp($gametype, 'jx2')==0){
+        else{
+           $items = DB::connection(strtolower($gametype))->select(DB::raw("select TOP 1 * from sabay_items where id=".$id));
+           foreach($items as $item);
+            $itemgroup = [];
+            $itemtype = [];
+            $itemtypes = DB::connection(strtolower($gametype))
+                          ->select(DB::raw("select * from sabay_item_types"));
+                          foreach($itemtypes as $types){
+                                $itemtype = array_add($itemtype,$types->id,$types->name);
+                          }
+             $itemgroups = DB::connection(strtolower($gametype))
+                          ->select(DB::raw("select * from sabay_item_groups"));  
+                          foreach($itemgroups as $groups){
+                                $itemgroup = array_add($itemgroup,$groups->id,$groups->name);
+                          }
+                         // return $itemgroup;
 
-           $items = DB::connection('odbc')->select(DB::raw("select TOP 1 * from sabay_items where id=".$id));
-            foreach($items as $item);
         }
         return view('item.edititem',['item'=>$item,'itemgroup'=>$itemgroup,'gametype'=>$gametype,'itemtype'=>$itemtype]);
         
@@ -165,10 +188,10 @@ class ItemController extends Controller
                 $item->group_id = $request->itemgroup;
                 $item->save();
         }
-        elseif(strcasecmp($gametype,'jx2')==0){
+        else{
              $date = date('Y-m-d H:i:s');
              if(!$request->dateadded){$request->dateadded = '0000-00-00';}
-             DB::connection('odbc')->statement(DB::raw("update sabay_items set name='".$request->name."',type_id='".$request->itemtype."',duration='".$request->duration."',price='".$request->price."',updated_at='".$date."',date_added='".$request->dateadded."'where id=".$id));
+             DB::connection(strtolower($gametype))->statement(DB::raw("update sabay_items set name='".$request->name."',type_id='".$request->itemtype."',duration='".$request->duration."',price='".$request->price."',updated_at='".$date."',date_added='".$request->dateadded."',group_id='".$request->itemgroup."'where id=".$id));
  
         }
         return Redirect::route('item');
@@ -186,8 +209,8 @@ class ItemController extends Controller
             $item = Item::findOrFail($id);
             $item->delete();
             }
-        elseif(strcasecmp($gametype,'jx2') == 0){
-            DB::connection('odbc')->statement(DB::raw("delete from sabay_items where id=".$id));
+        else{
+            DB::connection(strtolower($gametype))->statement(DB::raw("delete from sabay_items where id=".$id));
         }
             return Redirect::back();
     }

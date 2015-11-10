@@ -130,15 +130,33 @@ $(document).ready(function() {
 
   $("#gametype").change(function(){
           var url = "{{URL::to('/item/game')}}" + "/" + $("#gametype").val();
-          //$("#method").val("GET");
           $("#getgametype").attr("action",url);
           $("#getgametype").submit();
   });
+
+$("#newgametype").change(function(){
+          var url = "{{URL::to('/item/create')}}" + "/" + $("#newgametype").val();
+          $("#method1").val("GET");
+          $("#additem").attr("action",url);
+          $("#additem").submit();
+  });
+
+ $("#gametypeforgroup").change(function(){
+          var url = "{{URL::to('/itemgroup/game')}}" + "/" + $("#gametypeforgroup").val();
+          $("#getgametypeforgroup").attr("action",url);
+          $("#getgametypeforgroup").submit();
+  });
+ $("#gametypefortype").change(function(){
+          var url = "{{URL::to('/itemtype/game')}}" + "/" + $("#gametypefortype").val();
+          $("#getgametypefortype").attr("action",url);
+          $("#getgametypefortype").submit();
+  });
+
   $("#back").click(function(){
      window.history.back();
   });
+  
    $("#itemtype").change(function(){
-    //alert($("#itemtype").val());
         if($("#itemtype").val() == "3"){
           $("#duration").show();
         }

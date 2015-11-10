@@ -148,7 +148,6 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\LdapServiceProvider::class,
         yajra\Oci8\Oci8ServiceProvider::class,
-        //TCK\Odbc\OdbcServiceProvider::class,
         TCK\Odbc\OdbcServiceProvider::class,
        
     ],

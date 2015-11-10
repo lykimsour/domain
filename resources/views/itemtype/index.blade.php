@@ -5,11 +5,11 @@
 <h2>{{trans('Manage Item')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('createitemgroup',['gametype'=>$gametype])}}"><div class="btn btn-primary">{{trans('New Group_Item')}}</div></a>
+       <a href="{{route('createitemtype',['gametype'=>$gametype])}}"><div class="btn btn-primary">{{trans('New Item_Type')}}</div></a>
         <br/><br/>
-       <form method="GET" action="#" id="getgametypeforgroup">
+       <form method="GET" action="#" id="getgametypefortype">
         <div class="form-group">
-        {!! Form::select('gametypeforgroup',$gameservice, $gametype,['class'=>'form-control','id'=>'gametypeforgroup']) !!}
+        {!! Form::select('gametypefortype',$gameservice, $gametype,['class'=>'form-control','id'=>'gametypefortype']) !!}
       </div>
       </form>
     </div>
@@ -19,7 +19,7 @@
     <div class="col-md-12">
     @if(strtolower($gametype) == 'ak')
 
-     {!! $itemgroups->render()  !!}
+     {!! $itemtypes->render()  !!}
     @endif
     
        <ul class="list-group">
@@ -36,22 +36,22 @@
       					</tr>
     				</thead>
     				 <tbody>
-   				   @foreach($itemgroups as $itemgroup)
+   				   @foreach($itemtypes as $itemtype)
       				<tr>
       					<td>
-      				<form method="post" action="{{route('destroyitemgroup',['id'=>$itemgroup->id,'gametype'=>$gametype])}}" >
+      				<form method="post" action="{{route('destroyitemtype',['id'=>$itemtype->id,'gametype'=>$gametype])}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="DELETE" >
              <button type="submmit" class="btn btn-xs btn btn-danger"  onclick="return confirm('Are you sure?')">
   						<span class="glyphicon glyphicon-remove"></span>
   						</button>
-              <a href="{{route('edititemgroup',['id'=>$itemgroup->id,'gametype'=>$gametype])}}"><div class="btn btn-xs btn btn-info">
+              <a href="{{route('edititemtype',['id'=>$itemtype->id,'gametype'=>$gametype])}}"><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
               </form>
   						</td>
-               <td>{{$itemgroup->id}}</td>
-                <td>{{$itemgroup->name}}</td>
+               <td>{{$itemtype->id}}</td>
+                <td>{{$itemtype->name}}</td>
       				</tr>
      			  @endforeach
     				</tbody>

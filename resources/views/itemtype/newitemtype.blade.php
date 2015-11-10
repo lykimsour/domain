@@ -17,7 +17,7 @@
     @endif
 <div class="row">
     <div class="col-md-6">
-    <form method="post" action="{{route('storeitemgroup')}}" id="additem">
+    <form method="post" action="{{route('storeitemtype')}}" id="additem">
     	   {!! csrf_field() !!}
      <div class="form-group">
         <label for="username">{{trans('Game_Type')}}</label>
@@ -35,19 +35,4 @@
 
 @endsection
 
-@section('script')
-  <script type="text/javascript">
-    $(document).ready(function(){
-       $('form#additem').validate({
-        rules: {
-          name: {
-             required : true
-          },
-          price: {
-            number: true,required : true
-          }
-        }
-      });
-    });
-  </script>
-@endsection
+

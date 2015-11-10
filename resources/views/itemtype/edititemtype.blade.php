@@ -17,13 +17,12 @@
     @endif
 <div class="row">
     <div class="col-md-6">
-    <form method="post" action="{{route('updateitemgroup',['id'=>$itemgroup->id,'gametype'=>$gametype])}}" id="additemgroup">
+    <form method="post" action="{{route('updateitemtype',['id'=>$itemtype->id,'gametype'=>$gametype])}}" id="edditemgroup">
     <input type="hidden" name="_method" value="PUT">
     	   {!! csrf_field() !!}
-    
     	<div class="form-group">
     		<label for="name">{{trans('Name')}}</label>
-    		<input type="text" name="name" class="form-control" id="name" value="{{$itemgroup->name}}">
+    		<input type="text" name="name" class="form-control" id="name" value="{{$itemtype->name}}">
   		</div>
 		  <button type="submit" class="btn btn-primary">{{trans('Save')}}</button>
       </form>
@@ -31,21 +30,4 @@
 </div><br/>
 </section>
 
-@endsection
-
-@section('script')
-  <script type="text/javascript">
-    $(document).ready(function(){
-       $('form#additemgroup').validate({
-        rules: {
-          name: {
-             required : true
-          },
-          price: {
-            number: true,required : true
-          }
-        }
-      });
-    });
-  </script>
 @endsection

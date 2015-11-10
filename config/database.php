@@ -95,7 +95,7 @@ return [
             'charset' => 'AL32UTF8',
             'prefix' => '',
         ],
-         'odbc' => [
+         'jx2' => [
             'driver' => 'odbc',
             'dsn'    => env('DSN_JX', 'forge'),
             'host' => env('DB_JX_HOST', 'localhost'),
@@ -107,6 +107,19 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
+        'naga' => [
+            'driver' => 'odbc',
+            'dsn'    => env('DSN_NAGA', 'forge'),
+            'host' => env('DB_NAGA_HOST', 'localhost'),
+            'database' =>  env('DB_NAGA_DATABASE', 'forge'),
+            'username' => env('DB_NAGA_USERNAME', 'forge'),
+            'password' => env('DB_NAGA_PASSWORD', 'forge'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
 
 
     ],

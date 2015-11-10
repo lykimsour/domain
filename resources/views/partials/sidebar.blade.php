@@ -57,6 +57,13 @@
           <div class="clear"></div>
         </a>
       </li>
+        <li {{ Helper::activeMenu("reseller") }}>
+        <a href="{{URL::route('reseller')}}">
+          <i class="glyphicon glyphicon-usd"></i> 
+          <span>{{trans('Reseller Management')}}</span>
+          <div class="clear"></div>
+        </a>
+      </li>
 
        <li class="treeview">
               <a href="#">
@@ -67,6 +74,7 @@
               <ul class="treeview-menu">
                 <li class="active"><a href="{{URL::route('item')}}"><i class="fa fa-circle-o"></i><span>{{trans('Item')}}</span></a></li>
                 <li {{ Helper::activeMenu("servicetype") }}><a href="{{route('itemgroup')}}"><i class="fa fa-circle-o"></i><span>{{trans('Item_Group')}}</span></a></li>
+                <li {{ Helper::activeMenu("servicetype") }}><a href="{{route('itemtype')}}"><i class="fa fa-circle-o"></i><span>{{trans('Item_Type')}}</span></a></li>
               </ul>
             </li>
       <li class="treeview">

@@ -18,11 +18,11 @@
 <div class="row">
     <div class="col-md-6">
     <form method="post" action="{{route('storeitem')}}" id="additem">
+     <input type="hidden" name="_method" value="POST" id="method1" >
     	   {!! csrf_field() !!}
       <div class="form-group">
-       <?php $gametypes = ["ak"=>"ak","jx2"=>"jx2"]; ?>
         <label for="username">{{trans('Game_Type')}}</label>
-        {!! Form::select('gametypes',$gameservice, Input::old('gametypes'),['class'=>'form-control','id'=>'gametypes']) !!}
+        {!! Form::select('gametypes',$gameservice, $gametype,['class'=>'form-control','id'=>'newgametype']) !!}
       </div>
       <div class="form-group">
         <label for="name">{{trans('ID')}}</label>

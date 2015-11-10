@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\ItemGroup;
 use Redirect;
 use DB;
+use App\SabayItemTypes;
+use App\Service;
 class ItemGroupController extends Controller
 {
     /**
@@ -16,10 +18,21 @@ class ItemGroupController extends Controller
      *
      * @return Response
      */
+     public function getgametype($gametype){
+        $gameservice = Service::lists('code','code');
+        if(strcasecmp($gametype,'ak')==0){
+             $itemgroup = ItemGroup::paginate(env('PAGINATION'))->setPath('itemgroup');
+        }
+       else{ 
+         $itemgroup = DB::connection(strtolower($gametype))->select(DB::raw("select * from sabay_item_groups")); 
+       }
+        return view('itemgroup.index',['itemgroups'=>$itemgroup,'gametype'=>$gametype,'gameservice'=>$gameservice]);
+    }
     public function index()
     {
+        $gameservice = Service::lists('code','code');
         $itemgroup = ItemGroup::paginate(50)->setPath('itemgroup');
-        return view('itemgroup.index',['itemgroups'=>$itemgroup]);
+        return view('itemgroup.index',['itemgroups'=>$itemgroup,'gameservice'=>$gameservice,'gametype'=>'ak']);
     }
 
     /**
@@ -27,10 +40,13 @@ class ItemGroupController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($gametype)
     {
-
-        return view('itemgroup.newgroupitem');
+        $gameservice = Service::lists('code','code');
+        //if(strcasecmp($gametype,'ak') == 0 ){
+            //$itemgroup = ItemGroup::lists('name','id');
+        //}
+        return view('itemgroup.newgroupitem',['gameservice'=>$gameservice,'gametype'=>$gametype]);
     }
 
     /**
@@ -41,19 +57,21 @@ class ItemGroupController extends Controller
      */
     public function store(Request $request)
     {
-        $itemgroupid = ItemGroup::orderBy('id','DESC')->first();
-        $itemgroup = new ItemGroup;
-        if(is_null($itemgroupid)){
-            $itemgroup->id = 1;
-        }
-        else {
+        if(strcasecmp($request->gametypes,'ak') == 0 ){
+            $itemgroupid = ItemGroup::orderBy('id','DESC')->first();
+            $itemgroup = new ItemGroup;
+            if(is_null($itemgroupid)){
+                $itemgroup->id = 1;
+            }
+            else {
             $itemgroup->id = $itemgroupid->id +1;
+            }
+            $itemgroup->name = $request->name;
+            $itemgroup->save();
         }
-        DB::connection('odbc')->statement(DB::raw("insert into sabay_item_groups (name) values('".$request->name."')"));
-
-        $itemgroup->name = $request->name;
-        $itemgroup->save();
-
+        else{
+            DB::connection(strtolower($request->gametypes))->statement(DB::raw("insert into sabay_item_groups (name) values('".$request->name."')"));
+        }
         return Redirect::back();
     }
 
@@ -74,10 +92,18 @@ class ItemGroupController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($id,$gametype)
     {
-         $itemgroup = ItemGroup::findOrFail($id);
-         return view('itemgroup.editgroupitem',['itemgroup'=>$itemgroup]);
+         
+         if(strcasecmp($gametype, 'ak')==0){
+            $itemgroup = ItemGroup::findOrFail($id);
+        }
+        else{
+            $itemgroups = DB::connection(strtolower($gametype))->select(DB::raw("select TOP 1 * from sabay_item_groups where id=".$id));
+            foreach($itemgroups as $itemgroup);
+        }
+         return view('itemgroup.editgroupitem',['itemgroup'=>$itemgroup,'gametype'=>$gametype]);
+        
     }
 
     /**
@@ -87,12 +113,17 @@ class ItemGroupController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,$gametype)
     {
-        $itemgroup = ItemGroup::findOrFail($id);
-        $itemgroup->name = $request->name;
-        $itemgroup->save();
-        DB::connection('odbc')->statement(DB::raw("update sabay_item_groups set name ='".$request->name."'where id=".$id));
+        if(strcasecmp($gametype,'ak') == 0 ){
+            $itemgroup = ItemGroup::findOrFail($id);
+            $itemgroup->name = $request->name;
+            $itemgroup->save();
+        }
+        else{
+            
+            DB::connection(strtolower($gametype))->statement(DB::raw("update sabay_item_groups set name ='".$request->name."'where id=".$id));
+        }
           return Redirect::route('itemgroup');
     }
 
@@ -102,12 +133,15 @@ class ItemGroupController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($id,$gametype)
     {
-        $itemgroup = ItemGroup::findOrFail($id);
-        $itemgroup->delete();
-        DB::connection('odbc')->statement(DB::raw("delete from sabay_item_groups where id=".$id));
-
+        if(strcasecmp($gametype,'ak') == 0 ){
+            $itemgroup = ItemGroup::findOrFail($id);
+            $itemgroup->delete();
+        } 
+        else{   
+            DB::connection(strtolower($gametype))->statement(DB::raw("delete from sabay_item_groups where id=".$id));
+        }
         return Redirect::back();
     }
 }

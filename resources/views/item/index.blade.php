@@ -5,11 +5,10 @@
 <h2>{{trans('Manage Item')}}</h2>
 <div class="row">
     <div class="col-md-6">
-       <a href="{{route('createitem')}}"><div class="btn btn-primary">{{trans('New Item')}}</div></a>
+       <a href="{{route('createitem',['gametype'=>$gametype])}}"><div class="btn btn-primary">{{trans('New Item')}}</div></a>
        <br/><br/>
        <form method="GET" action="#" id="getgametype">
         <div class="form-group">
-       <?php $gametypes = ["ak"=>"ak","jx"=>"jx"]; ?>
         {!! Form::select('gametype',$gameservice, $gametype,['class'=>'form-control','id'=>'gametype']) !!}
       </div>
       </form>
@@ -18,7 +17,7 @@
 <div class="row">
 
     <div class="col-md-12">
-    @if($gametype == 'AK')
+    @if(strtolower($gametype) == 'ak')
     {!!$items->render()!!}
     @endif
        <ul class="list-group">

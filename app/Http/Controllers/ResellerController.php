@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Reseller;
+use App\ResellerRequest;
+use Redirect;
 class ResellerController extends Controller
 {
     /**
@@ -14,9 +16,19 @@ class ResellerController extends Controller
      *
      * @return Response
      */
+    public function requesttoken($id){
+        $date = date('Y-m-d H:i:s');
+        $resellerrequest = new ResellerRequest;
+        $resellerrequest->token = str_random(64);
+        $resellerrequest->reseller_id = $id;
+        $resellerrequest->datetime = $date;
+        $resellerrequest->save(); 
+        return Redirect::back();
+    }
     public function index()
     {
-        $resellers = Reseller::All();
+        $resellers = Reseller::where('status','=','1')->paginate(50);
+        $resellers->setPath('reseller');
         return view('resellers.index',['resellers'=>$resellers]);
     }
 

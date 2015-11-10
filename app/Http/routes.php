@@ -387,7 +387,7 @@
 		//Item Management
 		Route::get('/item/game/{gametype}',['uses'=>'ItemController@getgametype','as'=>'getgametype','permission'=>'manage_user']);
 		Route::get('/item',['uses'=>'ItemController@index','as'=>'item','permission'=>'manage_user']);
-		Route::get('/item/create',['uses'=>'ItemController@create','as'=>'createitem','permission'=>'manage_user']);
+		Route::get('/item/create/{gametype}',['uses'=>'ItemController@create','as'=>'createitem','permission'=>'manage_user']);
 		Route::post('/item/store',['uses'=>'ItemController@store','as'=>'storeitem','permission'=>'manage_user']);
 		Route::get('/item/edit/{id}/{gametype}',['uses'=>'ItemController@edit','as'=>'edititem','permission'=>'manage_user']);
 		Route::put('/item/update/{id}/{gametype}',['uses'=>'ItemController@update','as'=>'updateitem','permission'=>'manage_user']);
@@ -395,12 +395,26 @@
 	
 
 		//ItemGroup
+		Route::get('/itemgroup/game/{gametype}',['uses'=>'ItemGroupController@getgametype','as'=>'getgametypegroup','permission'=>'manage_user']);
 		Route::get('/itemgroup',['uses'=>'ItemGroupController@index','as'=>'itemgroup','permission'=>'manage_user']);
-		Route::get('/itemgroup/create',['uses'=>'ItemGroupController@create','as'=>'createitemgroup','permission'=>'manage_user']);
+		Route::get('/itemgroup/create/{gametype}',['uses'=>'ItemGroupController@create','as'=>'createitemgroup','permission'=>'manage_user']);
 		Route::post('/itemgroup/store',['uses'=>'ItemGroupController@store','as'=>'storeitemgroup','permission'=>'manage_user']);
-		Route::get('/itemgroup/edit/{id}',['uses'=>'ItemGroupController@edit','as'=>'edititemgroup','permission'=>'manage_user']);
-		Route::put('/itemgroup/update/{id}',['uses'=>'ItemGroupController@update','as'=>'updateitemgroup','permission'=>'manage_user']);
-		Route::delete('/itemgroup/destroy/{id}',['uses'=>'ItemGroupController@destroy','as'=>'destroyitemgroup','permission'=>'manage_user']);
+		Route::get('/itemgroup/edit/{id}/{gametype}',['uses'=>'ItemGroupController@edit','as'=>'edititemgroup','permission'=>'manage_user']);
+		Route::put('/itemgroup/update/{id}/{gametype}',['uses'=>'ItemGroupController@update','as'=>'updateitemgroup','permission'=>'manage_user']);
+		Route::delete('/itemgroup/destroy/{id}/{gametype}',['uses'=>'ItemGroupController@destroy','as'=>'destroyitemgroup','permission'=>'manage_user']);
+
+		//Itemtype
+		Route::get('/itemtype/game/{gametype}',['uses'=>'ItemTypeController@getgametype','as'=>'getgametypetype','permission'=>'manage_user']);
+		Route::get('/itemtype',['uses'=>'ItemTypeController@index','as'=>'itemtype','permission'=>'manage_user']);
+		Route::get('/itemtype/create/{gametype}',['uses'=>'ItemTypeController@create','as'=>'createitemtype','permission'=>'manage_user']);
+		Route::post('/itemtype/store',['uses'=>'ItemTypeController@store','as'=>'storeitemtype','permission'=>'manage_user']);
+		Route::get('/itemtype/edit/{id}/{gametype}',['uses'=>'ItemTypeController@edit','as'=>'edititemtype','permission'=>'manage_user']);
+		Route::put('/itemtype/update/{id}/{gametype}',['uses'=>'ItemTypeController@update','as'=>'updateitemtype','permission'=>'manage_user']);
+		Route::delete('/itemtype/destroy/{id}/{gametype}',['uses'=>'ItemTypeController@destroy','as'=>'destroyitemtype','permission'=>'manage_user']);
+
+		//Reseller management
+		Route::get('/reseller',['uses'=>'ResellerController@index','as'=>'reseller','permission'=>'manage_user']);
+		Route::get('/reseller/requesttoken/{id}',['uses'=>'ResellerController@requesttoken','as'=>'requesttoken','permission'=>'manage_user']);
 
 	});
 
