@@ -50,8 +50,8 @@
               <input type="hidden" value="{{$date}}" id="datevalue">
               <label for="name" >{{trans('Date_Add')}}</label><br/>
     
-                <div class="input-group date" data-date-format="yyyy-M-dd"  id="startdate" value="{{$item->date_added}}">
-                    <input type='text' class="form-control" name="dateadded" id="dateadded" value="{{$item->date_added}}"/>
+                <div class="input-group date" data-date-format="yyyy-M-dd"  id="startdate" >
+                    <input type='text' class="form-control" name="dateadded" id="dateadded" />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                     </span>

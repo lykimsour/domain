@@ -64,6 +64,20 @@ return [
             'strict'    => false,
         ],
          
+         'KPI' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_KPI_HOST', 'localhost'),
+            'port'      => env('DB_KPI_PORT', 'forge'),
+            'database'  => env('DB_KPI_DATABASE', 'forge'),
+            'username'  => env('DB_KPI_USERNAME', 'forge'),
+            'password'  => env('DB_KPI_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
+
 
         'pgsql' => [
             'driver'   => 'pgsql',

@@ -416,6 +416,16 @@
 		Route::get('/reseller',['uses'=>'ResellerController@index','as'=>'reseller','permission'=>'manage_user']);
 		Route::get('/reseller/requesttoken/{id}',['uses'=>'ResellerController@requesttoken','as'=>'requesttoken','permission'=>'manage_user']);
 
+	
+
+		//GameUpdate
+		Route::get('/gameupdate',['uses'=>'GameUpdateController@index','as'=>'gameupdate','permission'=>'manage_user']);
+		Route::get('/gameupdate/create/{gametype}',['uses'=>'GameUpdateController@create','as'=>'creategameupdate','permission'=>'manage_user']);
+		Route::post('/gameupdate/store',['uses'=>'GameUpdateController@store','as'=>'storegameupdate','permission'=>'manage_user']);
+		Route::delete('/gameupdate/destroy/{id}',['uses'=>'GameUpdateController@destroy','as'=>'destroygameupdate','permission'=>'manage_user']);
+		Route::get('/gameupdate/edit/{id}/{gametype}',['uses'=>'GameUpdateController@edit','as'=>'editgameupdate','permission'=>'manage_user']);
+		Route::put('/gameupdate/update/{id}',['uses'=>'GameUpdateController@update','as'=>'updategameupdate','permission'=>'manage_user']);
+
 	});
 
 	

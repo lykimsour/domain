@@ -65,6 +65,14 @@
         </a>
       </li>
 
+
+         <li {{ Helper::activeMenu("gameupdate") }}>
+        <a href="{{URL::route('gameupdate')}}">
+          <i class="glyphicon glyphicon-usd"></i> 
+          <span>{{trans('Game Updates')}}</span>
+          <div class="clear"></div>
+        </a>
+      </li>
        <li class="treeview">
               <a href="#">
                 <i class="glyphicon glyphicon-italic"></i>

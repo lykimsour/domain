@@ -72,14 +72,14 @@ $(document).ready(function() {
     else{
       $("#dateadded").val($("#datevalue").val());
     }
+     $("#updatedate").val($("#datevalue").val());
       $("#sdate").hide();
       $("#edate").hide();
       $("#sdate1").hide();
       $("#edate1").hide();
       $("#from").hide();
       $("#to").hide();
-
-    if(time == "Period"){
+    if($("#time").val() == "period"){
       $("#sdate").show();
       $("#edate").show();
       var from = $("#from").text();
@@ -95,11 +95,17 @@ $(document).ready(function() {
     var gettime = document.getElementById("time");
     var time = gettime.options[gettime.selectedIndex].text;
   }
+
   $("#dateadded").datepicker({ 
         autoclose: true, 
         todayHighlight: true
   }).datepicker('update', new Date());
-  
+
+  $("#dateupdate").datepicker({ 
+        autoclose: true, 
+        todayHighlight: true
+  }).datepicker('update', new Date());
+
   $("#startdate").datepicker({ 
         autoclose: true, 
         todayHighlight: true

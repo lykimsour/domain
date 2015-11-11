@@ -23,14 +23,18 @@ class ItemController extends Controller
      */
     public function getgametype($gametype){
         $gameservice = Service::lists('code','code');
-        if(strcasecmp($gametype,'ak')==0){
-             $item = Item::paginate(env('PAGINATION'))->setPath('item');
-        }
-       else{ 
-        $item = DB::connection(strtolower($gametype))
-        ->select(DB::raw("select *,item.id as id,item.name as name,type.name as typename,groups.name as groupname from sabay_items as item LEFT JOIN sabay_item_types as type on item.type_id=type.id LEFT JOIN sabay_item_groups as groups on item.group_id = groups.id "));
-       }
-        return view('item.index',['items'=>$item,'gametype'=>$gametype,'gameservice'=>$gameservice]);
+            if(strcasecmp($gametype,'ak')==0){
+                $item = Item::paginate(env('PAGINATION'))->setPath('item');
+            }
+            elseif(strtolower($gametype) == 'naga' or strtolower($gametype) =='jx2'){
+                  $item = DB::connection(strtolower($gametype))
+                    ->select(DB::raw("select *,item.id as id,item.name as name,type.name as typename,groups.name as groupname from sabay_items as item LEFT JOIN sabay_item_types as type on item.type_id=type.id LEFT JOIN sabay_item_groups as groups on item.group_id = groups.id "));
+               
+            }
+            else{ 
+               return Redirect::Back();
+            }
+                return view('item.index',['items'=>$item,'gametype'=>$gametype,'gameservice'=>$gameservice]);
     }
     public function index()
     {

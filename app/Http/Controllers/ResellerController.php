@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Reseller;
 use App\ResellerRequest;
 use Redirect;
+use Carbon\Carbon;
 class ResellerController extends Controller
 {
     /**
@@ -17,11 +18,11 @@ class ResellerController extends Controller
      * @return Response
      */
     public function requesttoken($id){
-        $date = date('Y-m-d H:i:s');
+      
         $resellerrequest = new ResellerRequest;
         $resellerrequest->token = str_random(64);
         $resellerrequest->reseller_id = $id;
-        $resellerrequest->datetime = $date;
+        $resellerrequest->datetime = Carbon::now();
         $resellerrequest->save(); 
         return Redirect::back();
     }

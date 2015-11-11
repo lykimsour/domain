@@ -29,7 +29,6 @@
         					<th>Status</th>
         					<th>Phone</th>
         					<th>Email</th>
-        					<th>Request_Date</th>
                   <th></th>
       					</tr>
     				</thead>
@@ -54,26 +53,18 @@
         			       <td>{{$reseller->status}}</td>
         			       <td>{{$reseller->phone}}</td>
         			       <td>{{$reseller->email}}</td>
-        			       <td>{{$reseller->message}}</td>
-        			       <td>{{$reseller->request_date}}</td>
                      <?php $resellerrequest = ResellerRequest::where('reseller_id','=',$reseller->id)->first(); ?>
                      @if(!$resellerrequest)
                      <td><a href="{{route('requesttoken',['id'=>$reseller->id])}}"><div class="btn btn-xs btn btn-info">re-enable certificate installation</td>
                      @endif
               </tr>
-              
               @endforeach
-
             </tbody>
           </table>
     			</table>
-
     		</div>
-
 		</ul>
     </div>
 </div><br/>
 </div>
-
-
 @endsection

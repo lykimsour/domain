@@ -35,7 +35,9 @@ class ReportCashtoUserController extends Controller
             if(strcasecmp($type,"all")==0 && strcasecmp($time,"all") == 0){
                 $chart = DB::table('transfer_cash2user_log')
                         ->select('date',DB::raw('YEAR(date) as groupdate,SUM(amount) as total'))
-                        ->where('status','=',1)->groupBy('groupdate')
+                        ->where('status','=',1)
+                        ->orderBy('date')
+                        ->groupBy('groupdate')
                         ->get();
                 
             }
@@ -43,7 +45,9 @@ class ReportCashtoUserController extends Controller
             elseif(strcasecmp($type,"all")!=0 && strcasecmp($time,"all") == 0){
              $chart = DB::table('transfer_cash2user_log')->join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
                         ->select('date',DB::raw('YEAR(transfer_cash2user_log.date) as groupdate,SUM(transfer_cash2user_log.amount) as total'))
-                        ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])->groupBy('groupdate')
+                        ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
+                        ->orderBy('date')
+                        ->groupBy('groupdate')
                         ->get();
             }
 
@@ -54,6 +58,7 @@ class ReportCashtoUserController extends Controller
                         ->where('status','=',1)
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                        
@@ -64,6 +69,7 @@ class ReportCashtoUserController extends Controller
                         ->where('status','=',1)
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                 }
@@ -73,6 +79,7 @@ class ReportCashtoUserController extends Controller
                         ->where('status','=',1)
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                    
@@ -85,6 +92,7 @@ class ReportCashtoUserController extends Controller
                         ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                     }
@@ -94,6 +102,7 @@ class ReportCashtoUserController extends Controller
                         ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                 }
@@ -103,6 +112,7 @@ class ReportCashtoUserController extends Controller
                         ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get(); 
                 }
@@ -112,7 +122,9 @@ class ReportCashtoUserController extends Controller
                  if(strcasecmp($time,"all") == 0){
                          $chart = DB::table('transfer_cash2user_log')
                         ->select('date',DB::raw('YEAR(date) as groupdate,SUM(amount) as total'))
-                        ->where(['status'=>1,'cashier_id'=>$id])->groupBy('groupdate')
+                        ->where(['status'=>1,'cashier_id'=>$id])
+                        ->orderBy('date')
+                        ->groupBy('groupdate')
                         ->get();
 
                 }
@@ -122,6 +134,7 @@ class ReportCashtoUserController extends Controller
                         ->where(['status'=>1,'cashier_id'=>$id])
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                        
@@ -132,6 +145,7 @@ class ReportCashtoUserController extends Controller
                         ->where(['status'=>1,'cashier_id'=>$id])
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                 }
@@ -141,6 +155,7 @@ class ReportCashtoUserController extends Controller
                         ->where(['status'=>1,'cashier_id'=>$id])
                         ->where('date','>=',$from)
                         ->where('date','<=',$to)
+                        ->orderBy('date')
                         ->groupBy('groupdate')
                         ->get();
                 }
