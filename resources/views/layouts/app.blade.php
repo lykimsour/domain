@@ -101,6 +101,7 @@ $(document).ready(function() {
         todayHighlight: true
   }).datepicker('update', new Date());
 
+
   $("#dateupdate").datepicker({ 
         autoclose: true, 
         todayHighlight: true

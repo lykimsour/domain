@@ -23,7 +23,7 @@ class ReportGoldtoUserController extends Controller
             $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
                 $to = date('Y-m-d 23:59:59',time());          
                 $report = GoldtoUserLog::groupBy('cashier_id')
-                                            ->selectRaw('*,sum(amount) as total')
+                                            ->selectRaw('*,sum(amount) as total,count(cashier_id) as recordcount')
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
@@ -174,7 +174,7 @@ class ReportGoldtoUserController extends Controller
         $end = $request->enddate;
         if(strcasecmp($type,"all")==0 && strcasecmp($time,"all") == 0){
                         $report = GoldtoUserLog::groupBy('cashier_id')
-                                                    ->selectRaw('*,sum(amount) as total')
+                                                    ->selectRaw('*,sum(amount) as total,count(cashier_id) as recordcount')
                                                     ->orderBy('id','asc')
                                                     ->paginate(env('PAGINATION'));
                         $totalall = GoldtoUserLog::sum('amount');
@@ -189,7 +189,7 @@ class ReportGoldtoUserController extends Controller
                          $report = GoldtoUserLog::join('cashier','transfer_gold2user_log.cashier_id','=','cashier.id')
                                                     ->groupBy('transfer_gold2user_log.cashier_id')
                                                     ->where(['cashier.type'=>$type])
-                                                    ->selectRaw('transfer_gold2user_log.id,transfer_gold2user_log.cashier_id,transfer_gold2user_log.user_id,sum(transfer_gold2user_log.amount) as total,transfer_gold2user_log.date')
+                                                    ->selectRaw('count(cashier.id) as recordcount,transfer_gold2user_log.id,transfer_gold2user_log.cashier_id,transfer_gold2user_log.user_id,sum(transfer_gold2user_log.amount) as total,transfer_gold2user_log.date')
                                                     ->orderBy('id','asc')
                                                     ->paginate(env('PAGINATION'));
                         $totalall =  GoldtoUserLog::join('cashier','transfer_gold2user_log.cashier_id','=','cashier.id')
@@ -227,7 +227,7 @@ class ReportGoldtoUserController extends Controller
                     $to   = $endd->format('Y-m-d 23:59:59');
                             
             }
-            $report = GoldtoUserLog::groupBy('cashier_id')->selectRaw('*,sum(amount) as total')
+            $report = GoldtoUserLog::groupBy('cashier_id')->selectRaw('*,sum(amount) as total,count(cashier_id) as recordcount')
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->orderBy('date','ASC')
@@ -272,7 +272,7 @@ class ReportGoldtoUserController extends Controller
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('date','ASC')
-                                            ->selectRaw('transfer_gold2user_log.id,transfer_gold2user_log.cashier_id,transfer_gold2user_log.user_id,sum(transfer_gold2user_log.amount) as total,transfer_gold2user_log.date')
+                                            ->selectRaw('count(cashier.id) as recordcount,transfer_gold2user_log.id,transfer_gold2user_log.cashier_id,transfer_gold2user_log.user_id,sum(transfer_gold2user_log.amount) as total,transfer_gold2user_log.date')
                                             ->paginate(env('PAGINATION'));
 
                 $totalall = GoldtoUserLog::join('cashier','transfer_gold2user_log.cashier_id','=','cashier.id')

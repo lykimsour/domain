@@ -180,7 +180,7 @@ class ReportCashtoUserController extends Controller
         if(strcasecmp($type,"all")==0 && strcasecmp($time,"all") == 0){
 
                         $report = CashtoUserLog::groupBy('cashier_id')
-                                                    ->selectRaw('*,sum(amount) as total')->where('status','=',1)
+                                                    ->selectRaw('*,sum(amount) as total,count(cashier_id) as recordcount')->where('status','=',1)
                                                     ->orderBy('id','asc')
                                                     ->paginate(env('PAGINATION'));
 
@@ -199,7 +199,7 @@ class ReportCashtoUserController extends Controller
                          $report = CashtoUserLog::join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
                                                     ->groupBy('transfer_cash2user_log.cashier_id')
                                                     ->where(['transfer_cash2user_log.status'=>1,'cashier.type'=>$type])
-                                                    ->selectRaw('transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
+                                                    ->selectRaw('count(cashier.id) as recordcount,transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
                                                     ->orderBy('id','asc')
                                                     ->paginate(env('PAGINATION'));
             
@@ -241,7 +241,7 @@ class ReportCashtoUserController extends Controller
 
             }
        
-             $report = CashtoUserLog::groupBy('cashier_id')->selectRaw('*,sum(amount) as total')
+             $report = CashtoUserLog::groupBy('cashier_id')->selectRaw('*,sum(amount) as total,count(cashier_id) as recordcount')
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->where(['status'=>'1'])
@@ -287,7 +287,7 @@ class ReportCashtoUserController extends Controller
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('date','ASC')
-                                            ->selectRaw('transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
+                                            ->selectRaw('count(cashier.id) as recordcount,transfer_cash2user_log.id,transfer_cash2user_log.cashier_id,transfer_cash2user_log.user_id,transfer_cash2user_log.status,sum(transfer_cash2user_log.amount) as total,transfer_cash2user_log.date')
                                             ->paginate(env('PAGINATION'));
 
                 $totalall = CashtoUserLog::join('cashier','transfer_cash2user_log.cashier_id','=','cashier.id')
@@ -308,7 +308,7 @@ class ReportCashtoUserController extends Controller
                 $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
                 $to = date('Y-m-d 23:59:59',time());          
                 $report = CashtoUserLog::groupBy('cashier_id')
-                                            ->selectRaw('*,sum(amount) as total')
+                                            ->selectRaw('*,sum(amount) as total, count(cashier_id) as recordcount ')
                                             ->where('status','=',1)
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
@@ -325,25 +325,26 @@ class ReportCashtoUserController extends Controller
                 return view('reportcashtouser.index',['reports'=>$report,'totalall'=>$totalall,'type'=>$type,'time'=>$time,'from'=>$from,'to'=>$to,'chart'=>$chart,'url'=>$url]);
 
     }
-
-
-
-
-
-    public function details($id,Request $request){
-
-        return $this->detail($id,$request->time,$request->startdate,$request->enddate);
+    public function salereportpost($id,Request $request){
+                return $this->salereport($id,$request->time,$request->startdate,$request->enddate);
     }
 
-    public function detail($id,$time,$startdate,$enddate)
-    {
+    public function salereport($id,$time,$startdate,$enddate){
+       // return 'h';
         $reportctor = CashtoUserLog::findOrFail($id);
         $cashiername = $reportctor->cashier->name;
-
-        if(strcasecmp($time,"all") == 0){
-           $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
-                                    ->orderBy('id','DESC')->paginate(env('PAGINATION'));
-            $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])->sum('amount');      
+        if(strcasecmp($time,"all") == 0){               
+            $report = CashtoUserLog::join('transfer_cash2user_mycard_d','transfer_cash2user_log.id','=','transfer_cash2user_mycard_d.transfer_cash2user_log_id')
+                                        ->where(['transfer_cash2user_log.status'=>1,'transfer_cash2user_log.cashier_id'=>$reportctor->cashier_id])
+                                        ->selectRaw('transfer_cash2user_log.*')
+                                        ->selectRaw('transfer_cash2user_mycard_d.*')
+                                        ->selectRaw('count(transfer_cash2user_mycard_d.amount) as QTY')
+                                        ->groupBy('transfer_cash2user_mycard_d.amount')
+                                        ->paginate(env('PAGINATION'));
+                                         //dd($report->all());
+             $totalqty = CashtoUserLog::join('transfer_cash2user_mycard_d','transfer_cash2user_log.id','=','transfer_cash2user_mycard_d.transfer_cash2user_log_id')
+                        ->where(['transfer_cash2user_log.status'=>1,'transfer_cash2user_log.cashier_id'=>$reportctor->cashier_id])->count();
+           // $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])->sum('amount');    
             $from = $startdate;
             $to = $enddate;
        }
@@ -376,10 +377,92 @@ class ReportCashtoUserController extends Controller
 
 
                 }
-            $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
+             $report = CashtoUserLog::join('transfer_cash2user_mycard_d','transfer_cash2user_log.id','=','transfer_cash2user_mycard_d.transfer_cash2user_log_id')
+                                        ->where(['transfer_cash2user_log.status'=>1,'transfer_cash2user_log.cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
+                                        ->selectRaw('transfer_cash2user_log.*')
+                                        ->selectRaw('transfer_cash2user_mycard_d.*')
+                                        ->selectRaw('count(transfer_cash2user_mycard_d.amount) as QTY')
+                                        ->groupBy('transfer_cash2user_mycard_d.amount')
                                         ->paginate(env('PAGINATION'));
+
+             $totalqty = CashtoUserLog::join('transfer_cash2user_mycard_d','transfer_cash2user_log.id','=','transfer_cash2user_mycard_d.transfer_cash2user_log_id')
+                        ->where(['transfer_cash2user_log.status'=>1,'transfer_cash2user_log.cashier_id'=>$reportctor->cashier_id])
+                        ->where('date','>=',$from)
+                        ->where('date','<=',$to)->count();
+                                                                             
+        }
+        $chart = $this->chartdata($reportctor->cashier_id,"all",$time,$from,$to);
+        $report->setPath(url('/cashtouser/salereport/'.$id.'/'.$time.'/'.$startdate.'/'.$enddate));
+        return view('reportcashtouser.salereport',['reports'=>$report,'time'=>$time,'from'=>$startdate,'to'=>$enddate,'reportid'=>$id,'chart'=>$chart,'cashiername'=>$cashiername,'totalqty'=>$totalqty]);
+
+    }
+
+
+
+    public function details($id,Request $request){
+
+        return $this->detail($id,$request->time,$request->startdate,$request->enddate);
+    }
+
+    public function detail($id,$time,$startdate,$enddate)
+    {
+        $reportctor = CashtoUserLog::findOrFail($id);
+        $cashiername = $reportctor->cashier->name;
+
+        if(strcasecmp($time,"all") == 0){
+           $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
+                                    ->orderBy('id','ASC')->paginate(env('PAGINATION'));
+          
+           $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])->sum('amount');    
+            $from = $startdate;
+            $to = $enddate;
+       }
+        else{
+                if(strcasecmp($time,"today") == 0){
+                            $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
+                            $to = date('Y-m-d 23:59:59',time());          
+                }
+                elseif(strcasecmp($time,"week") ==0){
+                            $preweek = time() - (7 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $preweek);
+                            $to = date('Y-m-d 23:59:59',time());                           
+                }
+                elseif(strcasecmp($time,"month") ==0){
+                            $premonth = time() - (30 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $premonth);
+                            $to = date('Y-m-d 23:59:59',time());      
+                }
+                elseif(strcasecmp($time,"year") ==0){
+                            $preyear = time() - (365 * 24 * 60 * 60);
+                            $from = date('Y-m-d'.' '.'00:00:00', $preyear);
+                            $to = date('Y-m-d 23:59:59',time());
+                }
+                elseif(strcasecmp($time,"period") ==0){
+
+                    $startd= DateTime::createFromFormat("F-d-Y", $startdate);
+                    $from  = $startd->format('Y-m-d 00:00:00');
+                    $endd  = DateTime::createFromFormat("F-d-Y", $enddate);
+                    $to   = $endd->format('Y-m-d 23:59:59');
+
+
+                }
+             /*$report = CashtoUserLog::join('transfer_cash2user_mycard_d','transfer_cash2user_log.id','=','transfer_cash2user_mycard_d.transfer_cash2user_log_id')
+                                        ->where(['transfer_cash2user_log.status'=>1,'transfer_cash2user_log.cashier_id'=>$reportctor->cashier_id])
+                                        ->where('date','>=',$from)
+                                        ->where('date','<=',$to)
+                                        ->selectRaw('transfer_cash2user_log.*')
+                                        ->selectRaw('transfer_cash2user_mycard_d.*')
+                                        ->selectRaw('count(transfer_cash2user_mycard_d.amount) as QTY')
+                                        ->groupBy('transfer_cash2user_mycard_d.amount')
+                                        ->paginate(env('PAGINATION'));*/
+                                        // dd($report->all());
+             $report = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
+                                     ->where('date','>=',$from)
+                                     ->where('date','<=',$to)
+                                     ->orderBy('id','ASC')                          
+                                     ->paginate(env('PAGINATION'));
 
             $totalall = CashtoUserLog::where(['status'=>1,'cashier_id'=>$reportctor->cashier_id])
                                         ->where('date','>=',$from)

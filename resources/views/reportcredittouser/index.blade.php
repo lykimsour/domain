@@ -66,6 +66,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Reseller_name</th>
+                  <th>Record_count</th>
                   <th>Amount</th>
                   <th>Date</th>
                    <th>Detail</th>
@@ -87,6 +88,7 @@
               <tr>
                     <td>{{$report->id}}</td>
                     <td>{{$report->reseller->name}}</td>
+                    <td>{{$report->recordcount}}</td>
                     <td>{{number_format($report->total,2)}}</td>
                     <td>{{$report->date}}</td>
                     <td><a href="{{route('detailcredittouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>

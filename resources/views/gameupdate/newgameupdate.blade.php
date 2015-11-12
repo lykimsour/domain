@@ -26,7 +26,7 @@
     	 <div class="form-group">
               <label for="name" >{{trans('Update_Date')}}</label><br/>
                 <div class="input-group date" data-date-format="yyyy-M-dd" id="dateadded"  >
-                    <input type='text' class="form-control" name="updatedate" id="updatedate" />
+                    <input type='text' class="form-control" name="updatedate" id="dateadded" />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                     </span>

@@ -72,8 +72,10 @@
                 <tr>
                   <th>ID</th>
                   <th>Cashier_Name</th>
+                  <th>Record_count</th>
                   <th>Total</th>
                   <th>Status</th>
+                  <th>Sales Report</th>
                   <th>Detail</th>
                 </tr>
             </thead>
@@ -93,8 +95,10 @@
               <tr>
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>
+                    <td>{{$report->recordcount}}</td>
                     <td>{{number_format($report->total,2)}}</td>
                     <td>{{$report->status}}</td>
+                    <td><a href="{{route('salereport',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Show Sale_Report</a></td>
                     <td><a href="{{route('detailcashtouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
                     <?php 
                     $total = $report->total + $total  ?>

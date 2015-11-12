@@ -75,6 +75,7 @@
                  
                   <th>ID</th>
                   <th>Cashier_Name</th>
+                  <th>Record_count</th>
                   <th>Total</th>
                   <th>Detail</th>
                 </tr>
@@ -97,6 +98,7 @@
               <tr>
                     <td>{{$report->id}}</td>
                     <td>{{$report->cashier->name}}</td>
+                    <td>{{$report->recordcount}}</td>
                     <td>{{number_format($report->total,2)}}</td>
                     <td><a href="{{route('detailsreportgoldtouser',['id'=>$report->id,'time'=>$time,'startdate'=>$from,'enddate'=>$to])}}">Detail</a></td>
                     <?php $total = $report->total + $total  ?>

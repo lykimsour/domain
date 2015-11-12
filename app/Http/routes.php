@@ -341,6 +341,10 @@
 		Route::get('/cashtouser/detail/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashtoUserController@detail','as'=>'detailcashtouser','permission'=>'view_cashier_report']);
 		Route::post('/cashtouser/detail/{id}/',['uses'=>'ReportCashtoUserController@details','as'=>'detailscashtouser','permission'=>'view_cashier_report']);
 		Route::get('/cashtouser/recorddetail/{id}',['uses'=>'ReportCashtoUserController@recorddetail','as'=>'recorddetailcashtouser','permission'=>'view_cashier_report']);
+		
+
+		Route::get('/cashtouser/salereport/{id}/{time}/{startdate}/{enddate}',['uses'=>'ReportCashtoUserController@salereport','as'=>'salereport','permission'=>'view_cashier_report']);
+		Route::post('/cashtouser/salereport/{id}',['uses'=>'ReportCashtoUserController@salereportpost','as'=>'salereportpost','permission'=>'view_cashier_report']);
 
 		//Report User To Shop Log
 		Route::get('/usertoshoplog', ['uses'=>'ReportUserToShopLogController@index','as'=>'usertoshoplog', 'permission'=>'manage_user']);

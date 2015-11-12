@@ -103,7 +103,7 @@ class ReportCredittoUserController extends Controller
         $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
         $to = date('Y-m-d 23:59:59',time());          
         $report = CredittoUserLog::groupBy('reseller_id')
-                                            ->selectRaw('*,sum(amount) as total')
+                                            ->selectRaw('*,sum(amount) as total,count(reseller_id) as recordcount')
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
@@ -129,9 +129,10 @@ class ReportCredittoUserController extends Controller
         $end = $request->enddate;
          if(strcasecmp($time,"all") == 0){
                         $report = CredittoUserLog::groupBy('reseller_id')
-                                                    ->selectRaw('*,sum(amount) as total')
+                                                    ->selectRaw('*,sum(amount) as total,count(reseller_id) as recordcount')
                                                     ->orderBy('id','asc')
                                                     ->paginate(env('PAGINATION'));
+
                         $totalall = CredittoUserLog::sum('amount');
                         $type = "all";
                         $from = "0";
@@ -167,7 +168,7 @@ class ReportCredittoUserController extends Controller
                  }
         
 
-        $report = CredittoUserLog::groupBy('reseller_id')->selectRaw('*,sum(amount) as total')
+        $report = CredittoUserLog::groupBy('reseller_id')->selectRaw('*,sum(amount) as total,count(reseller_id) as recordcount')
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->orderBy('date','ASC')

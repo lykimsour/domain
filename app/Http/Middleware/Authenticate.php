@@ -39,13 +39,18 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
+        if(Auth::user()->status ==0 ){
+            return redirect()->guest('auth/login')->withErrors('You are blocked by Admin.');
+        }
+        else{
+            if ($this->auth->guest()) {
+                if ($request->ajax()) {
+                    return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                   return redirect()->guest('auth/login');
             }
 
+            }
         }
         return $next($request);
     }

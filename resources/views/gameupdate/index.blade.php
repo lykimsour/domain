@@ -7,12 +7,7 @@
 <div class="row">
     <div class="col-md-6">
        <a href="{{route('creategameupdate',['gametype'=>$gametype])}}"><div class="btn btn-primary">{{trans('Add Game_update')}}</div></a>
-        <br/><br/>
-       <form method="GET" action="" id="getgametypeforgroup">
-        <div class="form-group">
-        {!! Form::select('gameupdate',$gameservice,$gametype,['class'=>'form-control','id'=>'gameupdate']) !!}
-      </div>
-      </form>
+     
     </div>
 </div><br/>
 <div class="row">
@@ -47,7 +42,7 @@
               </div></a>
               </form>
   						</td>
-               <td>{{$gameupdate->service_id}}</td>
+               <td>{{$gameupdate->service->code}}</td>
                 <td>{{Carbon::parse($gameupdate->date)->format('Y/M/d')}}</td>
       				</tr>
      			  @endforeach

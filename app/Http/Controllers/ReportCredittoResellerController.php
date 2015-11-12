@@ -100,7 +100,7 @@ class ReportCredittoResellerController extends Controller
         $from = date('Y-m-d'.' '.'00:00:00' ,time()); 
         $to = date('Y-m-d 23:59:59',time());          
         $report = CredittoResellerLog::groupBy('from_reseller_id')
-                                            ->selectRaw('*,sum(amount) as total')
+                                            ->selectRaw('*,sum(amount) as total,count(from_reseller_id) as recordcount')
                                             ->where('date','>=',$from)
                                             ->where('date','<=',$to)
                                             ->orderBy('id','DESC')
@@ -127,7 +127,7 @@ class ReportCredittoResellerController extends Controller
         $end = $request->enddate;
          if(strcasecmp($time,"all") == 0){
                         $report = CredittoResellerLog::groupBy('from_reseller_id')
-                                                    ->selectRaw('*,sum(amount) as total')
+                                                    ->selectRaw('*,sum(amount) as total,count(from_reseller_id) as recordcount')
                                                     ->orderBy('id','asc')
                                                     ->paginate(env('PAGINATION'));
                         $totalall = CredittoResellerLog::sum('amount');
@@ -167,7 +167,7 @@ class ReportCredittoResellerController extends Controller
                  }
         
 
-        $report = CredittoResellerLog::groupBy('from_reseller_id')->selectRaw('*,sum(amount) as total')
+        $report = CredittoResellerLog::groupBy('from_reseller_id')->selectRaw('*,sum(amount) as total,count(from_reseller_id) as recordcount')
                                         ->where('date','>=',$from)
                                         ->where('date','<=',$to)
                                         ->orderBy('date','ASC')
