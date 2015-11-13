@@ -21,9 +21,7 @@
 							</ul>
 						</div>
 					@endif
-
 					{!! csrf_field() !!}
-
 	        <div class="form-group">
 
 	            <label for="exampleInputEmail1" class="sr-only">User name</label>
@@ -50,9 +48,7 @@
 	    </div>
 	  </div>
 	</div>
-
 @endsection
-
 @section('script')
 	<script type="text/javascript">
 		$(document).ready(function(){
