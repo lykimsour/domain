@@ -8,7 +8,7 @@
 	      <div class="panel-body">
 	        <div class="fa_logo">
 	        {!! Html::image('images/sabay-logo.png') !!}
-	        <p>Admin User Login</p>
+	        <p>Admin Login</p>
 	        </div>
 	        <form id="login" role="form" method="POST" action="{{ url('/auth/login') }}">
 	        

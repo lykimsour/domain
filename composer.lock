@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "4a67d9a6b7fc010c2e7e5f82151d1874",
+    "content-hash": "869ff29a83d5b0fd1fae1769273ab397",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -280,12 +281,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "33f848674c96b82b050fde2806ba4e55ee88078f"
+                "reference": "2d8de6577b86c8b3bf49b6578d659ba9ee21fcc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/33f848674c96b82b050fde2806ba4e55ee88078f",
-                "reference": "33f848674c96b82b050fde2806ba4e55ee88078f",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/2d8de6577b86c8b3bf49b6578d659ba9ee21fcc1",
+                "reference": "2d8de6577b86c8b3bf49b6578d659ba9ee21fcc1",
                 "shasum": ""
             },
             "require": {
@@ -334,7 +335,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2015-11-04 14:06:13"
+            "time": "2015-11-05 18:30:26"
         },
         {
             "name": "jakub-onderka/php-console-color",
