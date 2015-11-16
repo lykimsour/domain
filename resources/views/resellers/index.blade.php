@@ -5,11 +5,11 @@
 <?php use App\ResellerRequest; ?>
 <div class="container-fluid">
 <h2>{{trans('Manage Reseller')}}</h2>
-<div class="row">
+<!--<div class="row">
     <div class="col-md-6">
        <a href="{{route('createonlineshop')}}"><div class="btn btn-primary">{{trans('New Reseller')}}</div></a>
     </div>
-</div><br/>
+</div><br/>-->
 <div class="row">
 
     <div class="col-md-12">
@@ -22,7 +22,7 @@
   				<table class="table table-bordered table-hover table-condensed" >
     				<thead>
       					<tr>
-        					<th>Tools</th>
+        					<!--<th>Tools</th>-->
         					<th>ID</th>
         					<th>Name</th>
         					<th>Coin</th>
@@ -35,7 +35,7 @@
     				   <tbody>
             	@foreach($resellers as $reseller)
               <tr>
-                <td>
+                <!--<td>
               <form method="post" action="{{route('requesttoken')}}" >
                {!! csrf_field() !!}
               <input type="hidden" name="_method" value="post"  >
@@ -46,7 +46,7 @@
               <a href=""><div class="btn btn-xs btn btn-info">
                 <span class="glyphicon glyphicon-pencil"></span>
               </div></a>
-                </td>
+                </td>-->
                      <td>{{$reseller->id}}</td>
         			       <td>{{$reseller->name}}</td>
         			       <td>{{$reseller->coin}}</td>
